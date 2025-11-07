@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     "Discover the latest fashion, lifestyle, and trendsetting products at Bend the Trendd. Shop quality apparel, accessories, and more.",
   icons: {
-    icon: "/bend-the-trendd-logo.png",
+    icon: "/vetabelle-logo.jpg",
   },
 };
 

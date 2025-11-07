@@ -8,11 +8,11 @@ import { Trash2 } from "lucide-react";
 type SingleItemProps = {
   item: {
     _id: string;
-    name: string;
+    title: string;
     price: number;
     discountPrice?: number;
     quantity: number;
-    mainImageUrl?: string;
+    image: string;
   };
 };
 
@@ -29,8 +29,8 @@ const SingleItem: React.FC<SingleItemProps> = ({ item }) => {
         {/* Product Image */}
         <div className="relative flex items-center justify-center rounded-[8px] bg-gray-2 max-w-[80px] w-full h-20 overflow-hidden p-1.5">
           <Image
-            src={item.mainImageUrl}
-            alt={item.name}
+            src={item.image || "/images/placeholder.png"}
+            alt={item.title}
             fill
             className="object-contain rounded-[5px] p-2"
           />
@@ -39,7 +39,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ item }) => {
         {/* Product Details */}
         <div>
           <h3 className="font-medium text-dark mb-1 ease-out duration-200 hover:text-blue">
-            {item.name}
+            {item.title}
           </h3>
           <p className="text-custom-sm">
             Price: ₵{item.discountPrice ?? item.price}

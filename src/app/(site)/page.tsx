@@ -2,29 +2,32 @@ import Home from "@/components/Home";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Bend the Trendd | Fashion & Lifestyle Ecommerce",
+  title: "Vetabelle | Wellness & Beauty Supplements for Women",
   description:
-    "Discover the latest fashion, lifestyle, and trendsetting products at Bend the Trendd. Shop quality apparel, accessories, and more with seamless online shopping.",
+    "Vetabelle is a wellness brand dedicated to empowering women through beauty, confidence, and self-care. Explore our high-quality supplements made with Collagen, Biotin, and Keratin to enhance your natural beauty from within.",
   keywords: [
-    "Bend the Trendd",
-    "fashion ecommerce",
-    "online clothing store",
-    "lifestyle products",
-    "trendy outfits",
+    "Vetabelle",
+    "beauty supplements",
+    "women wellness",
+    "collagen supplements",
+    "biotin for hair growth",
+    "keratin for nails",
+    "skin care vitamins",
+    "inner beauty",
   ],
-  authors: [{ name: "Bend the Trendd" }],
+  authors: [{ name: "Vetabelle" }],
   openGraph: {
-    title: "Bend the Trendd | Fashion & Lifestyle Ecommerce",
+    title: "Vetabelle | Wellness & Beauty Supplements for Women",
     description:
-      "Shop the latest trends in fashion and lifestyle at Bend the Trendd. Quality apparel and accessories made for you.",
-    url: "https://bendthetrendd.com",
-    siteName: "Bend the Trendd",
+      "Discover Vetabelle — your trusted wellness brand for glowing skin, healthy hair, and strong nails. Beauty starts from within!",
+    url: "https://vetabelle.com",
+    siteName: "Vetabelle",
     images: [
       {
-        url: "/bend-the-trendd-logo.png",
+        url: "/vetabelle-logo.png",
         width: 1200,
         height: 630,
-        alt: "Bend the Trendd Ecommerce Store",
+        alt: "Vetabelle Wellness & Beauty Supplements",
       },
     ],
     locale: "en_US",

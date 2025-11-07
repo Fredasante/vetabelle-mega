@@ -1,25 +1,22 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
-// 🛍️ Cart Item Type
 export type CartItem = {
   _id: string;
-  name: string;
+  title: string;
   price: number;
   discountPrice?: number;
   quantity: number;
-  mainImageUrl?: string;
-  size?: string;
-  color?: string;
+  image: string;
 };
 
 // 🧺 State Type
-type InitialState = {
+type CartState = {
   items: CartItem[];
 };
 
 // 🧩 Initial State
-const initialState: InitialState = {
+const initialState: CartState = {
   items: [],
 };
 
@@ -29,50 +26,37 @@ export const cart = createSlice({
   initialState,
   reducers: {
     addItemToCart: (state, action: PayloadAction<CartItem>) => {
-      const {
-        _id,
-        name,
-        price,
-        quantity,
-        discountPrice,
-        mainImageUrl,
-        size,
-        color,
-      } = action.payload;
+      const existingItem = state.items.find(
+        (item) => item._id === action.payload._id
+      );
 
-      const existingItem = state.items.find((item) => item._id === _id);
-
-      // 🛑 If item already exists, do nothing (no duplicate / price increase)
       if (existingItem) {
-        return;
+        // ✅ Increase quantity if item already exists
+        existingItem.quantity += action.payload.quantity || 1;
+      } else {
+        // ✅ Add new item
+        state.items.push({ ...action.payload });
       }
-
-      // ✅ Otherwise, add new item
-      state.items.push({
-        _id,
-        name,
-        price,
-        quantity,
-        discountPrice,
-        mainImageUrl,
-        size,
-        color,
-      });
     },
 
     removeItemFromCart: (state, action: PayloadAction<string>) => {
       state.items = state.items.filter((item) => item._id !== action.payload);
     },
 
-    updateCartItemQuantity: (
-      state,
-      action: PayloadAction<{ _id: string; quantity: number }>
-    ) => {
-      const existingItem = state.items.find(
-        (item) => item._id === action.payload._id
-      );
-      if (existingItem) {
-        existingItem.quantity = action.payload.quantity;
+    incrementQuantity: (state, action: PayloadAction<string>) => {
+      const item = state.items.find((item) => item._id === action.payload);
+      if (item) item.quantity += 1;
+    },
+
+    decrementQuantity: (state, action: PayloadAction<string>) => {
+      const item = state.items.find((item) => item._id === action.payload);
+      if (item && item.quantity > 1) {
+        item.quantity -= 1;
+      } else {
+        // remove item if quantity would go below 1
+        state.items = state.items.filter(
+          (cartItem) => cartItem._id !== action.payload
+        );
       }
     },
 
@@ -95,7 +79,8 @@ export const selectTotalPrice = createSelector([selectCartItems], (items) =>
 export const {
   addItemToCart,
   removeItemFromCart,
-  updateCartItemQuantity,
+  incrementQuantity,
+  decrementQuantity,
   removeAllItemsFromCart,
 } = cart.actions;
 

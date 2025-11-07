@@ -3,9 +3,9 @@ import AboutUs from "@/components/AboutUs/AboutUs";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Us | Bend the Trendd",
+  title: "About Us | Vetabelle",
   description:
-    "Discover Bend the Trendd — your go-to fashion destination offering trendy, affordable, and high-quality styles for every occasion.",
+    "Learn about Vetabelle — a wellness brand empowering women through beauty, confidence, and self-care. Discover how our high-quality supplements promote glowing skin, healthy hair, and overall well-being.",
 };
 
 const AboutUsPage = () => {

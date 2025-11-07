@@ -1,150 +1,88 @@
 import { Product } from "@/types/product";
 import { client } from "./client";
 
-// 🛍️ All products (newest first) - AVAILABLE ONLY
+// 🛍️ All products (available only, newest first)
 export const allProductsQuery = `
-  *[_type == "product" && status == "available"] | order(createdAt desc) {
+  *[_type == "product" && status == "in-stock"] | order(createdAt desc) {
     _id,
-    name,
+    title,
     slug,
     price,
     discountPrice,
-    category,
     description,
-    gender,
     status,
-    isFeatured,
-    "mainImageUrl": mainImage.asset->url
+    createdAt,
+    "image": image.asset->url
   }
 `;
 
-// 👕 Products by Category - AVAILABLE ONLY
-export const productsByCategoryQuery = `
-  *[_type == "product" && category == $category && status == "available"] | order(createdAt desc) {
-    _id,
-    name,
-    slug,
-    price,
-    discountPrice,
-    category,
-    description,
-    isFeatured,
-    "mainImageUrl": mainImage.asset->url
-  }
-`;
-
-// ✅ Fetch the 12 most recent available products (New Arrivals)
+// ✅ Fetch 12 most recent in-stock products (New Arrivals)
 export const newArrivalsQuery = `
-  *[_type == "product" && status == "available"] | order(_createdAt desc)[0...12]{
+  *[_type == "product" && status == "in-stock"] 
+  | order(coalesce(createdAt, _createdAt) desc)[0...12] {
     _id,
-    name,
+    title,
     slug,
     price,
-    sizes,
-    colors,
     discountPrice,
-    category,
     description,
-    "mainImageUrl": mainImage.asset->url
+    status,
+    createdAt,
+    "image": image.asset->url
   }
 `;
 
-// 🔍 Search by name - AVAILABLE ONLY
+// 🔍 Search by name (in-stock only)
 export const searchProductsQuery = `
-  *[_type == "product" && name match $search + "*" && status == "available"] | order(createdAt desc) {
+  *[_type == "product" && title match $search + "*" && status == "in-stock"] | order(createdAt desc) {
     _id,
-    name,
+    title,
     slug,
     price,
     discountPrice,
-    category,
-    sizes,
-    colors,
     description,
-    "mainImageUrl": mainImage.asset->url
+    status,
+    createdAt,
+    "image": image.asset->url
   }
 `;
 
-// 🧭 Paginated products - AVAILABLE ONLY
+// 🧭 Paginated products (in-stock only)
 export const paginatedProductsQuery = `
-  *[_type == "product" && status == "available"] | order(createdAt desc) [$start...$end] {
+  *[_type == "product" && status == "in-stock"] | order(createdAt desc) [$start...$end] {
     _id,
-    name,
+    title,
     slug,
     price,
     discountPrice,
-    sizes,
-    colors,
-    category,
-    gender,
-    status,
-    isFeatured,
     description,
-    "mainImageUrl": mainImage.asset->url
+    status,
+    createdAt,
+    "image": image.asset->url
   }
 `;
 
-// Count available products with optional category filter
-export const productCountQuery = `count(*[_type == "product" && status == "available" $categoryFilter])`;
-
-// Categories with product count - AVAILABLE ONLY
-export const categoriesWithCountQuery = `
-  *[_type == "product" && status == "available"] {
-    category
-  } | {
-    "name": category,
-    "products": count(*[_type == "product" && category == ^.category && status == "available"])
-  }
+// 📊 Count total in-stock products
+export const productCountQuery = `
+  count(*[_type == "product" && status == "in-stock"])
 `;
 
-// Genders with product count - AVAILABLE ONLY
-export const gendersWithCountQuery = `
-  *[_type == "product" && status == "available"] {
-    gender
-  } | {
-    "name": gender,
-    "products": count(*[_type == "product" && gender == ^.gender && status == "available"])
-  }
-`;
-
-// Sizes with count - AVAILABLE ONLY
-export const sizesWithCountQuery = `
-  *[_type == "product" && defined(sizes) && status == "available"] {
-    sizes
-  }
-`;
-
-// Colors with count - AVAILABLE ONLY
-export const colorsWithCountQuery = `
-  *[_type == "product" && defined(colors) && status == "available"] {
-    colors
-  }
-`;
-
-// Query to fetch a single product by slug - AVAILABLE ONLY
+// 🧾 Single product by slug (in-stock only)
 export const PRODUCT_BY_SLUG_QUERY = `
-  *[_type == "product" && slug.current == $slug && status == "available"][0]{
+  *[_type == "product" && slug.current == $slug && status == "in-stock"][0] {
     _id,
-    name,
+    title,
     slug,
-    "mainImageUrl": mainImage.asset->url,
-    "gallery": gallery[]{
-      "imageUrl": asset->url
-    },
-    category,
-    gender,
-    sizes,
     price,
     discountPrice,
-    colors,
     description,
     status,
-    isFeatured,
-    createdAt
+    createdAt,
+    "image": image.asset->url
   }
 `;
 
-// Function to fetch product by slug
+// 🚀 Function to fetch product by slug
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   try {
     const product = await client.fetch<Product>(PRODUCT_BY_SLUG_QUERY, {
@@ -157,7 +95,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
   }
 }
 
-// Query to get all AVAILABLE product slugs (for static generation)
+// 🧩 All product slugs (for static generation)
 export const ALL_PRODUCT_SLUGS_QUERY = `
-  *[_type == "product" && status == "available"]{ "slug": slug.current }
+  *[_type == "product" && status == "in-stock"]{ "slug": slug.current }
 `;

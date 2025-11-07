@@ -1,17 +1,11 @@
 export type Product = {
   _id: string;
-  name: string;
+  title: string;
   slug: { current: string };
-  mainImageUrl?: string;
-  gallery?: { imageUrl: string }[];
-  category: string;
-  gender?: "men" | "women" | "unisex";
-  sizes?: string[];
+  image: string; // URL from Sanity image
   price: number;
   discountPrice?: number;
-  colors?: string[];
-  description?: string | any[];
-  status?: "available" | "sold";
-  isFeatured?: boolean;
-  createdAt?: string;
+  description: any[]; // rich text blocks from Sanity
+  status: "in-stock" | "out-of-stock";
+  createdAt: string;
 };

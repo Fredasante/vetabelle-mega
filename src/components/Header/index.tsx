@@ -83,10 +83,11 @@ const Header = () => {
           <div className="xl:w-auto flex-col sm:flex-row w-full flex sm:justify-between sm:items-center gap-5 sm:gap-10">
             <Link className="flex-shrink-0 hidden md:block" href="/">
               <Image
-                src="/bend-the-trendd-logo.png"
+                src="/vetabelle-logo.jpg"
                 alt="Logo"
-                width={90}
+                width={170}
                 height={20}
+                className="py-2"
               />
             </Link>
 
@@ -109,7 +110,7 @@ const Header = () => {
                   24/7 SUPPORT
                 </span>
                 <p className="font-medium text-custom-sm text-dark">
-                  (+233) 5498-35411
+                  (+233) 54 818 2872
                 </p>
               </div>
             </div>
@@ -121,10 +122,10 @@ const Header = () => {
               <div className="flex items-center gap-5">
                 <Link className="flex-shrink-0 block md:hidden" href="/">
                   <Image
-                    src="/bend-the-trendd-logo.png"
+                    src="/vetabelle-logo.jpg"
                     alt="Logo"
-                    width={80}
-                    height={20}
+                    width={105}
+                    height={50}
                   />
                 </Link>
 
@@ -142,7 +143,7 @@ const Header = () => {
                       width={25}
                       height={25}
                     />
-                    <span className="flex items-center justify-center font-medium text-2xs absolute -right-2 -top-2.5 bg-blue w-4.5 h-4.5 rounded-full text-white">
+                    <span className="flex items-center justify-center font-medium text-2xs absolute -right-2 -top-2.5 bg-amber-700 w-4.5 h-4.5 rounded-full text-white">
                       {product.length}
                     </span>
                   </span>
@@ -220,12 +221,12 @@ const Header = () => {
                   {menuData.map((menuItem, i) => (
                     <li
                       key={i}
-                      className="group relative before:w-0 before:h-[3px] before:bg-blue before:absolute before:left-0 before:top-0 before:rounded-b-[3px] before:ease-out before:duration-200 hover:before:w-full "
+                      className="group relative before:w-0 before:h-[3px] before:bg-[#c77f56] before:absolute before:left-0 before:top-0 before:rounded-b-[3px] before:ease-out before:duration-200 hover:before:w-full "
                     >
                       <Link
                         href={menuItem.path}
                         onClick={closeNavigation}
-                        className={`hover:text-blue text-custom-sm font-medium text-dark flex ${
+                        className={`hover:text-[#c77f56] text-custom-sm font-medium text-dark flex ${
                           stickyMenu ? "xl:py-4" : "xl:py-6"
                         }`}
                       >
@@ -243,7 +244,7 @@ const Header = () => {
                 <li className="py-4">
                   <a
                     href="#"
-                    className="flex items-center gap-1.5 font-medium text-custom-sm text-dark hover:text-blue"
+                    className="flex items-center gap-1.5 font-medium text-custom-sm text-dark hover:text-[#c77f56]"
                   >
                     <RefreshCcw className="w-4 h-4" />
                     Recently Viewed
@@ -253,7 +254,7 @@ const Header = () => {
                 <li className="py-4">
                   <Link
                     href="/wishlist"
-                    className="flex items-center gap-1.5 font-medium text-custom-sm text-dark hover:text-blue"
+                    className="flex items-center gap-1.5 font-medium text-custom-sm text-dark hover:text-[#c77f56]"
                   >
                     <Heart className="w-4 h-4" />
                     Wishlist
