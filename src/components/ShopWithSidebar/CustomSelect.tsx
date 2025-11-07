@@ -1,13 +1,34 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const CustomSelect = ({ options }) => {
+interface Option {
+  label: string;
+  value: string;
+}
+
+interface CustomSelectProps {
+  options: Option[];
+  value?: string;
+  onChange?: (value: string) => void;
+}
+
+const CustomSelect: React.FC<CustomSelectProps> = ({
+  options,
+  value,
+  onChange,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(options[0]);
-  const selectRef = useRef(null);
+  const selectRef = useRef<HTMLDivElement>(null);
+
+  // Find the selected option based on the value prop
+  const selectedOption =
+    options.find((opt) => opt.value === value) || options[0];
 
   // Function to close the dropdown when a click occurs outside the component
-  const handleClickOutside = (event) => {
-    if (selectRef.current && !selectRef.current.contains(event.target)) {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      selectRef.current &&
+      !selectRef.current.contains(event.target as Node)
+    ) {
       setIsOpen(false);
     }
   };
@@ -26,9 +47,12 @@ const CustomSelect = ({ options }) => {
     setIsOpen(!isOpen);
   };
 
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
-    toggleDropdown();
+  const handleOptionClick = (option: Option) => {
+    // Call the onChange callback if provided
+    if (onChange) {
+      onChange(option.value);
+    }
+    setIsOpen(false);
   };
 
   return (
@@ -45,12 +69,12 @@ const CustomSelect = ({ options }) => {
         {selectedOption.label}
       </div>
       <div className={`select-items ${isOpen ? "" : "select-hide"}`}>
-        {options.slice(1).map((option, index) => (
+        {options.map((option, index) => (
           <div
             key={index}
             onClick={() => handleOptionClick(option)}
             className={`select-item ${
-              selectedOption === option ? "same-as-selected" : ""
+              selectedOption.value === option.value ? "same-as-selected" : ""
             }`}
           >
             {option.label}

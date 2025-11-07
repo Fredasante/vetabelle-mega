@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Product } from "@/types/product";
 import { useModalContext } from "@/app/context/QuickViewModalContext";
 import { updateQuickView } from "@/redux/features/quickView-slice";
@@ -10,13 +10,19 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import Link from "next/link";
 import Image from "next/image";
-import { Eye, Heart } from "lucide-react";
+import { Eye, Heart, Minus, Plus } from "lucide-react";
 import StarRating from "../Common/StarRating";
 import { toast } from "sonner";
+import { updateProductDetails } from "@/redux/features/product-details";
 
 const SingleGridItem = ({ item }: { item: Product }) => {
   const { openModal } = useModalContext();
   const dispatch = useDispatch<AppDispatch>();
+
+  const [quantity, setQuantity] = useState(1);
+
+  const handleIncrease = () => setQuantity((prev) => prev + 1);
+  const handleDecrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
   // 🟢 Update QuickView
   const handleQuickViewUpdate = () => {
@@ -25,76 +31,113 @@ const SingleGridItem = ({ item }: { item: Product }) => {
 
   // 🛒 Add to Cart
   const handleAddToCart = () => {
-    const selectedSize = item.sizes?.[0] || null;
-    const selectedColor = item.colors?.[0] || null;
-
     dispatch(
       addItemToCart({
-        ...item,
-        quantity: 1,
-        size: selectedSize,
-        color: selectedColor,
+        _id: item._id,
+        title: item.title,
+        price: item.price,
+        discountPrice: item.discountPrice,
+        quantity,
+        image: item.image,
       })
     );
-    toast.success("Added to cart!");
+    toast.success(`${quantity} ${item.title} added to cart!`);
+    setQuantity(1); // Reset quantity after adding to cart
   };
 
   // 💖 Add to Wishlist
   const handleItemToWishList = () => {
     dispatch(
       addItemToWishlist({
-        ...item,
-        status: "available",
+        _id: item._id,
+        name: item.title,
+        price: item.price,
+        discountPrice: item.discountPrice,
+        mainImageUrl: item.image,
+        status: item.status,
         quantity: 1,
       })
     );
     toast.success("Added to wishlist!");
   };
 
+  const handleProductDetails = () => {
+    dispatch(updateProductDetails({ ...item }));
+  };
+
   return (
     <div className="group">
-      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg bg-white shadow-1 mb-4 flex items-center justify-center">
+      {/* Image */}
+      <div className="relative w-full aspect-square md:aspect-[4/3] overflow-hidden rounded-lg bg-white shadow-1 mb-4 flex items-center justify-center">
         <Image
-          src={item.mainImageUrl || "/images/placeholder.png"}
-          alt={item.name || "Product image"}
+          src={item.image || "/images/placeholder.png"}
+          alt={item.title || "Product image"}
           fill
-          className="object-contain object-center p-3"
+          className="object-contain object-center p-2 md:p-3"
         />
       </div>
 
       <StarRating />
 
-      {/* Product title */}
-      <h3 className="font-medium text-center text-dark ease-out duration-200 hover:text-blue mb-1.5 line-clamp-1">
-        <Link href={`/shop/${item.slug?.current || item.slug}`}>
-          {item.name}
+      {/* Title */}
+      <h3
+        className="font-semibold text-dark text-center ease-out duration-200 hover:text-[#c77f56] mb-1.5"
+        onClick={handleProductDetails}
+      >
+        <Link href={`/shop/${item.slug.current}`} className="line-clamp-1">
+          {item.title}
         </Link>
       </h3>
 
       {/* Price */}
       <span className="flex items-center justify-center gap-2 font-medium">
-        <span className="text-dark">₵{item.discountPrice ?? item.price}</span>
-        {item.discountPrice && (
-          <span className="text-dark-4 line-through">₵{item.price}</span>
+        {item.discountPrice && item.discountPrice > 0 ? (
+          <>
+            <span className="text-dark">₵{item.discountPrice}</span>
+            <span className="text-dark-4 line-through">₵{item.price}</span>
+          </>
+        ) : (
+          <span className="text-dark">₵{item.price}</span>
         )}
       </span>
 
-      {/* Hover buttons */}
-      <div className="w-full flex items-center justify-center gap-2.5 pt-3 pb-2 ease-linear duration-200 group-hover:translate-y-0">
+      {/* Quantity Controls */}
+      <div className="flex items-center justify-center gap-3 py-3">
+        <button
+          onClick={handleDecrease}
+          className="p-1 rounded bg-gray-100 hover:bg-gray-200 transition-colors"
+          aria-label="Decrease quantity"
+        >
+          <Minus size={14} />
+        </button>
+        <span className="text-sm font-medium min-w-[20px] text-center">
+          {quantity}
+        </span>
+        <button
+          onClick={handleIncrease}
+          className="p-1 rounded bg-gray-100 hover:bg-gray-200 transition-colors"
+          aria-label="Increase quantity"
+        >
+          <Plus size={14} />
+        </button>
+      </div>
+
+      {/* Buttons */}
+      <div className="w-full flex items-center justify-center gap-2.5 pt-3 pb-2">
         <button
           onClick={() => {
             openModal();
             handleQuickViewUpdate();
           }}
           aria-label="Quick view product"
-          className="flex items-center justify-center w-9 h-9 rounded-[5px] shadow-1 ease-out duration-200 text-dark bg-white hover:text-blue"
+          className="flex items-center justify-center w-9 h-9 rounded-[5px] shadow-1 ease-out duration-200 text-dark bg-white hover:text-[#c77f56] flex-shrink-0"
         >
           <Eye className="w-4 h-4" />
         </button>
 
         <button
           onClick={handleAddToCart}
-          className="inline-flex font-medium text-custom-sm py-[4px] md:py-[7px] px-1.5 md:px-5 rounded-[5px] bg-blue text-white ease-out duration-200 hover:bg-blue-dark"
+          className="flex items-center justify-center bg-[#c77f56] font-medium text-custom-sm py-[4px] md:py-[7px] px-1.5 md:px-5 rounded-[5px] text-white ease-out duration-200 hover:bg-opacity-90"
         >
           Add to cart
         </button>
@@ -102,7 +145,7 @@ const SingleGridItem = ({ item }: { item: Product }) => {
         <button
           onClick={handleItemToWishList}
           aria-label="Add to wishlist"
-          className="flex items-center justify-center w-9 h-9 rounded-[5px] shadow-1 ease-out duration-200 text-dark bg-white hover:text-blue"
+          className="flex items-center justify-center w-9 h-9 rounded-[5px] shadow-1 ease-out duration-200 text-dark bg-white hover:text-[#c77f56] flex-shrink-0"
         >
           <Heart className="w-4 h-4" />
         </button>
