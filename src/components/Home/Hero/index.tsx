@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <section className="overflow-hidden pb-10 lg:pb-12.5 xl:pb-15 pt-37 sm:pt-40 lg:pt-30 xl:pt-46 bg-[#e5eaf4]">
+    <section className="overflow-hidden pb-10 lg:pb-12.5 xl:pb-12 pt-37 sm:pt-40 lg:pt-30 xl:pt-46 bg-[#e5eaf4]">
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
         <div className="flex flex-wrap gap-5">
           {/* Left Video Section */}
@@ -77,7 +77,7 @@ const Hero = () => {
                 <div className="relative z-10 bg-white/20 backdrop-blur-sm w-fit rounded-md">
                   <Link
                     href="/about"
-                    className="cursor-pointer bg-[#c77f56] text-white px-3 py-1 rounded-md font-medium transition-all duration-200 hover:bg-[#b96e48]"
+                    className="cursor-pointer text-sm bg-[#c77f56] text-white px-3 py-1.5 rounded-md font-medium transition-all duration-200 hover:bg-[#b96e48]"
                   >
                     Learn More
                   </Link>
@@ -108,7 +108,7 @@ const Hero = () => {
                 </div>
                 <Link
                   href="/shop"
-                  className="w-fit cursor-pointer bg-white text-[#c77f56] px-3 py-1 rounded-md font-medium transition-all duration-200 hover:bg-[#f9f9f9]"
+                  className="w-fit cursor-pointer text-sm bg-white text-[#c77f56] px-3 py-1.5 rounded-md font-medium transition-all duration-200 hover:bg-[#f9f9f9]"
                 >
                   Explore All Products
                 </Link>
@@ -117,9 +117,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-
-      {/* Hero Features */}
-      <HeroFeature />
     </section>
   );
 };
