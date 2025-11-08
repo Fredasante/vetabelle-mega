@@ -66,7 +66,7 @@ export default function NewArrival() {
             <ClipLoader size={30} color="#c77f56" />
           </div>
         ) : (
-          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 md:gap-x-7.5 gap-y-9">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 md:gap-x-7.5 gap-y-9">
             {products.length > 0 ? (
               products.map((item: any) => (
                 <ProductItem key={item._id} item={item} />

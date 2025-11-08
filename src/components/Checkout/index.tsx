@@ -145,33 +145,6 @@ const Checkout = () => {
               throw new Error("Failed to create order");
             }
 
-            const result = await response.json();
-
-            // Update all products in cart to "out-of-stock" status
-            const updatePromises = cartItems.map((item) =>
-              fetch("/api/products/update-status", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  productId: item._id,
-                  status: "out-of-stock",
-                }),
-              })
-            );
-
-            // Wait for all product updates to complete
-            const updateResults = await Promise.allSettled(updatePromises);
-
-            // Log any failures (optional)
-            updateResults.forEach((result, index) => {
-              if (result.status === "rejected") {
-                console.error(
-                  `Failed to update product ${cartItems[index]._id}:`,
-                  result.reason
-                );
-              }
-            });
-
             // Clear the cart
             dispatch(removeAllItemsFromCart());
 
