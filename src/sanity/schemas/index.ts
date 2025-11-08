@@ -1,4 +1,4 @@
-import {order} from './order'
-import {product} from './product'
+import order from "./order";
+import product from "./product";
 
-export const schemas = [product, order]
+export const schemas = [product, order];
