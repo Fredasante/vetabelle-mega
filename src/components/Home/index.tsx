@@ -1,14 +1,14 @@
 import React from "react";
 import NewArrival from "./NewArrivals";
-import PromoBanner from "./PromoBanner";
 import Hero from "./Hero";
+import AboutUsSection from "./AboutUsSection";
 
 const Home = () => {
   return (
     <main>
       <Hero />
       <NewArrival />
-      <PromoBanner />
+      <AboutUsSection />
     </main>
   );
 };

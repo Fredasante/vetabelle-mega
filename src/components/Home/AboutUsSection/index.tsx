@@ -1,10 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 
-export default function DiscountBanner() {
+export default function AboutUsSection() {
   return (
     <div className="overflow-hidden pb-5 lg:pb-8 pt-10 bg-[#f4f0f7]">
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
@@ -23,8 +22,9 @@ export default function DiscountBanner() {
                   </p>
                   <p>
                     At Vetabelle, we believe that true beauty comes from a
-                    healthy body, mind, and spirit. That's why we offer a range
-                    of products designed to support your overall well-being.
+                    healthy body, mind, and spirit. That&apos;s why we offer a
+                    range of products designed to support your overall
+                    well-being.
                   </p>
                 </div>
               </div>
