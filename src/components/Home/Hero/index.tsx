@@ -17,12 +17,17 @@ const Hero = () => {
                 loop
                 muted
                 playsInline
+                webkit-playsinline="true"
                 preload="auto"
-                className="w-full h-full object-cover"
-                dangerouslySetInnerHTML={{
-                  __html: `<source src="/vetabelle-video.mp4" type="video/mp4" />`,
+                onLoadedMetadata={(e) => {
+                  const video = e.target as HTMLVideoElement;
+                  video.play().catch(() => {});
                 }}
-              />
+                className="w-full h-full object-cover"
+              >
+                <source src="/vetabelle-video.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
 
               {/* Overlay Text */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-8">
