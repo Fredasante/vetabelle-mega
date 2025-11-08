@@ -35,21 +35,21 @@
 /* third-party libraries CSS */
 
 /* clears the ‘X’ from Internet Explorer */
-input[type='search']::-ms-clear {
+input[type="search"]::-ms-clear {
   display: none;
   width: 0;
   height: 0;
 }
-input[type='search']::-ms-reveal {
+input[type="search"]::-ms-reveal {
   display: none;
   width: 0;
   height: 0;
 }
 /* clears the ‘X’ from Chrome */
-input[type='search']::-webkit-search-decoration,
-input[type='search']::-webkit-search-cancel-button,
-input[type='search']::-webkit-search-results-button,
-input[type='search']::-webkit-search-results-decoration {
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
   display: none;
 }
 .custom-search {
@@ -107,7 +107,7 @@ input[type='search']::-webkit-search-results-decoration {
 }
 
 .custom-select-common .select-selected {
-  @apply bg-gray-1 rounded-md !border-r text-dark-4 py-3 pl-5 pr-9 duration-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20;
+  @apply bg-gray-1 rounded-md !border-r text-dark-4 py-3 pl-5 pr-9 duration-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-teal/20;
 }
 .custom-select-common .select-selected:after {
   content: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2.41469 5.03569L2.41467 5.03571L2.41749 5.03846L7.76749 10.2635L8.0015 10.492L8.23442 10.2623L13.5844 4.98735L13.5844 4.98735L13.5861 4.98569C13.6809 4.89086 13.8199 4.89087 13.9147 4.98569C14.0092 5.08024 14.0095 5.21864 13.9155 5.31345C13.9152 5.31373 13.915 5.31401 13.9147 5.31429L8.16676 10.9622L8.16676 10.9622L8.16469 10.9643C8.06838 11.0606 8.02352 11.0667 8.00039 11.0667C7.94147 11.0667 7.89042 11.0522 7.82064 10.9991L2.08526 5.36345C1.99127 5.26865 1.99154 5.13024 2.08609 5.03569C2.18092 4.94086 2.31986 4.94086 2.41469 5.03569Z' fill='%238D93A5' stroke='%238D93A5' stroke-width='0.666667'/%3E%3C/svg%3E%0A");
@@ -117,13 +117,12 @@ input[type='search']::-webkit-search-results-decoration {
   @apply -mt-0.5;
 }
 
-
 .hero-carousel .swiper-pagination-bullet {
   @apply h-1 w-4 rounded-[11px] bg-[#DDD];
 }
 
 .hero-carousel .swiper-pagination-bullet-active {
-  @apply w-5.5 bg-blue;
+  @apply w-5.5 bg-teal;
 }
 
 .hero-carousel .swiper-pagination {
@@ -137,7 +136,7 @@ input[type='search']::-webkit-search-results-decoration {
 
 .common-carousel .swiper-button-next,
 .common-carousel .swiper-button-prev {
-  @apply !static h-9 w-9 rounded-lg bg-white text-dark border border-gray-3 m-0 ease-out duration-200 hover:bg-blue hover:text-white hover:border-blue;
+  @apply !static h-9 w-9 rounded-lg bg-white text-dark border border-gray-3 m-0 ease-out duration-200 hover:bg-teal hover:text-white hover:border-teal;
 }
 
 .common-carousel .swiper-button-next svg,
@@ -160,10 +159,10 @@ input[type='search']::-webkit-search-results-decoration {
   @apply h-1 rounded-full bg-gray-3;
 }
 .priceSlide .noUi-connect {
-  @apply h-1 rounded-full bg-blue;
+  @apply h-1 rounded-full bg-teal;
 }
 .priceSlide .noUi-horizontal .noUi-handle {
-  @apply -top-3 h-7 w-7 rounded-full border border-gray-4 bg-white shadow-range before:block before:absolute before:left-1/2 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:w-4 before:h-4 before:rounded-full before:bg-blue;
+  @apply -top-3 h-7 w-7 rounded-full border border-gray-4 bg-white shadow-range before:block before:absolute before:left-1/2 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:w-4 before:h-4 before:rounded-full before:bg-teal;
 }
 .priceSlide .noUi-tooltip {
   @apply border-none p-0 bg-transparent text-custom-sm text-dark-4;
@@ -173,17 +172,16 @@ input[type='search']::-webkit-search-results-decoration {
   @apply hidden;
 }
 
-
 .range-slider {
- @apply w-full !h-[4px] rounded-md bg-blue relative mb-3;
+  @apply w-full !h-[4px] rounded-md bg-teal relative mb-3;
 }
 
 .slider .thumb {
-  @apply w-6 h-6 bg-blue-dark rounded-full absolute -top-2 border-[5px] border-blue-light-4;
+  @apply w-6 h-6 bg-teal-dark rounded-full absolute -top-2 border-[5px] border-emerald-400;
 }
 
 .range-slider__thumb {
-  @apply !bg-white border-[1px] border-blue-light-4 flex justify-center items-center !w-7 !h-7;
+  @apply !bg-white border-[1px] border-emerald-400 flex justify-center items-center !w-7 !h-7;
 }
 
 .range-slider__thumb::after {
@@ -193,9 +191,9 @@ input[type='search']::-webkit-search-results-decoration {
   display: block;
   border-radius: 100%;
   position: absolute;
-  @apply bg-blue;
+  @apply bg-teal;
 }
 
 .range-slider__range {
-  @apply !bg-blue;
+  @apply !bg-teal;
 }

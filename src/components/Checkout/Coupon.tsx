@@ -71,7 +71,7 @@ const Coupon = ({ onApplyCoupon }: CouponProps) => {
               }
             }}
             placeholder="Enter coupon code"
-            className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full py-2.5 px-5 outline-none duration-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full py-2.5 px-5 outline-none duration-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-teal/20 disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={isApplied || isLoading}
           />
 
@@ -80,7 +80,7 @@ const Coupon = ({ onApplyCoupon }: CouponProps) => {
               type="button"
               onClick={handleApplyCoupon}
               disabled={isLoading}
-              className="inline-flex font-medium text-white bg-blue py-3 px-6 rounded-md ease-out duration-200 hover:bg-blue-dark disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+              className="inline-flex font-medium text-white bg-teal py-3 px-6 rounded-md ease-out duration-200 hover:bg-teal-dark disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
             >
               {isLoading ? "Applying..." : "Apply"}
             </button>

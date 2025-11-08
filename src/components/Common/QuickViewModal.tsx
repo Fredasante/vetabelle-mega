@@ -47,12 +47,14 @@ const QuickViewModal = () => {
     dispatch(
       addItemToWishlist({
         _id: product._id,
-        name: product.title,
+        title: product.title,
         price: product.price,
         discountPrice: product.discountPrice,
-        mainImageUrl: product.image,
-        quantity: 1,
+        image: product.image,
         status: product.status,
+        description: product.description,
+        slug: product.slug,
+        createdAt: product.createdAt,
       })
     );
     toast.success("Added to wishlist!");
@@ -189,7 +191,7 @@ const QuickViewModal = () => {
 
                 <button
                   onClick={handleAddToWishlist}
-                  className="inline-flex items-center gap-2 font-medium text-white bg-dark py-2.5 px-4.5 sm:py-3 sm:px-6 text-sm sm:text-base rounded-md hover:bg-opacity-95 transition-colors"
+                  className="inline-flex items-center gap-2 font-medium text-white bg-teal py-2.5 px-4.5 sm:py-3 sm:px-6 text-sm sm:text-base rounded-md hover:bg-opacity-90 transition-colors"
                 >
                   Add to Wishlist
                 </button>

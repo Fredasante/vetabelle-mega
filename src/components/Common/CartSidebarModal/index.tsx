@@ -194,7 +194,7 @@ const CartSidebarModal = () => {
                 <Link
                   onClick={closeCartModal}
                   href="/checkout"
-                  className="w-full flex justify-center font-medium text-white bg-dark py-[13px] px-6 rounded-md ease-out duration-200 hover:bg-opacity-95"
+                  className="w-full flex justify-center font-medium text-white bg-teal py-[13px] px-6 rounded-md ease-out duration-200 hover:bg-opacity-90"
                 >
                   Checkout
                 </Link>

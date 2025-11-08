@@ -2,11 +2,10 @@ import MyAccount from "@/components/MyAccount";
 import React from "react";
 
 import { Metadata } from "next";
-
 export const metadata: Metadata = {
-  title: "My Account | Bend the Trendd",
+  title: "My Account | Vetabelle",
   description:
-    "Access and manage your Bend the Trendd account. Track orders, update your details, and view your purchase history all in one place.",
+    "Access and manage your Vetabelle account. Track your wellness orders, update personal details, and view your supplement purchase history with ease.",
 };
 
 const MyAccountPage = () => {

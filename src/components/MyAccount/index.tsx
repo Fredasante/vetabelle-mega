@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Breadcrumb from "../Common/Breadcrumb";
 import Image from "next/image";
 import Orders from "../Orders";
 import { useUser, useClerk } from "@clerk/nextjs";
@@ -40,6 +39,13 @@ const MyAccount = () => {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [orders, setOrders] = useState<Order[]>([]);
   const [loadingOrders, setLoadingOrders] = useState(true);
+
+  // Redirect if not authenticated
+  useEffect(() => {
+    if (isLoaded && !user) {
+      router.push("/signin");
+    }
+  }, [isLoaded, user, router]);
 
   useEffect(() => {
     if (!user) return;
@@ -96,7 +102,8 @@ const MyAccount = () => {
   // Get recent orders (last 3)
   const recentOrders = orders.slice(0, 3);
 
-  if (!isLoaded) {
+  // Show loading while auth is loading OR while redirecting
+  if (!isLoaded || !user) {
     return (
       <>
         <section className="overflow-hidden py-20 bg-gray-2 mt-45 mb-5 md:mt-50 md:mb-10 lg:mb-15">
@@ -108,11 +115,6 @@ const MyAccount = () => {
         </section>
       </>
     );
-  }
-
-  if (!user) {
-    router.push("/signin");
-    return null;
   }
 
   return (
@@ -161,7 +163,7 @@ const MyAccount = () => {
                       onClick={() => setActiveTab("dashboard")}
                       className={`w-full flex items-center gap-3 rounded-lg py-3 px-4 text-sm font-medium transition-all duration-200 ${
                         activeTab === "dashboard"
-                          ? "text-white bg-blue shadow-sm"
+                          ? "text-white bg-teal shadow-sm"
                           : "text-gray-700 bg-gray-1 hover:bg-gray-2 hover:text-dark"
                       }`}
                     >
@@ -173,7 +175,7 @@ const MyAccount = () => {
                       onClick={() => setActiveTab("orders")}
                       className={`w-full flex items-center gap-3 rounded-lg py-3 px-4 text-sm font-medium transition-all duration-200 ${
                         activeTab === "orders"
-                          ? "text-white bg-blue shadow-sm"
+                          ? "text-white bg-teal shadow-sm"
                           : "text-gray-700 bg-gray-1 hover:bg-gray-2 hover:text-dark"
                       }`}
                     >
@@ -184,7 +186,7 @@ const MyAccount = () => {
                     <button
                       onClick={handleLogout}
                       disabled={isLoggingOut}
-                      className="w-full flex items-center justify-center gap-3 rounded-lg py-3 px-4 text-sm font-medium text-gray-700 bg-gray-1 hover:bg-red hover:text-white transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full flex items-center justify-center gap-3 rounded-lg py-3 px-4 text-sm font-medium text-gray-700 bg-gray-1 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {isLoggingOut ? (
                         <ClipLoader size={18} color="#ffffff" />
@@ -228,7 +230,7 @@ const MyAccount = () => {
                         </h3>
                         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                           {/* Total Orders */}
-                          <div className="p-4 sm:p-5 bg-blue-light-6 rounded-lg border border-blue-light-3">
+                          <div className="p-4 sm:p-5 bg-blue-light-6 rounded-lg border border-gray-2 shadow-md">
                             <div className="flex flex-col gap-2">
                               <div className="w-10 h-10 bg-blue rounded-lg flex items-center justify-center">
                                 <Package className="w-5 h-5 text-white" />
@@ -245,7 +247,7 @@ const MyAccount = () => {
                           </div>
 
                           {/* Completed */}
-                          <div className="p-4 sm:p-5 bg-green-light-6 rounded-lg border border-green-light-3">
+                          <div className="p-4 sm:p-5 bg-green-light-6 rounded-lg border border-gray-2 shadow-md">
                             <div className="flex flex-col gap-2">
                               <div className="w-10 h-10 bg-green rounded-lg flex items-center justify-center">
                                 <CheckCircle className="w-5 h-5 text-white" />
@@ -262,7 +264,7 @@ const MyAccount = () => {
                           </div>
 
                           {/* In Progress */}
-                          <div className="p-4 sm:p-5 bg-yellow-light-4 rounded-lg border border-yellow-light-2">
+                          <div className="p-4 sm:p-5 bg-yellow-light-4 rounded-lg border border-gray-2 shadow-md">
                             <div className="flex flex-col gap-2">
                               <div className="w-10 h-10 bg-yellow rounded-lg flex items-center justify-center">
                                 <Clock className="w-5 h-5 text-white" />
@@ -279,14 +281,14 @@ const MyAccount = () => {
                           </div>
 
                           {/* Total Spent */}
-                          <div className="p-4 sm:p-5 bg-purple-light-6 rounded-lg border border-purple-light-3">
+                          <div className="p-4 sm:p-5 bg-purple-light-6 rounded-lg border border-gray-2 shadow-md">
                             <div className="flex flex-col gap-2">
                               <div className="w-10 h-10 bg-purple rounded-lg flex items-center justify-center">
                                 <TrendingUp className="w-5 h-5 text-white" />
                               </div>
                               <div>
                                 <p className="text-xl sm:text-2xl font-bold text-purple truncate">
-                                  GH₵{totalSpent.toFixed(0)}
+                                  ₵{totalSpent.toFixed(0)}
                                 </p>
                                 <p className="text-xs sm:text-sm text-gray-600 mt-1">
                                   Total Spent
@@ -333,7 +335,7 @@ const MyAccount = () => {
                                   </div>
                                   <div className="text-right flex-shrink-0">
                                     <p className="text-sm font-semibold text-dark">
-                                      GH₵{order.pricing.total.toFixed(2)}
+                                      ₵{order.pricing.total.toFixed(2)}
                                     </p>
                                     <p className="text-xs text-gray-600 capitalize">
                                       {order.deliveryStatus.replace(/_/g, " ")}
@@ -353,14 +355,14 @@ const MyAccount = () => {
                           <div className="flex flex-col sm:flex-row gap-3">
                             <button
                               onClick={() => setActiveTab("orders")}
-                              className="flex items-center justify-center gap-2 font-medium text-white bg-blue py-3 px-6 rounded-lg transition-all duration-200 hover:bg-blue-dark text-sm sm:text-base"
+                              className="flex items-center justify-center gap-2 font-medium text-white bg-teal py-3 px-6 rounded-lg transition-all duration-200 hover:bg-teal-dark text-sm sm:text-base"
                             >
                               <ShoppingBag className="w-4 h-4" />
                               <span>View All Orders</span>
                             </button>
                             <button
                               onClick={() => router.push("/shop")}
-                              className="flex items-center justify-center gap-2 font-medium text-blue bg-blue-light-6 py-3 px-6 rounded-lg transition-all duration-200 hover:bg-blue-light-5 border border-blue-light-3 text-sm sm:text-base"
+                              className="flex items-center justify-center gap-2 font-medium text-teal bg-blue-light-6 py-3 px-6 rounded-lg transition-all duration-200 hover:bg-green-light-6 border border-blue-light-3 text-sm sm:text-base"
                             >
                               <Package className="w-4 h-4" />
                               <span>Continue Shopping</span>

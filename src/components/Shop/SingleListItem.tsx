@@ -48,17 +48,18 @@ const SingleListItem = ({ item }: { item: Product }) => {
     dispatch(
       addItemToWishlist({
         _id: item._id,
-        name: item.title,
+        title: item.title,
         price: item.price,
         discountPrice: item.discountPrice,
-        mainImageUrl: item.image,
+        image: item.image,
+        slug: item.slug,
         status: item.status,
-        quantity: 1,
+        description: item.description,
+        createdAt: item.createdAt,
       })
     );
     toast.success("Added to wishlist!");
   };
-
   const handleProductDetails = () => {
     dispatch(updateProductDetails({ ...item }));
   };
@@ -83,14 +84,14 @@ const SingleListItem = ({ item }: { item: Product }) => {
                 handleQuickViewUpdate();
               }}
               aria-label="Quick view"
-              className="flex items-center justify-center w-9 h-9 rounded-[5px] shadow-1 ease-out duration-200 text-dark bg-white hover:text-blue"
+              className="flex items-center justify-center w-9 h-9 rounded-[5px] shadow-1 ease-out duration-200 text-dark bg-white hover:text-teal"
             >
               <Eye className="w-4 h-4" />
             </button>
 
             <button
               onClick={handleAddToCart}
-              className="inline-flex font-medium text-custom-sm py-[7px] px-5 rounded-[5px] bg-blue text-white ease-out duration-200 hover:bg-opacity-90"
+              className="inline-flex font-medium text-custom-sm py-[7px] px-5 rounded-[5px] bg-teal text-white ease-out duration-200 hover:bg-opacity-90"
             >
               Add to cart
             </button>
@@ -98,7 +99,7 @@ const SingleListItem = ({ item }: { item: Product }) => {
             <button
               onClick={handleItemToWishList}
               aria-label="Add to wishlist"
-              className="flex items-center justify-center w-9 h-9 rounded-[5px] shadow-1 ease-out duration-200 text-dark bg-white hover:text-blue"
+              className="flex items-center justify-center w-9 h-9 rounded-[5px] shadow-1 ease-out duration-200 text-dark bg-white hover:text-teal"
             >
               <Heart className="w-4 h-4" />
             </button>
@@ -108,8 +109,6 @@ const SingleListItem = ({ item }: { item: Product }) => {
         {/* Content Section */}
         <div className="w-full flex flex-col gap-5 sm:flex-row sm:items-center justify-between py-5 px-4 sm:px-7.5 lg:pl-11 lg:pr-12">
           <div className="flex-1">
-            <StarRating />
-
             <h3
               className="font-semibold text-dark ease-out duration-200 hover:text-[#c77f56] mb-1.5 line-clamp-2"
               onClick={handleProductDetails}

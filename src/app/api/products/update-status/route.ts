@@ -17,16 +17,20 @@ export async function POST(request: NextRequest) {
     // Validation
     if (!productId || !status) {
       return NextResponse.json(
-        { success: false, message: "Missing productId or status" },
+        {
+          success: false,
+          message: "Product ID and status are required",
+        },
         { status: 400 }
       );
     }
 
-    if (status !== "available" && status !== "sold") {
+    // Validate status value
+    if (!["in-stock", "out-of-stock"].includes(status)) {
       return NextResponse.json(
         {
           success: false,
-          message: "Invalid status. Must be 'available' or 'sold'",
+          message: "Invalid status. Must be 'in-stock' or 'out-of-stock'",
         },
         { status: 400 }
       );
@@ -35,7 +39,7 @@ export async function POST(request: NextRequest) {
     // Update product status in Sanity
     const updatedProduct = await client
       .patch(productId)
-      .set({ status })
+      .set({ status: status })
       .commit();
 
     return NextResponse.json({
@@ -44,7 +48,7 @@ export async function POST(request: NextRequest) {
       status: updatedProduct.status,
     });
   } catch (error) {
-    console.error("Error updating product status:", error);
+    console.error("Product status update error:", error);
     return NextResponse.json(
       {
         success: false,

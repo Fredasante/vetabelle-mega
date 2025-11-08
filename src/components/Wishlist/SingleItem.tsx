@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
@@ -10,6 +10,7 @@ import { addItemToCart } from "@/redux/features/cart-slice";
 
 import Image from "next/image";
 import { CheckCircle, CircleX, XCircle } from "lucide-react";
+import Link from "next/link";
 
 type Props = {
   item: WishListItem;
@@ -31,6 +32,9 @@ const SingleItem = ({ item }: Props) => {
     );
   };
 
+  const isInStock = item.status === "in-stock";
+  const displayPrice = item.discountPrice ?? item.price;
+
   return (
     <div className="flex items-center border-t border-gray-3 py-5 px-10">
       <div className="min-w-[83px]">
@@ -48,15 +52,17 @@ const SingleItem = ({ item }: Props) => {
           <div className="w-full flex items-center gap-5.5">
             <div className="relative flex items-center justify-center rounded-[8px] bg-gray-2 max-w-[80px] w-full h-20 overflow-hidden p-1.5">
               <Image
-                src={item.mainImageUrl}
-                alt={item.name}
+                src={item.image}
+                alt={item.title}
                 fill
                 className="object-contain rounded-[5px] p-2"
               />
             </div>
             <div>
               <h3 className="text-dark ease-out duration-200 hover:text-blue line-clamp-1">
-                <a href="#"> {item.name} </a>
+                <Link href={`/products/${item.slug?.current}`}>
+                  {item.title}
+                </Link>
               </h3>
             </div>
           </div>
@@ -64,19 +70,19 @@ const SingleItem = ({ item }: Props) => {
       </div>
 
       <div className="min-w-[205px]">
-        <p className="text-dark">₵{item.discountPrice ?? item.price}</p>
+        <p className="text-dark">₵{displayPrice.toFixed(2)}</p>
       </div>
 
       <div className="min-w-[265px] flex items-center gap-1.5">
-        {item.status === "available" ? (
+        {isInStock ? (
           <>
             <CheckCircle className="text-green w-5 h-5" />
-            <span className="text-green">Available</span>
+            <span className="text-green">In Stock</span>
           </>
         ) : (
           <>
             <XCircle className="text-red w-5 h-5" />
-            <span className="text-red-dark">Sold</span>
+            <span className="text-red-dark">Out of Stock</span>
           </>
         )}
       </div>
@@ -84,9 +90,14 @@ const SingleItem = ({ item }: Props) => {
       <div className="min-w-[150px] flex justify-end">
         <button
           onClick={handleAddToCart}
-          className="inline-flex text-dark hover:text-white bg-gray-1 border border-gray-3 py-2.5 px-6 rounded-md ease-out duration-200 hover:bg-blue hover:border-gray-3"
+          disabled={!isInStock}
+          className={`inline-flex text-dark py-2.5 px-6 rounded-md ease-out duration-200 ${
+            isInStock
+              ? "hover:text-white bg-gray-1 border border-gray-3 hover:bg-[#c77f56] hover:border-gray-3"
+              : "bg-gray-2 border border-gray-3 cursor-not-allowed opacity-50"
+          }`}
         >
-          Add to Cart
+          {isInStock ? "Add to Cart" : "Unavailable"}
         </button>
       </div>
     </div>

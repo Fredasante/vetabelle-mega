@@ -46,12 +46,14 @@ const ProductItem = ({ item }: { item: Product }) => {
     dispatch(
       addItemToWishlist({
         _id: item._id,
-        name: item.title,
+        title: item.title,
         price: item.price,
         discountPrice: item.discountPrice,
-        mainImageUrl: item.image,
+        image: item.image,
+        slug: item.slug,
         status: item.status,
-        quantity: 1,
+        description: item.description,
+        createdAt: item.createdAt,
       })
     );
     toast.success("Added to wishlist!");
@@ -77,7 +79,7 @@ const ProductItem = ({ item }: { item: Product }) => {
 
       {/* Title */}
       <h3
-        className="font-semibold text-dark text-center ease-out duration-200 hover:text-blue mb-1.5"
+        className="font-semibold text-teal text-center ease-out duration-200 hover:text-teal mb-1.5"
         onClick={handleProductDetails}
       >
         <Link href={`/shop/${item.slug.current}`} className="line-clamp-1">

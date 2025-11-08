@@ -40,7 +40,7 @@ const OrderSummary = () => {
                 className="flex items-center justify-between py-5 border-b border-gray-3"
               >
                 <div>
-                  <p className="text-dark">{item.name}</p>
+                  <p className="text-dark">{item.title}</p>
                 </div>
                 <div>
                   <p className="text-dark text-right">
@@ -67,7 +67,7 @@ const OrderSummary = () => {
           <Link
             href="/checkout"
             type="button"
-            className="w-full flex justify-center font-medium text-white bg-blue py-3 px-6 rounded-md ease-out duration-200 hover:bg-blue-dark mt-7.5"
+            className="w-full flex justify-center font-medium text-white bg-teal py-3 px-6 rounded-md ease-out duration-200 hover:bg-teal-dark mt-7.5"
           >
             Proceed to Checkout
           </Link>

@@ -4,7 +4,7 @@ import ShopDetails from "@/components/ShopDetails";
 import { getProductBySlug } from "@/sanity/groq";
 import { client } from "@/sanity/client";
 
-// Generate static params for all products (for better performance)
+// Generate static params for all products
 export async function generateStaticParams() {
   const products = await client.fetch<{ slug: string }[]>(
     `*[_type == "product"]{ "slug": slug.current }`
@@ -26,12 +26,13 @@ export async function generateMetadata({
 
   if (!product) {
     return {
-      title: "Product Not Found",
+      title: "Product Not Found | Vetabelle",
     };
   }
 
-  // Handle description - extract plain text if it's block content
-  let description = "Shop this amazing product";
+  // Extract plain text from block content description
+  let description =
+    "Empower your natural beauty with Vetabelle's high-quality wellness supplements";
   if (product.description && Array.isArray(product.description)) {
     const textBlocks = product.description
       .filter((block: any) => block._type === "block")
@@ -44,13 +45,30 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${product.name} | Bend the Trendd`,
+    title: `${product.title} | Vetabelle - Beauty from Within`,
     description,
+    keywords: [
+      "wellness supplements",
+      "beauty supplements",
+      "hair growth",
+      "skin health",
+      "nail strength",
+      "women's health",
+      "natural beauty",
+      "Vetabelle",
+    ],
     openGraph: {
-      title: product.name,
+      title: `${product.title} | Vetabelle`,
       description,
-      images: product.mainImageUrl ? [product.mainImageUrl] : [],
+      images: product.image ? [product.image] : [],
       type: "website",
+      siteName: "Vetabelle",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${product.title} | Vetabelle`,
+      description,
+      images: product.image ? [product.image] : [],
     },
   };
 }

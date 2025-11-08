@@ -2,10 +2,11 @@ import React from "react";
 import Cart from "@/components/Cart";
 
 import { Metadata } from "next";
+
 export const metadata: Metadata = {
-  title: "Cart | Bend the Trendd",
+  title: "Cart | Vetabelle",
   description:
-    "View and manage the items in your shopping cart on Bend the Trendd.",
+    "Review and manage the wellness supplements in your Vetabelle cart before completing your purchase.",
 };
 
 const CartPage = () => {

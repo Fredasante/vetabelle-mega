@@ -17,7 +17,7 @@ const ShopWithoutSidebar = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage] = useState(12);
   const [totalCount, setTotalCount] = useState(0);
-  const [sortBy, setSortBy] = useState("latest"); // Track selected sort option
+  const [sortBy, setSortBy] = useState("latest");
   const productsTopRef = useRef<HTMLDivElement>(null);
 
   const options = [
@@ -33,7 +33,7 @@ const ShopWithoutSidebar = () => {
       const { products, totalCount } = await fetchPaginatedProducts({
         page: currentPage,
         perPage,
-        sortBy, // Pass sort option to fetch function
+        sortBy,
       });
       setProducts(products);
       setTotalCount(totalCount);
@@ -61,7 +61,7 @@ const ShopWithoutSidebar = () => {
 
   const handleSortChange = (value: string) => {
     setSortBy(value);
-    setCurrentPage(1); // Reset to first page when sorting changes
+    setCurrentPage(1);
     scrollToProducts();
   };
 
@@ -101,9 +101,9 @@ const ShopWithoutSidebar = () => {
                   aria-label="grid view"
                   className={`${
                     productStyle === "grid"
-                      ? "bg-blue border-blue text-white"
+                      ? "bg-teal border-teal text-white"
                       : "text-dark bg-gray-1 border-gray-3"
-                  } flex items-center justify-center w-10.5 h-9 rounded-[5px] border ease-out duration-200 hover:bg-blue hover:border-blue hover:text-white`}
+                  } flex items-center justify-center w-10.5 h-9 rounded-[5px] border ease-out duration-200 hover:bg-teal hover:border-teal hover:text-white`}
                 >
                   <TableCellsIcon width={20} height={20} />
                 </button>
@@ -113,9 +113,9 @@ const ShopWithoutSidebar = () => {
                   aria-label="list view"
                   className={`${
                     productStyle === "list"
-                      ? "bg-blue border-blue text-white"
+                      ? "bg-teal border-teal text-white"
                       : "text-dark bg-gray-1 border-gray-3"
-                  } flex items-center justify-center w-10.5 h-9 rounded-[5px] border ease-out duration-200 hover:bg-blue hover:border-blue hover:text-white`}
+                  } flex items-center justify-center w-10.5 h-9 rounded-[5px] border ease-out duration-200 hover:bg-teal hover:border-teal hover:text-white`}
                 >
                   <ListBulletIcon width={20} height={20} />
                 </button>

@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Breadcrumb from "../Common/Breadcrumb";
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import SingleItem from "./SingleItem";
 import { removeAllItemsFromWishlist } from "@/redux/features/wishlist-slice";
@@ -19,7 +18,7 @@ export const Wishlist = () => {
         <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
           <div className="flex flex-wrap items-center justify-between gap-5 mb-7.5">
             <h2 className="font-medium text-dark text-2xl">Your Wishlist</h2>
-            <button onClick={handleClearWishlist} className="text-blue">
+            <button onClick={handleClearWishlist} className="text-teal">
               Clear Wishlist Cart
             </button>
           </div>

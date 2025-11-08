@@ -4,24 +4,26 @@ import { Metadata } from "next";
 import LoadingFallback from "@/components/Common/LoadingFallback";
 
 export const metadata: Metadata = {
-  title: "Shop | Bend The Trendd",
+  title: "Shop | Vetabelle",
   description:
-    "Discover the latest fashion, sneakers, slippers, and gadgets at Bend The Trendd. Shop our exclusive collection of stylish products at great prices.",
+    "Shop premium beauty and wellness supplements from Vetabelle. Discover science-backed formulas with Collagen, Biotin, and Keratin to enhance your natural beauty from within.",
   keywords: [
-    "Bend The Trendd",
-    "Online Shop",
-    "Fashion",
-    "Sneakers",
-    "Clothing",
-    "Women's Fashion",
-    "Affordable Fashion Ghana",
+    "Vetabelle",
+    "Beauty Supplements",
+    "Collagen",
+    "Biotin",
+    "Keratin",
+    "Hair Skin Nails",
+    "Wellness Products",
+    "Women's Health",
+    "Beauty from Within",
   ],
   openGraph: {
-    title: "Shop | Bend The Trendd",
+    title: "Shop | Vetabelle",
     description:
-      "Explore trendy clothing, sneakers, slippers, and more — only at Bend The Trend.",
-    url: "https://bendthetrendd.com/shop",
-    siteName: "Bend The Trendd",
+      "Explore Vetabelle's premium range of beauty and wellness supplements formulated to support glowing skin, luscious hair, and strong nails. Beauty begins within.",
+    url: "https://vetabelle.com/shop",
+    siteName: "Vetabelle",
     type: "website",
   },
 };

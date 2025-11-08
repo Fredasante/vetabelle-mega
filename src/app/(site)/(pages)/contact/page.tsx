@@ -1,11 +1,10 @@
 import Contact from "@/components/Contact";
-
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact | Bend the Trendd",
+  title: "Contact Us | Vetabelle",
   description:
-    "Get in touch with Bend the Trendd for inquiries, orders, or support. We'd love to hear from you!",
+    "Reach out to Vetabelle for inquiries, appointments, or product information. We’re here to support your pet’s well-being and answer all your questions.",
 };
 
 const ContactPage = () => {

@@ -20,10 +20,10 @@ interface Order {
   };
   items: Array<{
     productSnapshot: {
-      name: string;
+      title: string;
       price: number;
       discountPrice?: number;
-      mainImageUrl?: string;
+      image?: string;
     };
     quantity: number;
     priceAtPurchase: number;
@@ -32,11 +32,13 @@ interface Order {
     subtotal: number;
     discount: number;
     total: number;
+    couponCode?: string | null;
   };
   payment: {
     method: string;
     status: string;
     amount: number;
+    paystackReference?: string;
   };
   deliveryStatus: string;
   createdAt: string;
@@ -87,7 +89,7 @@ const Orders = () => {
   if (!isLoaded || loading) {
     return (
       <div className="flex justify-center items-center min-h-[400px]">
-        <ClipLoader size={32} color="#000080" />
+        <ClipLoader size={32} color="#c77f56" />
       </div>
     );
   }
@@ -97,7 +99,7 @@ const Orders = () => {
       <div className="flex justify-center items-center min-h-[400px] px-4">
         <div className="max-w-md w-full bg-white shadow-lg rounded-xl p-8 text-center">
           <div className="w-16 h-16 bg-blue-light-6 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Package className="w-8 h-8 text-blue" />
+            <Package className="w-8 h-8 text-teal" />
           </div>
           <h3 className="text-xl font-semibold text-dark mb-3">
             Sign In Required
@@ -148,7 +150,7 @@ const Orders = () => {
           </p>
           <Link
             href="/shop"
-            className="inline-block font-medium text-white bg-blue py-3 px-8 rounded-lg ease-out duration-200 hover:bg-blue-dark"
+            className="inline-block font-medium text-white bg-[#c77f56] py-3 px-8 rounded-lg ease-out duration-200 hover:bg-opacity-90"
           >
             Start Shopping
           </Link>

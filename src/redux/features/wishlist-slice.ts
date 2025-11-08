@@ -1,13 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Product } from "@/lib/productUtils";
 
-export type WishListItem = {
-  _id: string;
-  name: string;
-  price: number;
-  discountPrice?: number;
+export type WishListItem = Product & {
   quantity?: number;
-  status?: string;
-  mainImageUrl?: string;
 };
 
 type InitialState = {
@@ -22,14 +17,14 @@ export const wishlist = createSlice({
   name: "wishlist",
   initialState,
   reducers: {
-    addItemToWishlist: (state, action: PayloadAction<WishListItem>) => {
+    addItemToWishlist: (state, action: PayloadAction<Product>) => {
       const { _id } = action.payload;
       const existingItem = state.items.find((item) => item._id === _id);
 
       if (!existingItem) {
         state.items.push({
           ...action.payload,
-          quantity: action.payload.quantity ?? 1,
+          quantity: 1,
         });
       }
     },

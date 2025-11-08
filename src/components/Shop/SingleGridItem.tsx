@@ -42,7 +42,7 @@ const SingleGridItem = ({ item }: { item: Product }) => {
       })
     );
     toast.success(`${quantity} ${item.title} added to cart!`);
-    setQuantity(1); // Reset quantity after adding to cart
+    setQuantity(1);
   };
 
   // 💖 Add to Wishlist
@@ -50,12 +50,14 @@ const SingleGridItem = ({ item }: { item: Product }) => {
     dispatch(
       addItemToWishlist({
         _id: item._id,
-        name: item.title,
+        title: item.title,
         price: item.price,
         discountPrice: item.discountPrice,
-        mainImageUrl: item.image,
+        image: item.image,
+        slug: item.slug,
         status: item.status,
-        quantity: 1,
+        description: item.description,
+        createdAt: item.createdAt,
       })
     );
     toast.success("Added to wishlist!");

@@ -34,24 +34,24 @@ export async function GET(
     // 3. Guest orders with matching phone
     const orders = await client.fetch(
       `*[_type == "order" && (
-        customerInfo.userId == $userId ||
-        customerInfo.email in $userEmails ||
-        customerInfo.phone == $userPhone
-      )] | order(createdAt desc) {
-        orderId,
-        customerInfo,
-        deliveryInfo,
-        items[] {
-          productSnapshot,
-          quantity,
-          priceAtPurchase
-        },
-        pricing,
-        payment,
-        deliveryStatus,
-        createdAt,
-        updatedAt
-      }`,
+    customerInfo.userId == $userId ||
+    customerInfo.email in $userEmails ||
+    customerInfo.phone == $userPhone
+  )] | order(createdAt desc) {
+    orderId,
+    customerInfo,
+    deliveryInfo,
+    items[] {
+      productSnapshot,
+      quantity,
+      priceAtPurchase
+    },
+    pricing,
+    payment,
+    deliveryStatus,
+    createdAt,
+    updatedAt
+  }`,
       { userId, userEmails, userPhone }
     );
 

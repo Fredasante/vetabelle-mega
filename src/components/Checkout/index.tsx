@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import Breadcrumb from "../Common/Breadcrumb";
 import Coupon from "./Coupon";
 import Billing from "./Billing";
 import { useAppSelector } from "@/redux/store";
@@ -68,12 +67,10 @@ const Checkout = () => {
           _key: generateKey(),
           product: { _ref: item._id, _type: "reference" },
           productSnapshot: {
-            name: item.name,
+            title: item.title,
             price: item.price,
             discountPrice: item.discountPrice,
-            mainImageUrl: item.mainImageUrl,
-            size: item.size || null,
-            color: item.color || null,
+            image: item.image,
           },
           quantity: item.quantity,
           priceAtPurchase: item.discountPrice ?? item.price,
@@ -113,7 +110,7 @@ const Checkout = () => {
           customerName: orderData.customerInfo.fullName,
           phone: orderData.customerInfo.phone,
           items: cartItems.map((item) => ({
-            name: item.name,
+            title: item.title,
             quantity: item.quantity,
             price: item.discountPrice ?? item.price,
           })),
@@ -150,14 +147,14 @@ const Checkout = () => {
 
             const result = await response.json();
 
-            // Update all products in cart to "sold" status
+            // Update all products in cart to "out-of-stock" status
             const updatePromises = cartItems.map((item) =>
               fetch("/api/products/update-status", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                   productId: item._id,
-                  status: "sold",
+                  status: "out-of-stock",
                 }),
               })
             );
@@ -211,7 +208,7 @@ const Checkout = () => {
         <section className="overflow-hidden py-20 bg-gray-2 mt-10">
           <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
             <div className="flex justify-center items-center min-h-[400px]">
-              <ClipLoader size={32} color="#000080" />
+              <ClipLoader size={32} color="#c77f56" />
             </div>
           </div>
         </section>
@@ -233,7 +230,7 @@ const Checkout = () => {
               </p>
               <Link
                 href="/shop"
-                className="inline-block font-medium text-white bg-blue py-3 px-8 rounded-md ease-out duration-200 hover:bg-blue-dark"
+                className="inline-block font-medium text-white bg-[#c77f56] py-3 px-8 rounded-md ease-out duration-200 hover:bg-opacity-90"
               >
                 Continue Shopping
               </Link>
@@ -263,13 +260,13 @@ const Checkout = () => {
                 <div className="flex flex-wrap gap-3">
                   <Link
                     href="/signin?redirect_url=/checkout"
-                    className="inline-flex items-center justify-center font-medium text-white bg-blue py-2.5 px-6 rounded-md ease-out duration-200 hover:bg-blue-dark whitespace-nowrap"
+                    className="inline-flex items-center justify-center font-medium text-white bg-teal py-2.5 px-6 rounded-md ease-out duration-200 hover:bg-opacity-90 whitespace-nowrap"
                   >
                     Sign In
                   </Link>
                   <Link
                     href="/signup?redirect_url=/checkout"
-                    className="inline-flex items-center justify-center font-medium text-blue bg-white border border-blue py-2.5 px-6 rounded-md ease-out duration-200 hover:bg-blue hover:text-white whitespace-nowrap"
+                    className="inline-flex items-center justify-center font-medium text-teal bg-white border border-teal py-2.5 px-6 rounded-md ease-out duration-200 hover:bg-teal-dark hover:text-white whitespace-nowrap"
                   >
                     Create Account
                   </Link>
@@ -318,11 +315,11 @@ const Checkout = () => {
                           className="flex items-start justify-between gap-4 py-4 border-b border-gray-3"
                         >
                           <div className="flex items-start gap-3 flex-1">
-                            {item.mainImageUrl && (
+                            {item.image && (
                               <div className="relative w-16 h-16 flex-shrink-0 rounded bg-gray-1">
                                 <Image
-                                  src={item.mainImageUrl}
-                                  alt={item.name}
+                                  src={item.image}
+                                  alt={item.title}
                                   fill
                                   className="object-contain p-1"
                                 />
@@ -330,15 +327,15 @@ const Checkout = () => {
                             )}
                             <div className="flex-1">
                               <p className="text-dark text-sm font-medium mb-1">
-                                {item.name}
+                                {item.title}
                               </p>
                               <p className="text-xs text-gray-600">
-                                Qty: {item.quantity} x GH₵{itemPrice.toFixed(2)}
+                                Qty: {item.quantity} x ₵{itemPrice.toFixed(2)}
                               </p>
                             </div>
                           </div>
                           <p className="text-dark font-medium">
-                            GH₵{itemTotal.toFixed(2)}
+                            ₵{itemTotal.toFixed(2)}
                           </p>
                         </div>
                       );
@@ -346,7 +343,7 @@ const Checkout = () => {
 
                     <div className="flex items-center justify-between py-4 border-b border-gray-3">
                       <p className="text-dark">Subtotal</p>
-                      <p className="text-dark">GH₵{itemsTotal.toFixed(2)}</p>
+                      <p className="text-dark">₵{itemsTotal.toFixed(2)}</p>
                     </div>
 
                     {discount > 0 && (
@@ -355,7 +352,7 @@ const Checkout = () => {
                           Discount {couponCode && `(${couponCode})`}
                         </p>
                         <p className="text-green-600">
-                          -GH₵{discount.toFixed(2)}
+                          -₵{discount.toFixed(2)}
                         </p>
                       </div>
                     )}
@@ -367,8 +364,8 @@ const Checkout = () => {
                           Payment for items only
                         </p>
                       </div>
-                      <p className="font-semibold text-lg text-blue">
-                        GH₵{total.toFixed(2)}
+                      <p className="font-semibold text-lg text-[#c77f56]">
+                        ₵{total.toFixed(2)}
                       </p>
                     </div>
 
@@ -386,7 +383,7 @@ const Checkout = () => {
                 <button
                   type="submit"
                   disabled={isProcessing}
-                  className="w-full flex justify-center items-center gap-2 font-medium text-white bg-blue py-3.5 px-6 rounded-md ease-out duration-200 hover:bg-blue-dark mt-7.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full flex justify-center items-center gap-2 font-medium text-white bg-[#c77f56] py-3.5 px-6 rounded-md ease-out duration-200 hover:bg-opacity-90 mt-7.5 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isProcessing ? (
                     <>
@@ -396,7 +393,7 @@ const Checkout = () => {
                   ) : (
                     <>
                       <CircleCheck className="w-4 h-4" />
-                      <span>Pay GH₵{total.toFixed(2)} Now</span>
+                      <span>Pay ₵{total.toFixed(2)} Now</span>
                     </>
                   )}
                 </button>

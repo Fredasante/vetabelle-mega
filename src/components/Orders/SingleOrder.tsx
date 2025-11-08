@@ -25,10 +25,10 @@ interface Order {
   };
   items: Array<{
     productSnapshot: {
-      name: string;
+      title: string;
       price: number;
       discountPrice?: number;
-      mainImageUrl?: string;
+      image?: string;
     };
     quantity: number;
     priceAtPurchase: number;
@@ -37,11 +37,13 @@ interface Order {
     subtotal: number;
     discount: number;
     total: number;
+    couponCode?: string | null;
   };
   payment: {
     method: string;
     status: string;
     amount: number;
+    paystackReference?: string;
   };
   deliveryStatus: string;
   createdAt: string;
@@ -157,7 +159,7 @@ const SingleOrder = ({ order, isLast }: { order: Order; isLast: boolean }) => {
 
         <div className="col-span-2">
           <p className="text-sm font-semibold text-dark">
-            GH₵{order.pricing.total.toFixed(2)}
+            ₵{order.pricing.total.toFixed(2)}
           </p>
         </div>
 
@@ -204,7 +206,7 @@ const SingleOrder = ({ order, isLast }: { order: Order; isLast: boolean }) => {
             </span>
           </div>
           <p className="font-semibold text-dark">
-            GH₵{order.pricing.total.toFixed(2)}
+            ₵{order.pricing.total.toFixed(2)}
           </p>
         </div>
 
@@ -238,11 +240,11 @@ const SingleOrder = ({ order, isLast }: { order: Order; isLast: boolean }) => {
                     key={index}
                     className="flex gap-3 bg-white p-3 rounded-lg"
                   >
-                    {item.productSnapshot.mainImageUrl && (
+                    {item.productSnapshot.image && (
                       <div className="relative w-16 h-16 flex-shrink-0 rounded bg-gray-1">
                         <Image
-                          src={item.productSnapshot.mainImageUrl}
-                          alt={item.productSnapshot.name}
+                          src={item.productSnapshot.image}
+                          alt={item.productSnapshot.title}
                           fill
                           className="object-contain p-1"
                         />
@@ -250,14 +252,14 @@ const SingleOrder = ({ order, isLast }: { order: Order; isLast: boolean }) => {
                     )}
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-dark truncate">
-                        {item.productSnapshot.name}
+                        {item.productSnapshot.title}
                       </p>
                       <p className="text-xs text-gray-600 mt-1">
-                        Qty: {item.quantity} × GH₵
+                        Qty: {item.quantity} × ₵
                         {item.priceAtPurchase.toFixed(2)}
                       </p>
                       <p className="text-sm font-semibold text-dark mt-1">
-                        GH₵{(item.priceAtPurchase * item.quantity).toFixed(2)}
+                        ₵{(item.priceAtPurchase * item.quantity).toFixed(2)}
                       </p>
                     </div>
                   </div>
@@ -269,21 +271,28 @@ const SingleOrder = ({ order, isLast }: { order: Order; isLast: boolean }) => {
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">Subtotal</span>
                   <span className="text-dark">
-                    GH₵{order.pricing.subtotal.toFixed(2)}
+                    ₵{order.pricing.subtotal.toFixed(2)}
                   </span>
                 </div>
                 {order.pricing.discount > 0 && (
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Discount</span>
+                    <span className="text-gray-600">
+                      Discount
+                      {order.pricing.couponCode && (
+                        <span className="ml-1 text-xs">
+                          ({order.pricing.couponCode})
+                        </span>
+                      )}
+                    </span>
                     <span className="text-green">
-                      -GH₵{order.pricing.discount.toFixed(2)}
+                      -₵{order.pricing.discount.toFixed(2)}
                     </span>
                   </div>
                 )}
                 <div className="flex justify-between text-base font-semibold pt-2 border-t border-gray-3">
                   <span className="text-dark">Total</span>
                   <span className="text-blue">
-                    GH₵{order.pricing.total.toFixed(2)}
+                    ₵{order.pricing.total.toFixed(2)}
                   </span>
                 </div>
               </div>
@@ -310,6 +319,14 @@ const SingleOrder = ({ order, isLast }: { order: Order; isLast: boolean }) => {
                       {order.customerInfo.phone}
                     </p>
                   </div>
+                  {order.customerInfo.email && (
+                    <div>
+                      <p className="text-gray-600">Email</p>
+                      <p className="text-dark font-medium">
+                        {order.customerInfo.email}
+                      </p>
+                    </div>
+                  )}
                   <div>
                     <p className="text-gray-600">Location</p>
                     <p className="text-dark font-medium">
@@ -351,9 +368,17 @@ const SingleOrder = ({ order, isLast }: { order: Order; isLast: boolean }) => {
                   <div className="flex justify-between">
                     <span className="text-gray-600">Amount</span>
                     <span className="text-dark font-medium">
-                      GH₵{order.payment.amount.toFixed(2)}
+                      ₵{order.payment.amount.toFixed(2)}
                     </span>
                   </div>
+                  {order.payment.paystackReference && (
+                    <div>
+                      <p className="text-gray-600">Reference</p>
+                      <p className="text-dark font-mono text-xs break-all">
+                        {order.payment.paystackReference}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

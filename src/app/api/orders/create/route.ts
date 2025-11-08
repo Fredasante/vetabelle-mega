@@ -1,3 +1,4 @@
+// app/api/orders/create/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@sanity/client";
 
@@ -29,7 +30,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create order in Sanity - spread is fine here since your checkout already formats it correctly
+    // Create order in Sanity
     const order = await client.create({
       _type: "order",
       ...orderData,

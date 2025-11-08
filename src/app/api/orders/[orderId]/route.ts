@@ -1,3 +1,4 @@
+// app/api/orders/[orderId]/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { client } from "@/sanity/client";
 
@@ -21,16 +22,23 @@ export async function GET(
         orderId,
         customerInfo,
         deliveryInfo,
-        items,
+        items[]{
+          _key,
+          product->{
+            _id,
+            title,
+            slug,
+            image
+          },
+          productSnapshot,
+          quantity,
+          priceAtPurchase
+        },
         pricing,
         payment,
         deliveryStatus,
-        confirmation,
-        customerNotes,
-        adminNotes,
         createdAt,
-        updatedAt,
-        deliveredAt
+        updatedAt
       }`,
       { orderId }
     );

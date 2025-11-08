@@ -8,20 +8,14 @@ type InitialState = {
 const initialState: InitialState = {
   value: {
     _id: "",
-    name: "",
+    title: "",
     slug: { current: "" },
     price: 0,
     discountPrice: undefined,
-    category: "",
-    status: "available",
-    isFeatured: false,
-    mainImageUrl: "",
-    gallery: [],
+    status: "in-stock",
+    image: "",
     description: [],
-    sizes: [],
-    colors: [],
     createdAt: "",
-    gender: undefined,
   },
 };
 

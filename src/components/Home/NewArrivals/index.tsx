@@ -62,7 +62,9 @@ export default function NewArrival() {
 
         {/* Product Grid */}
         {isLoading ? (
-          <ClipLoader size={30} color={"#c77f56"} className="mx-auto py-10" />
+          <div className="min-h-[400px] flex items-center justify-center">
+            <ClipLoader size={30} color="#c77f56" />
+          </div>
         ) : (
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 md:gap-x-7.5 gap-y-9">
             {products.length > 0 ? (

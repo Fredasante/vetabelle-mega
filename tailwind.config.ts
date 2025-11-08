@@ -245,12 +245,12 @@ const config: Config = {
         3: "0px 2px 16px 0px rgba(13, 10, 44, 0.12)",
         testimonial:
           "0px 0px 4px 0px rgba(148, 163, 184, 0.10), 0px 6px 12px 0px rgba(224, 227, 238, 0.45)",
-        breadcrumb: "0px 1px 0px 0px #E5E7EB, 0px -1px 0px 0px #E5E7EB",
+        breadcrumb: "0px 1px 0px 0px #E5E7EB, 0px -1px 0px 0px #02aba5",
         range:
           "0px 0px 1px 0px rgba(33, 37, 41, 0.08), 0px 2px 2px 0px rgba(33, 37, 41, 0.06)",
-        filter: "0px 1px 0px 0px #E5E7EB",
-        list: "1px 0px 0px 0px #E5E7EB",
-        input: "inset 0 0 0 2px #3C50E0",
+        filter: "0px 1px 0px 0px #02aba5",
+        list: "1px 0px 0px 0px #02aba5",
+        input: "inset 0 0 0 2px #02aba5",
       },
     },
   },
