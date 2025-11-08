@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import HeroFeature from "./HeroFeature";
 import { Sparkles, Heart } from "lucide-react";
@@ -17,11 +19,9 @@ const Hero = () => {
                 loop
                 muted
                 playsInline
-                webkit-playsinline="true"
                 preload="auto"
                 onLoadedMetadata={(e) => {
-                  const video = e.target as HTMLVideoElement;
-                  video.play().catch(() => {});
+                  e.currentTarget.play().catch(() => {});
                 }}
                 className="w-full h-full object-cover"
               >
