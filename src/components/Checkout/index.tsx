@@ -89,14 +89,6 @@ const Checkout = () => {
           paidAt: null,
         },
         deliveryStatus: "payment_pending",
-        confirmation: {
-          isConfirmed: false,
-          confirmedBy: null,
-          confirmedAt: null,
-          deliveryDateAgreed: null,
-        },
-        customerNotes: (formData.get("notes") as string) || "",
-        adminNotes: "",
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
