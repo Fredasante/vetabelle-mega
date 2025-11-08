@@ -6,7 +6,7 @@ import React from "react";
 
 export default function DiscountBanner() {
   return (
-    <div className="overflow-hidden pb-5 lg:pb-8 pt-36 sm:pt-45 lg:pt-30 xl:pt-45 bg-[#F4F0F8]">
+    <div className="overflow-hidden pb-5 lg:pb-8 pt-10 bg-[#f4f0f7]">
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
         <div className="relative bg-white px-2 py-4 md:p-7 lg:p-12 rounded-lg shadow-sm">
           <div className="container">
@@ -16,29 +16,16 @@ export default function DiscountBanner() {
                   <h1 className="mb-5 text-3xl font-bold !leading-[1.208] text-[#3A2E39] sm:text-[42px] lg:text-[40px] xl:text-5xl">
                     Beauty Begins from Within
                   </h1>
-                  <p className="mb-8 max-w-[480px] text-base text-gray-700">
+                  <p className="mb-5 max-w-[480px] text-base text-gray-700">
                     Vetabelle empowers women to embrace their natural beauty
                     with confidence. Our wellness supplements nourish your skin,
                     hair, and nails — helping you glow from the inside out.
                   </p>
-                  <ul className="flex flex-wrap items-center">
-                    <li>
-                      <Link
-                        href="/products"
-                        className="inline-flex items-center justify-center rounded-md bg-[#c77f56] px-5 py-3 lg:px-7 text-center text-base font-medium text-white hover:bg-opacity-95 transition-all duration-200 ease-in-out"
-                      >
-                        Shop Now
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/about"
-                        className="inline-flex ml-3 border border-[#c77f56] items-center justify-center rounded-md bg-white px-5 py-3 lg:px-7 text-center text-base font-medium text-dark hover:text-white hover:bg-[#c77f56] transition-all duration-200 ease-in-out"
-                      >
-                        About Us
-                      </Link>
-                    </li>
-                  </ul>
+                  <p>
+                    At Vetabelle, we believe that true beauty comes from a
+                    healthy body, mind, and spirit. That's why we offer a range
+                    of products designed to support your overall well-being.
+                  </p>
                 </div>
               </div>
               <div className="hidden px-4 lg:block lg:w-1/12"></div>
