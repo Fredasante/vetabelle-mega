@@ -11,12 +11,12 @@ const Hero = () => {
           {/* Left Video Section */}
           <div className="xl:max-w-[757px] w-full">
             <div className="relative z-1 rounded-[10px] bg-white overflow-hidden h-[520px]">
+              {/* Video with mobile-friendly autoplay */}
               <video
                 autoPlay
                 loop
                 muted
                 playsInline
-                webkit-playsinline="true"
                 preload="auto"
                 className="w-full h-full object-cover"
               >
@@ -35,7 +35,7 @@ const Hero = () => {
                   </p>
                   <Link
                     href="/shop"
-                    className="inline-block bg-[#c77f56] text-white px-6 py-3 rounded-md font-medium hover:bg-opacity-90 transition-all duration-200"
+                    className="inline-block bg-[#c77f56] text-white px-6 py-3 rounded-md font-medium hover:bg-[#b96e48] transition-all duration-200"
                   >
                     Shop Now
                   </Link>
@@ -85,15 +85,15 @@ const Hero = () => {
                 style={{ backgroundImage: "url('/biotin.png')" }}
               >
                 {/* Overlay for readability */}
-                <div className="absolute inset-0 bg-black/30"></div>
+                <div className="absolute inset-0 bg-black/30 pointer-events-none"></div>
 
                 <div className="relative z-10">
                   <div className="flex items-start justify-between mb-6">
                     <h2 className="font-semibold text-white text-xl max-w-[200px]">
-                      Beauty from within
+                      Beauty from Within
                     </h2>
                     <div className="flex-shrink-0">
-                      <Sparkles className="w-12 h-12 text-[#c77f56]" />
+                      <Heart className="w-12 h-12 text-[#c77f56]" />
                     </div>
                   </div>
                   <p className="text-white text-sm leading-relaxed mb-6">

@@ -197,3 +197,7 @@ input[type="search"]::-webkit-search-results-decoration {
 .range-slider__range {
   @apply !bg-teal;
 }
+
+video::-webkit-media-controls {
+  display: none !important;
+}
