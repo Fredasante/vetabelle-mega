@@ -185,7 +185,7 @@ export default function OrderSuccessPage() {
                     {item.productSnapshot.title}
                   </p>
                   <p className="text-sm text-gray-600">
-                    Qty: {item.quantity} × ₵{item.priceAtPurchase.toFixed(2)}
+                    Qty: {item.quantity} x ₵{item.priceAtPurchase.toFixed(2)}
                   </p>
                 </div>
                 <p className="font-medium text-dark flex-shrink-0">
@@ -288,19 +288,6 @@ export default function OrderSuccessPage() {
               <span className="text-teal font-semibold">1.</span>
               <span>
                 Our team will review your order and contact you within 24 hours
-              </span>
-            </li>
-            <li className="flex gap-2">
-              <span className="text-teal font-semibold">2.</span>
-              <span>
-                We&apos;ll confirm the delivery date and time that works for you
-              </span>
-            </li>
-            <li className="flex gap-2">
-              <span className="text-teal font-semibold">3.</span>
-              <span>
-                Your order will be carefully prepared and delivered to your
-                address
               </span>
             </li>
             <li className="flex gap-2">
