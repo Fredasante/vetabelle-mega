@@ -168,6 +168,17 @@ const Footer = () => {
         <p className="text-gray-400 text-[13px]">
           Vetabelle © {year}. All rights reserved.
         </p>
+        <p className="text-gray-400 text-[13px] mt-1">
+          Developed by{" "}
+          <a
+            href="https://alfredasante.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#c77f56] font-medium hover:underline"
+          >
+            CodeWithAlfred
+          </a>
+        </p>
       </div>
     </footer>
   );
