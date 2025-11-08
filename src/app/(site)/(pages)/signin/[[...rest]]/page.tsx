@@ -3,9 +3,9 @@ import React from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Sign In | Bend the Trendd",
+  title: "Sign In | Vetabelle",
   description:
-    "Access your Bend the Trendd account to track orders, manage your wishlist, and enjoy a personalized shopping experience.",
+    "Sign In to your Vetabelle account to manage your orders, track deliveries, and enjoy a personalized wellness shopping experience.",
 };
 
 const SigninPage = () => {
