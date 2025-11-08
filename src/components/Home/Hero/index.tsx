@@ -20,12 +20,13 @@ const Hero = () => {
                 muted
                 playsInline
                 preload="auto"
-                onLoadedMetadata={(e) => {
-                  e.currentTarget.play().catch(() => {});
-                }}
                 className="w-full h-full object-cover"
+                poster="https://res.cloudinary.com/epic-eats/image/upload/f_auto,q_auto/vetabelle-fallback.jpg"
               >
-                <source src="/vetabelle-video.mp4" type="video/mp4" />
+                <source
+                  src="https://res.cloudinary.com/epic-eats/video/upload/f_auto,q_auto/v1762625692/vetabelle-video_zm114i.mp4"
+                  type="video/mp4"
+                />
                 Your browser does not support the video tag.
               </video>
 
