@@ -5,7 +5,7 @@ import React from "react";
 
 export default function AboutUsSection() {
   return (
-    <div className="overflow-hidden pb-5 lg:pb-8 pt-10 bg-[#f4f0f7]">
+    <div className="overflow-hidden pb-5 md:pb-10 lg:pb-12 pt-10 bg-[#f4f0f7]">
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
         <div className="relative bg-white px-2 py-4 md:p-7 lg:p-12 rounded-lg shadow-sm">
           <div className="container">

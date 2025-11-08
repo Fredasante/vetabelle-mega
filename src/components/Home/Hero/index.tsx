@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <section className="overflow-hidden pb-10 lg:pb-12.5 xl:pb-12 pt-37 sm:pt-40 lg:pt-30 xl:pt-46 bg-[#FDFDF7]">
+    <section className="overflow-hidden pb-10 lg:pb-12.5 xl:pb-12 pt-37 sm:pt-40 lg:pt-30 xl:pt-40 ">
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
         <div className="flex flex-wrap gap-5">
           {/* Left Video Section */}
@@ -58,7 +58,7 @@ const Hero = () => {
                 style={{ backgroundImage: "url('/vetabelle-image-1.jpg')" }}
               >
                 {/* Overlay for readability */}
-                <div className="absolute inset-0 bg-black/30 pointer-events-none"></div>
+                <div className="absolute inset-0 bg-black/25 pointer-events-none"></div>
 
                 <div className="relative z-10">
                   <div className="flex items-start justify-between mb-6">
