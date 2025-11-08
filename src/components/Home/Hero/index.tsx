@@ -19,10 +19,10 @@ const Hero = () => {
                 playsInline
                 preload="auto"
                 className="w-full h-full object-cover"
-              >
-                <source src="/vetabelle-video.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+                dangerouslySetInnerHTML={{
+                  __html: `<source src="/vetabelle-video.mp4" type="video/mp4" />`,
+                }}
+              />
 
               {/* Overlay Text */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-8">
