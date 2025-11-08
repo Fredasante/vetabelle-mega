@@ -1,7 +1,7 @@
 import React from "react";
-import Hero from "./Hero";
 import NewArrival from "./NewArrivals";
 import PromoBanner from "./PromoBanner";
+import Hero from "./Hero";
 
 const Home = () => {
   return (

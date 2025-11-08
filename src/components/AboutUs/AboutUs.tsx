@@ -4,7 +4,9 @@ import Breadcrumb from "../Common/Breadcrumb";
 const AboutUs = () => {
   return (
     <>
-      <section className="overflow-hidden py-10 bg-gray-2 mt-45 md:mt-50 md:pb-10 lg:pb-20">
+      <Breadcrumb title={"About"} pages={["about"]} />
+
+      <section className="overflow-hidden py-10 bg-gray-2">
         <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
           {/* Hero Section */}
           <div className="text-center mb-12">
@@ -143,7 +145,7 @@ const AboutUs = () => {
                 </div>
               </div>
 
-              <div className="bg-[#d1fae5] rounded-lg p-6 border-l-4 border-[#14b8a6]">
+              <div className="bg-green-light-6 rounded-lg p-6 border-l-4 border-[#14b8a6]">
                 <h3 className="font-semibold text-lg text-dark mb-3">
                   Our Promise
                 </h3>

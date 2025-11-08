@@ -3,11 +3,6 @@ import Image from "next/image";
 
 const featureData = [
   {
-    img: "/images/icons/icon-01.svg",
-    title: "Free Delivery",
-    description: "On orders above GHS 2,000",
-  },
-  {
     img: "/images/icons/icon-02.svg",
     title: "Shop with Confidence",
     description: "Every purchase is carefully inspected before delivery",

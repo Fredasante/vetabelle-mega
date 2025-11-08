@@ -1,90 +1,119 @@
-"use client";
-
-import Image from "next/image";
+import React from "react";
+import HeroFeature from "./HeroFeature";
+import { Sparkles, Heart } from "lucide-react";
 import Link from "next/link";
 
 const Hero = () => {
   return (
-    <>
-      <div className="overflow-hidden pb-5 lg:pb-8 pt-36 sm:pt-45 lg:pt-30 xl:pt-45 bg-[#F4F0F8]">
-        <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
-          <div className="relative bg-white px-2 py-4 md:p-7 lg:p-12 rounded-lg shadow-sm">
-            <div className="container">
-              <div className="-mx-4 flex flex-wrap">
-                <div className="w-full px-4 lg:w-5/12">
-                  <div className="hero-content">
-                    <h1 className="mb-5 text-3xl font-bold !leading-[1.208] text-[#3A2E39] sm:text-[42px] lg:text-[40px] xl:text-5xl">
-                      Beauty Begins from Within
-                    </h1>
-                    <p className="mb-8 max-w-[480px] text-base text-gray-700">
-                      Vetabelle empowers women to embrace their natural beauty
-                      with confidence. Our wellness supplements nourish your
-                      skin, hair, and nails — helping you glow from the inside
-                      out.
-                    </p>
-                    <ul className="flex flex-wrap items-center">
-                      <li>
-                        <Link
-                          href="/products"
-                          className="inline-flex items-center justify-center rounded-md bg-[#c77f56] px-5 py-3 lg:px-7 text-center text-base font-medium text-white hover:bg-opacity-95 transition-all duration-200 ease-in-out"
-                        >
-                          Shop Now
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/about"
-                          className="inline-flex ml-3 border border-[#c77f56] items-center justify-center rounded-md bg-white px-5 py-3 lg:px-7 text-center text-base font-medium text-dark hover:text-white hover:bg-[#c77f56] transition-all duration-200 ease-in-out"
-                        >
-                          About Us
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
+    <section className="overflow-hidden pb-10 lg:pb-12.5 xl:pb-15 pt-37 sm:pt-40 lg:pt-30 xl:pt-46 bg-[#e5eaf4]">
+      <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
+        <div className="flex flex-wrap gap-5">
+          {/* Left Video Section */}
+          <div className="xl:max-w-[757px] w-full">
+            <div className="relative z-1 rounded-[10px] bg-white overflow-hidden h-[520px]">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              >
+                <source src="/vetabelle-video.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+
+              {/* Overlay Text */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-8">
+                <div className="text-white">
+                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2">
+                    Beauty from Within
+                  </h1>
+                  <p className="text-lg sm:text-xl mb-4">
+                    Empowering women with premium wellness supplements
+                  </p>
+                  <Link
+                    href="/shop"
+                    className="inline-block bg-[#c77f56] text-white px-6 py-3 rounded-md font-medium hover:bg-opacity-90 transition-all duration-200"
+                  >
+                    Shop Now
+                  </Link>
                 </div>
-                <div className="hidden px-4 lg:block lg:w-1/12"></div>
-                <div className="w-full px-4 lg:w-6/12">
-                  <div className="lg:ml-auto lg:text-right">
-                    <div className="relative z-10 inline-block pt-11 lg:pt-0">
-                      <Image
-                        src="/vetabelle-image-1.jpg"
-                        alt="Vetabelle Wellness Hero"
-                        width={500}
-                        height={500}
-                        className="max-w-full lg:ml-auto rounded-xl"
-                      />
-                      <span className="absolute -bottom-8 -left-8 z-[-1]">
-                        <svg
-                          width="93"
-                          height="93"
-                          viewBox="0 0 93 93"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          {[...Array(25)].map((_, i) => {
-                            const x = (i % 5) * 22 + 2.5;
-                            const y = Math.floor(i / 5) * 22 + 2.5;
-                            return (
-                              <circle
-                                key={i}
-                                cx={x}
-                                cy={y}
-                                r="2.5"
-                                fill="#C69AC9"
-                              />
-                            );
-                          })}
-                        </svg>
-                      </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Cards */}
+          <div className="xl:max-w-[393px] w-full hidden md:block">
+            <div className="flex flex-col sm:flex-row xl:flex-col gap-4 h-full">
+              {/* Our Mission Card */}
+              <div
+                className="w-full relative rounded-[10px] overflow-hidden p-4 sm:p-7.5 flex-1 flex flex-col justify-between bg-cover bg-center"
+                style={{ backgroundImage: "url('/Photo-4.jpg')" }}
+              >
+                {/* Overlay for readability */}
+                <div className="absolute inset-0 bg-black/30 pointer-events-none"></div>
+
+                <div className="relative z-10">
+                  <div className="flex items-start justify-between mb-6">
+                    <h2 className="font-semibold text-white text-xl max-w-[200px]">
+                      Our Mission
+                    </h2>
+                    <div className="flex-shrink-0">
+                      <Sparkles className="w-12 h-12 text-[#c77f56]" />
                     </div>
                   </div>
+                  <p className="text-white text-sm leading-relaxed mb-6">
+                    Empowering women by enhancing natural beauty and boosting
+                    confidence through high-quality supplements.
+                  </p>
                 </div>
+                <div className="relative z-10 bg-white/20 backdrop-blur-sm w-fit rounded-md">
+                  <Link
+                    href="/about"
+                    className="cursor-pointer bg-[#c77f56] text-white px-3 py-1 rounded-md font-medium transition-all duration-200 hover:bg-[#b96e48]"
+                  >
+                    Learn More
+                  </Link>
+                </div>
+              </div>
+
+              {/* What We Offer Card */}
+              <div
+                className="w-full relative rounded-[10px] overflow-hidden p-4 sm:p-7.5 flex-1 flex flex-col justify-between bg-cover bg-center"
+                style={{ backgroundImage: "url('/biotin.png')" }}
+              >
+                {/* Overlay for readability */}
+                <div className="absolute inset-0 bg-black/30"></div>
+
+                <div className="relative z-10">
+                  <div className="flex items-start justify-between mb-6">
+                    <h2 className="font-semibold text-white text-xl max-w-[200px]">
+                      Beauty from within
+                    </h2>
+                    <div className="flex-shrink-0">
+                      <Sparkles className="w-12 h-12 text-[#c77f56]" />
+                    </div>
+                  </div>
+                  <p className="text-white text-sm leading-relaxed mb-6">
+                    Glowing skin, luscious hair, and strong nails. Made for
+                    Ghanaian women who embrace their inner strength.
+                  </p>
+                </div>
+                <Link
+                  href="/shop"
+                  className="w-fit cursor-pointer bg-white text-[#c77f56] px-3 py-1 rounded-md font-medium transition-all duration-200 hover:bg-[#f9f9f9]"
+                >
+                  Explore All Products
+                </Link>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </>
+
+      {/* Hero Features */}
+      <HeroFeature />
+    </section>
   );
 };
 
