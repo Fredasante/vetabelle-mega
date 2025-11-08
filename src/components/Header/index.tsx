@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { menuData } from "./menuData";
-import Dropdown from "./Dropdown";
 import { useAppSelector } from "@/redux/store";
 import { useSelector } from "react-redux";
 import { selectTotalPrice } from "@/redux/features/cart-slice";
@@ -10,7 +9,7 @@ import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
 import Image from "next/image";
 import AuthDropdown from "../Auth/AuthDropdown";
 import { useUser } from "@clerk/nextjs";
-import { Heart, RefreshCcw } from "lucide-react";
+import { Heart, ImagePlus } from "lucide-react";
 import SearchInput from "./SearchInput";
 
 const Header = () => {
@@ -243,11 +242,11 @@ const Header = () => {
               <ul className="flex items-center gap-5.5">
                 <li className="py-4">
                   <a
-                    href="#"
+                    href="/gallery"
                     className="flex items-center gap-1.5 font-medium text-custom-sm text-dark hover:text-[#c77f56]"
                   >
-                    <RefreshCcw className="w-4 h-4" />
-                    Recently Viewed
+                    <ImagePlus className="w-4 h-4" />
+                    Gallery
                   </a>
                 </li>
 

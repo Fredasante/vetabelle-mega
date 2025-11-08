@@ -58,14 +58,7 @@ const Footer = () => {
                 Explore All Products
               </Link>
             </li>
-            <li>
-              <Link
-                href="/gallery"
-                className="text-[15px] text-gray-500 hover:text-gray-600"
-              >
-                Gallery
-              </Link>
-            </li>
+            <li></li>
           </ul>
         </div>
         {/* HELPFUL LINKS */}
@@ -90,10 +83,10 @@ const Footer = () => {
             </li>
             <li>
               <Link
-                href="/faq"
+                href="/my-account"
                 className="text-[15px] text-gray-500 hover:text-gray-600"
               >
-                FAQs
+                My Account
               </Link>
             </li>
           </ul>
