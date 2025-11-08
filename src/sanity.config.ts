@@ -5,8 +5,8 @@ import { schemas } from "./sanity/schemas";
 
 export default defineConfig({
   name: "default",
-  title: "Bend the Trendd",
-  projectId: "f9rxg371",
+  title: "Vetabelle",
+  projectId: "lomuktof",
   dataset: "production",
   basePath: "/admin",
   plugins: [structureTool(), visionTool()],
