@@ -16,6 +16,8 @@ const Hero = () => {
                 loop
                 muted
                 playsInline
+                webkit-playsinline="true"
+                preload="auto"
                 className="w-full h-full object-cover"
               >
                 <source src="/vetabelle-video.mp4" type="video/mp4" />
