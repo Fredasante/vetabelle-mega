@@ -45,10 +45,10 @@ export default function NewArrival() {
           <div>
             <span className="flex items-center gap-2.5 font-medium text-dark mb-1.5">
               <Handbag color="#c77f56" className="w-5 h-5" />
-              This Week&apos;s
+              Explore
             </span>
             <h2 className="font-semibold text-xl xl:text-heading-5 text-dark">
-              New Arrivals
+              Featured Products
             </h2>
           </div>
 

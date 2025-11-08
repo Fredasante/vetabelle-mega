@@ -79,7 +79,7 @@ const ProductItem = ({ item }: { item: Product }) => {
 
       {/* Title */}
       <h3
-        className="font-semibold text-teal text-center ease-out duration-200 hover:text-teal mb-1.5"
+        className="font-semibold text-dark text-center ease-out duration-200 hover:text-teal mb-1.5"
         onClick={handleProductDetails}
       >
         <Link href={`/shop/${item.slug.current}`} className="line-clamp-1">
