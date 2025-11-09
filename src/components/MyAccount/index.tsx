@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Orders from "../Orders";
 import { useUser, useClerk } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ClipLoader } from "react-spinners";
 import {
   LayoutDashboard,
@@ -35,7 +35,9 @@ const MyAccount = () => {
   const { user, isLoaded } = useUser();
   const { signOut } = useClerk();
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState("dashboard");
+  const searchParams = useSearchParams();
+  const tabFromUrl = searchParams.get("tab");
+  const [activeTab, setActiveTab] = useState(tabFromUrl || "dashboard");
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [orders, setOrders] = useState<Order[]>([]);
   const [loadingOrders, setLoadingOrders] = useState(true);
@@ -46,6 +48,18 @@ const MyAccount = () => {
       router.push("/signin");
     }
   }, [isLoaded, user, router]);
+
+  // Update tab when URL changes
+  useEffect(() => {
+    if (tabFromUrl) {
+      setActiveTab(tabFromUrl);
+    }
+  }, [tabFromUrl]);
+
+  // Scroll to top when tab changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [activeTab]);
 
   useEffect(() => {
     if (!user) return;
@@ -119,7 +133,7 @@ const MyAccount = () => {
 
   return (
     <>
-      <section className="overflow-hidden py-5 sm:py-7 bg-gray-2 mt-45 mb-5 md:mt-50 md:mb-10 lg:mb-15">
+      <section className="overflow-hidden py-5 sm:py-7 bg-gray-2 mt-40 mb-5 md:mt-40 md:mb-10 lg:mb-15">
         <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
           <div className="flex flex-col xl:flex-row gap-5 lg:gap-7.5">
             {/* Sidebar */}

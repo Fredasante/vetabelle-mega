@@ -241,13 +241,13 @@ const Header = () => {
             <div className="hidden xl:block">
               <ul className="flex items-center gap-5.5">
                 <li className="py-4">
-                  <a
+                  <Link
                     href="/gallery"
                     className="flex items-center gap-1.5 font-medium text-custom-sm text-dark hover:text-[#c77f56]"
                   >
                     <ImagePlus className="w-4 h-4" />
                     Gallery
-                  </a>
+                  </Link>
                 </li>
 
                 <li className="py-4">
