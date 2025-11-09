@@ -70,7 +70,7 @@ const SingleGridItem = ({ item }: { item: Product }) => {
   return (
     <div className="group">
       {/* Image */}
-      <div className="relative w-full aspect-square md:aspect-[4/3] overflow-hidden rounded-lg bg-white shadow-1 mb-4 flex items-center justify-center">
+      <div className="relative w-full aspect-[3/2] md:aspect-[4/3] overflow-hidden rounded-lg bg-white shadow-1 mb-4 flex items-center justify-center">
         <Image
           src={item.image || "/images/placeholder.png"}
           alt={item.title || "Product image"}
@@ -139,7 +139,7 @@ const SingleGridItem = ({ item }: { item: Product }) => {
 
         <button
           onClick={handleAddToCart}
-          className="flex items-center justify-center bg-[#c77f56] font-medium text-custom-sm py-[4px] md:py-[7px] px-1.5 md:px-5 rounded-[5px] text-white ease-out duration-200 hover:bg-opacity-90"
+          className="flex items-center justify-center bg-[#c77f56] font-medium text-custom-sm py-[7px] px-5 rounded-[5px] text-white ease-out duration-200 hover:bg-opacity-90"
         >
           Add to cart
         </button>

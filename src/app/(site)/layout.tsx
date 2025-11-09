@@ -5,9 +5,9 @@ import ClientLayout from "./ClientLayout";
 import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
-  title: "Bend the Trendd | Fashion & Lifestyle Ecommerce",
+  title: "Vetabelle | Beauty & Wellness Supplements",
   description:
-    "Discover the latest fashion, lifestyle, and trendsetting products at Bend the Trendd. Shop quality apparel, accessories, and more.",
+    "Empowering women with premium wellness supplements made with Collagen, Biotin, and Keratin — for glowing skin, strong nails, and luscious hair.",
   icons: {
     icon: "/vetabelle-logo.jpg",
   },

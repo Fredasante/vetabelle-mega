@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     siteName: "Vetabelle",
     images: [
       {
-        url: "/vetabelle-logo.png",
+        url: "/vetabelle-logo.jpg",
         width: 1200,
         height: 630,
         alt: "Vetabelle Wellness & Beauty Supplements",
