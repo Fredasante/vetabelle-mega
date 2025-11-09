@@ -1,11 +1,11 @@
 import React from "react";
 import { Wishlist } from "@/components/Wishlist";
-import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Wishlist | Bend the Trendd",
+export const metadata = {
+  title: "Wishlist | Vetabelle",
   description:
-    "View and manage your favorite products saved on Bend the Trendd.",
+    "View and manage your saved products in your Vetabelle wishlist.",
+  robots: "noindex, nofollow",
 };
 
 const WishlistPage = () => {
