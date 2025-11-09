@@ -84,18 +84,22 @@ const ShopDetails = ({ product }: ShopDetailsProps) => {
             </p>
 
             <div className="mb-5">
-              <span className="text-2xl font-bold mr-2 text-dark">
-                ₵{product.price.toFixed(2)}
-              </span>
-              {hasDiscount && (
+              {hasDiscount ? (
                 <>
-                  <span className="text-gray-500 line-through">
+                  <span className="text-2xl font-bold mr-2 text-dark">
                     ₵{product.discountPrice?.toFixed(2)}
                   </span>
-                  <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-teal text-white">
+                  <span className="text-gray-500 line-through">
+                    ₵{product.price.toFixed(2)}
+                  </span>
+                  <span className="ml-4 inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-teal text-white">
                     {discountPercentage}% OFF
                   </span>
                 </>
+              ) : (
+                <span className="text-2xl font-bold text-dark">
+                  ₵{product.price.toFixed(2)}
+                </span>
               )}
             </div>
 

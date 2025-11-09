@@ -70,7 +70,7 @@ export default function SearchInput() {
             type="submit"
             id="search-btn"
             aria-label="Search"
-            className="flex items-center justify-center absolute right-3 top-1/2 -translate-y-1/2 ease-in duration-200 hover:text-blue"
+            className="flex items-center justify-center absolute right-3 top-1/2 -translate-y-1/2 ease-in duration-200 hover:text-teal"
           >
             <MagnifyingGlassIcon className="w-5 h-5" />
           </button>
