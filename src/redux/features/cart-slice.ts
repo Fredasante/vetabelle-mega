@@ -8,6 +8,7 @@ export type CartItem = {
   discountPrice?: number;
   quantity: number;
   image: string;
+  slug?: { current: string }; // add this if slug exists in your payload
 };
 
 // 🧺 State Type
@@ -30,12 +31,41 @@ export const cart = createSlice({
         (item) => item._id === action.payload._id
       );
 
+      const slug = action.payload.slug?.current;
+
+      // 👇 Apply special pricing logic before pushing/updating
+      let adjustedPrice = action.payload.price;
+      if (
+        [
+          "carrot-oil-skin-nourishment-youthful-skin",
+          "rapid-hair-growth-oil",
+        ].includes(slug || "")
+      ) {
+        // If quantity is 3, total should be ₵200 instead of 3×100
+        if (action.payload.quantity === 3) {
+          adjustedPrice = 200 / 3; // divide so per-item price = total ÷ quantity
+        }
+      }
+
       if (existingItem) {
-        // ✅ Increase quantity if item already exists
         existingItem.quantity += action.payload.quantity || 1;
+
+        // Recalculate if total quantity hits 3
+        if (
+          [
+            "carrot-oil-skin-nourishment-youthful-skin",
+            "rapid-hair-growth-oil",
+          ].includes(existingItem.slug?.current || "") &&
+          existingItem.quantity === 3
+        ) {
+          existingItem.price = 200 / 3;
+        }
       } else {
-        // ✅ Add new item
-        state.items.push({ ...action.payload });
+        // ✅ Add new item with possibly adjusted price
+        state.items.push({
+          ...action.payload,
+          price: adjustedPrice,
+        });
       }
     },
 
@@ -45,7 +75,20 @@ export const cart = createSlice({
 
     incrementQuantity: (state, action: PayloadAction<string>) => {
       const item = state.items.find((item) => item._id === action.payload);
-      if (item) item.quantity += 1;
+      if (item) {
+        item.quantity += 1;
+
+        // Recalculate if total quantity hits 3
+        if (
+          [
+            "carrot-oil-skin-nourishment-youthful-skin",
+            "rapid-hair-growth-oil",
+          ].includes(item.slug?.current || "") &&
+          item.quantity === 3
+        ) {
+          item.price = 200 / 3;
+        }
+      }
     },
 
     decrementQuantity: (state, action: PayloadAction<string>) => {
@@ -53,7 +96,6 @@ export const cart = createSlice({
       if (item && item.quantity > 1) {
         item.quantity -= 1;
       } else {
-        // remove item if quantity would go below 1
         state.items = state.items.filter(
           (cartItem) => cartItem._id !== action.payload
         );
