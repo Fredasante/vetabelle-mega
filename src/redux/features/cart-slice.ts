@@ -1,5 +1,6 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+import { calculateItemPrice } from "@/lib/pricing";
 
 export type CartItem = {
   _id: string;
@@ -8,7 +9,6 @@ export type CartItem = {
   discountPrice?: number;
   quantity: number;
   image: string;
-  slug?: { current: string }; // add this if slug exists in your payload
 };
 
 // 🧺 State Type
@@ -31,41 +31,12 @@ export const cart = createSlice({
         (item) => item._id === action.payload._id
       );
 
-      const slug = action.payload.slug?.current;
-
-      // 👇 Apply special pricing logic before pushing/updating
-      let adjustedPrice = action.payload.price;
-      if (
-        [
-          "carrot-oil-skin-nourishment-youthful-skin",
-          "rapid-hair-growth-oil",
-        ].includes(slug || "")
-      ) {
-        // If quantity is 3, total should be ₵200 instead of 3×100
-        if (action.payload.quantity === 3) {
-          adjustedPrice = 200 / 3; // divide so per-item price = total ÷ quantity
-        }
-      }
-
       if (existingItem) {
+        // ✅ Increase quantity if item already exists
         existingItem.quantity += action.payload.quantity || 1;
-
-        // Recalculate if total quantity hits 3
-        if (
-          [
-            "carrot-oil-skin-nourishment-youthful-skin",
-            "rapid-hair-growth-oil",
-          ].includes(existingItem.slug?.current || "") &&
-          existingItem.quantity === 3
-        ) {
-          existingItem.price = 200 / 3;
-        }
       } else {
-        // ✅ Add new item with possibly adjusted price
-        state.items.push({
-          ...action.payload,
-          price: adjustedPrice,
-        });
+        // ✅ Add new item
+        state.items.push({ ...action.payload });
       }
     },
 
@@ -75,20 +46,7 @@ export const cart = createSlice({
 
     incrementQuantity: (state, action: PayloadAction<string>) => {
       const item = state.items.find((item) => item._id === action.payload);
-      if (item) {
-        item.quantity += 1;
-
-        // Recalculate if total quantity hits 3
-        if (
-          [
-            "carrot-oil-skin-nourishment-youthful-skin",
-            "rapid-hair-growth-oil",
-          ].includes(item.slug?.current || "") &&
-          item.quantity === 3
-        ) {
-          item.price = 200 / 3;
-        }
-      }
+      if (item) item.quantity += 1;
     },
 
     decrementQuantity: (state, action: PayloadAction<string>) => {
@@ -96,6 +54,7 @@ export const cart = createSlice({
       if (item && item.quantity > 1) {
         item.quantity -= 1;
       } else {
+        // remove item if quantity would go below 1
         state.items = state.items.filter(
           (cartItem) => cartItem._id !== action.payload
         );
@@ -111,12 +70,33 @@ export const cart = createSlice({
 // 🧮 Selectors
 export const selectCartItems = (state: RootState) => state.cartReducer.items;
 
+export const selectTotalQuantity = createSelector([selectCartItems], (items) =>
+  items.reduce((total, item) => total + item.quantity, 0)
+);
+
 export const selectTotalPrice = createSelector([selectCartItems], (items) =>
   items.reduce((total, item) => {
-    const priceToUse = item.discountPrice ?? item.price;
-    return total + priceToUse * item.quantity;
+    return total + calculateItemPrice(item, item.quantity);
   }, 0)
 );
+
+// 🎁 Calculate savings from bulk pricing
+export const selectTotalSavings = createSelector([selectCartItems], (items) =>
+  items.reduce((totalSavings, item) => {
+    const regularPrice = (item.discountPrice ?? item.price) * item.quantity;
+    const bulkPrice = calculateItemPrice(item, item.quantity);
+    const savings = regularPrice - bulkPrice;
+    return totalSavings + savings;
+  }, 0)
+);
+
+// 🧾 Get item price with bulk pricing applied
+export const selectItemTotal = (itemId: string) =>
+  createSelector([selectCartItems], (items) => {
+    const item = items.find((i) => i._id === itemId);
+    if (!item) return 0;
+    return calculateItemPrice(item, item.quantity);
+  });
 
 export const {
   addItemToCart,
