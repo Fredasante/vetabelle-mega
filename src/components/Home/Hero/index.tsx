@@ -27,7 +27,7 @@ const Hero = () => {
         <div className="flex flex-wrap gap-5">
           {/* Left Search Section */}
           <div
-            className="xl:max-w-[757px] w-full flex items-center justify-center rounded-[10px] min-h-[520px] xl:h-[520px] bg-cover bg-center relative"
+            className="xl:max-w-[757px] w-full flex items-center justify-center rounded-[10px] h-[520px] bg-cover bg-center relative"
             style={{
               backgroundImage: "url('/carousel-3.jpg')",
             }}
