@@ -13,7 +13,6 @@ import { updateProductDetails } from "@/redux/features/product-details";
 import { Eye, Heart, Minus, Plus } from "lucide-react";
 import { toast } from "sonner";
 import StarRating from "./StarRating";
-import { hasBulkPricing } from "@/lib/pricing";
 
 const ProductItem = ({ item }: { item: Product }) => {
   const { openModal } = useModalContext();
@@ -64,9 +63,6 @@ const ProductItem = ({ item }: { item: Product }) => {
     dispatch(updateProductDetails({ ...item }));
   };
 
-  // Check if this product has bulk pricing
-  const showBulkBadge = hasBulkPricing(item.title);
-
   return (
     <div className="group">
       {/* Image */}
@@ -77,19 +73,6 @@ const ProductItem = ({ item }: { item: Product }) => {
           fill
           className="object-contain object-center p-1 md:p-2 lg:p-3"
         />
-
-        {/* Bulk Pricing Badge */}
-        {showBulkBadge && (
-          <div className="absolute top-2 left-2 bg-[#c77f56]  text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-md z-10">
-            1 for GH₵ 100
-          </div>
-        )}
-
-        {showBulkBadge && (
-          <div className="absolute top-2 right-2 bg-[#c77f56]  text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-md z-10">
-            3 for GH₵ 200
-          </div>
-        )}
       </div>
 
       <StarRating />

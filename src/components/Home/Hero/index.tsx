@@ -33,7 +33,7 @@ const Hero = () => {
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0 mt-3">
         <div className="flex flex-wrap gap-5">
           {/* Left Search Section */}
-          <div className="xl:max-w-[757px] w-full bg-gradient-to-br from-[#c77f56]/10 via-[#e5eaf4] to-[#c77f56]/5 flex items-center justify-center rounded-[10px] min-h-[450px] xl:h-[450px]">
+          <div className="xl:max-w-[757px] w-full bg-gradient-to-br from-[#c77f56]/10 via-[#e5eaf4] to-[#c77f56]/5 flex items-center justify-center rounded-[10px] min-h-[520px] xl:h-[520px]">
             <div className="relative z-1 overflow-hidden p-6 md:p-8 w-full">
               <div className="w-full max-w-2xl">
                 {/* Heading */}
@@ -109,10 +109,10 @@ const Hero = () => {
           </div>
 
           {/* Right Cards */}
-          <div className="xl:max-w-[393px] w-full hidden md:block h-[450px]">
+          <div className="xl:max-w-[393px] w-full hidden md:block h-[520px]">
             <div className="flex flex-col sm:flex-row xl:flex-col gap-4 h-full">
               {/* Our Mission Card */}
-              <div className="w-full relative rounded-[10px] overflow-hidden flex-[1.5] flex flex-col justify-between">
+              <div className="w-full relative rounded-[10px] overflow-hidden flex-1 flex flex-col justify-between">
                 <video
                   autoPlay
                   loop
@@ -134,7 +134,7 @@ const Hero = () => {
               <div
                 className="w-full relative rounded-[10px] overflow-hidden sm:p-7.5 flex-1 flex flex-col justify-between bg-cover bg-center"
                 style={{
-                  backgroundImage: "url('/vetabelle-image-1.jpg')",
+                  backgroundImage: "url('/vetabelle-image-6.jpg')",
                 }}
               ></div>
             </div>
