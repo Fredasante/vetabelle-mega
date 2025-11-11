@@ -14,6 +14,7 @@ import { Eye, Heart, Minus, Plus } from "lucide-react";
 import StarRating from "../Common/StarRating";
 import { toast } from "sonner";
 import { updateProductDetails } from "@/redux/features/product-details";
+import { hasBulkPricing } from "@/lib/pricing";
 
 const SingleGridItem = ({ item }: { item: Product }) => {
   const { openModal } = useModalContext();
@@ -67,6 +68,9 @@ const SingleGridItem = ({ item }: { item: Product }) => {
     dispatch(updateProductDetails({ ...item }));
   };
 
+  // Check if this product has bulk pricing
+  const showBulkBadge = hasBulkPricing(item.title);
+
   return (
     <div className="group">
       {/* Image */}
@@ -77,6 +81,13 @@ const SingleGridItem = ({ item }: { item: Product }) => {
           fill
           className="object-contain object-center p-2 md:p-3"
         />
+
+        {/* Bulk Pricing Badge */}
+        {showBulkBadge && (
+          <div className="absolute top-2 right-2 bg-teal text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-md z-10">
+            3 for ₵200
+          </div>
+        )}
       </div>
 
       <StarRating />
@@ -95,11 +106,11 @@ const SingleGridItem = ({ item }: { item: Product }) => {
       <span className="flex items-center justify-center gap-2 font-medium">
         {item.discountPrice && item.discountPrice > 0 ? (
           <>
-            <span className="text-dark">₵{item.discountPrice}</span>
-            <span className="text-dark-4 line-through">₵{item.price}</span>
+            <span className="text-dark text-lg"> GH₵ {item.discountPrice}</span>
+            <span className="text-dark-4 line-through"> GH₵ {item.price}</span>
           </>
         ) : (
-          <span className="text-dark">₵{item.price}</span>
+          <span className="text-dark text-lg"> GH₵ {item.price}</span>
         )}
       </span>
 
