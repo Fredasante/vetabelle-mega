@@ -80,8 +80,14 @@ const ProductItem = ({ item }: { item: Product }) => {
 
         {/* Bulk Pricing Badge */}
         {showBulkBadge && (
-          <div className="absolute top-2 right-2 bg-teal text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-md z-10">
-            3 for ₵200
+          <div className="absolute top-2 left-2 bg-[#c77f56]  text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-md z-10">
+            1 for GH₵ 100
+          </div>
+        )}
+
+        {showBulkBadge && (
+          <div className="absolute top-2 right-2 bg-[#c77f56]  text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-md z-10">
+            3 for GH₵ 200
           </div>
         )}
       </div>
