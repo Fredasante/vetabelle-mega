@@ -22,7 +22,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="overflow-hidden pb-10 lg:pb-12.5 xl:pb-12 pt-37 sm:pt-40 lg:pt-30 xl:pt-40 bg-[#f9fafb]">
+    <section className="overflow-x-hidden pb-10 lg:pb-12.5 xl:pb-12 pt-37 sm:pt-40 lg:pt-30 xl:pt-40 bg-[#f9fafb]">
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0 mt-3">
         <div className="flex flex-wrap gap-5">
           {/* Left Search Section */}
@@ -32,11 +32,8 @@ const Hero = () => {
               backgroundImage: "url('/carousel-3.jpg')",
             }}
           >
-            {/* Dark semi-transparent overlay */}
-            {/* <div className="absolute inset-0 bg-black/30 rounded-[10px]"></div> */}
-
-            <div className="relative z-1 overflow-hidden p-6 md:p-8 w-full flex items-center">
-              <div className="w-full max-w-md pr-20 sm:pr-0">
+            <div className="relative z-1 overflow-hidden p-6 md:p-8 w-full flex items-center max-w-full">
+              <div className="w-full max-w-md pr-20 sm:pr-0 overflow-hidden">
                 {/* Heading */}
                 <div className="text-left mb-6 lg:mb-8">
                   <h1 className="text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-5 lg:mb-7">
@@ -53,19 +50,19 @@ const Hero = () => {
                 </div>
 
                 {/* Search Bar */}
-                <div className="mb-4 sm:mb-6">
-                  <div className="relative flex items-center bg-white rounded-full shadow-2 overflow-hidden border-2 border-gray-3 focus-within:border-[#c77f56] transition-colors">
+                <div className="mb-4 sm:mb-6 w-full">
+                  <div className="relative flex items-center bg-white rounded-full shadow-2 overflow-hidden border-2 border-gray-3 focus-within:border-[#c77f56] transition-colors w-full max-w-full">
                     <input
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       onKeyPress={handleKeyPress}
                       placeholder="Search for supplements, vitamins, beauty products..."
-                      className="flex-1 px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base outline-none text-dark placeholder:text-gray-500"
+                      className="flex-1 px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base outline-none text-dark placeholder:text-gray-500 w-full min-w-0"
                     />
                     <button
                       onClick={handleSearch}
-                      className="bg-[#c77f56] text-white px-6 sm:px-8 py-3 sm:py-4 font-medium hover:bg-[#b96e48] transition-all duration-200 flex items-center gap-2"
+                      className="bg-[#c77f56] text-white px-6 sm:px-8 py-3 sm:py-4 font-medium hover:bg-[#b96e48] transition-all duration-200 flex items-center gap-2 flex-shrink-0"
                     >
                       <Search className="w-4 h-4 sm:w-5 sm:h-5" />
                       <span className="hidden sm:inline">Search</span>

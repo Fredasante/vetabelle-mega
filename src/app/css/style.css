@@ -202,15 +202,12 @@ video::-webkit-media-controls {
   display: none !important;
 }
 
-@supports (-webkit-touch-callout: none) {
-  /* iOS Safari specific fix */
-  .hero-section {
-    height: -webkit-fill-available;
-  }
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
-/* Prevent layout shift on keyboard open */
-body {
-  position: fixed;
-  width: 100%;
+input[type="text"] {
+  max-width: 100%;
+  box-sizing: border-box;
 }
