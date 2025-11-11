@@ -211,3 +211,19 @@ input[type="text"] {
   max-width: 100%;
   box-sizing: border-box;
 }
+
+@layer base {
+  input,
+  textarea,
+  select {
+    @apply text-base; /* ensures font-size >= 16px */
+    font-size: 16px; /* for safety on older browsers */
+  }
+
+  /* Optional: smooth mobile focus experience */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    @apply outline-none ring-2 ring-[#c77f56] ring-offset-1;
+  }
+}

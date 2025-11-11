@@ -58,8 +58,9 @@ const Hero = () => {
                       onChange={(e) => setSearchQuery(e.target.value)}
                       onKeyPress={handleKeyPress}
                       placeholder="Search for supplements, vitamins, beauty products..."
-                      className="flex-1 px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base outline-none text-dark placeholder:text-gray-500 w-full min-w-0"
+                      className="flex-1 px-4 sm:px-6 py-3 sm:py-4 outline-none text-dark placeholder:text-gray-500 w-full min-w-0"
                     />
+
                     <button
                       onClick={handleSearch}
                       className="bg-[#c77f56] text-white px-6 sm:px-8 py-3 sm:py-4 font-medium hover:bg-[#b96e48] transition-all duration-200 flex items-center gap-2 flex-shrink-0"
