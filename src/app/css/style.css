@@ -201,3 +201,16 @@ input[type="search"]::-webkit-search-results-decoration {
 video::-webkit-media-controls {
   display: none !important;
 }
+
+@supports (-webkit-touch-callout: none) {
+  /* iOS Safari specific fix */
+  .hero-section {
+    height: -webkit-fill-available;
+  }
+}
+
+/* Prevent layout shift on keyboard open */
+body {
+  position: fixed;
+  width: 100%;
+}
