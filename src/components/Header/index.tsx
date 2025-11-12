@@ -86,7 +86,7 @@ const Header = () => {
                 alt="Logo"
                 width={170}
                 height={20}
-                className="py-2"
+                className="py-3"
               />
             </Link>
 

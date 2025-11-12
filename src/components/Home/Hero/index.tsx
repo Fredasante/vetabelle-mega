@@ -27,13 +27,13 @@ const Hero = () => {
         <div className="flex flex-wrap gap-5">
           {/* Left Search Section */}
           <div
-            className="xl:max-w-[757px] w-full flex items-center justify-center rounded-[10px] h-[520px] bg-cover bg-center relative"
+            className="xl:max-w-[757px] w-full flex items-center justify-center rounded-[10px] min-h-[520px] lg:h-[520px] bg-cover bg-center relative"
             style={{
               backgroundImage: "url('/carousel-3.jpg')",
             }}
           >
             <div className="relative z-1 overflow-hidden p-6 md:p-8 w-full flex items-center max-w-full">
-              <div className="w-full max-w-md pr-20 sm:pr-0 overflow-hidden">
+              <div className="w-full max-w-md pr-18 sm:pr-0 overflow-hidden">
                 {/* Heading */}
                 <div className="text-left mb-6 lg:mb-8">
                   <h1 className="text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-5 lg:mb-7">

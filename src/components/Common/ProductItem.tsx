@@ -71,7 +71,7 @@ const ProductItem = ({ item }: { item: Product }) => {
           src={item.image || "/images/placeholder.png"}
           alt={item.title || "Product image"}
           fill
-          className="object-contain object-center p-1 md:p-2 lg:p-3"
+          className="object-contain object-center p-3"
         />
       </div>
 
