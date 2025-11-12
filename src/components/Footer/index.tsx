@@ -174,7 +174,7 @@ const Footer = () => {
             href="https://alfredasante.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#c77f56] font-medium hover:underline"
+            className="text-[#c2712f] font-medium hover:underline"
           >
             CodeWithAlfred
           </a>

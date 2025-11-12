@@ -65,7 +65,7 @@ const Pagination = ({
           className={`flex items-center justify-center w-9 h-9 rounded-md transition-all duration-200 ${
             currentPage === 1
               ? "text-gray-400 cursor-not-allowed"
-              : "text-dark hover:bg-blue hover:text-white"
+              : "text-dark hover:bg-[#c2712f] hover:text-white"
           }`}
           aria-label="Previous page"
         >
@@ -95,7 +95,7 @@ const Pagination = ({
                 onClick={() => onPageChange(pageNum)}
                 className={`w-9 h-9 rounded-md font-medium transition-all duration-200 ${
                   isActive
-                    ? "bg-blue text-white"
+                    ? "bg-[#c2712f] text-white"
                     : "text-dark hover:bg-gray-100"
                 }`}
                 aria-label={`Go to page ${pageNum}`}
@@ -114,7 +114,7 @@ const Pagination = ({
           className={`flex items-center justify-center w-9 h-9 rounded-md transition-all duration-200 ${
             currentPage === totalPages
               ? "text-gray-400 cursor-not-allowed"
-              : "text-dark hover:bg-blue hover:text-white"
+              : "text-dark hover:bg-[#c2712f] hover:text-white"
           }`}
           aria-label="Next page"
         >

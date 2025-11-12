@@ -23,7 +23,7 @@ const Hero = () => {
 
   return (
     <section className="overflow-x-hidden pb-10 lg:pb-12.5 xl:pb-12 pt-37 sm:pt-40 lg:pt-30 xl:pt-40 bg-[#f9fafb]">
-      <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0 mt-3">
+      <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0 mt-0 lg:mt-3">
         <div className="flex flex-wrap gap-5">
           {/* Left Search Section */}
           <div
@@ -63,7 +63,7 @@ const Hero = () => {
 
                     <button
                       onClick={handleSearch}
-                      className="bg-[#c77f56] text-white px-6 sm:px-8 py-3 sm:py-4 font-medium hover:bg-[#b96e48] transition-all duration-200 flex items-center gap-2 flex-shrink-0"
+                      className="bg-[#c2712f] text-white px-4 sm:px-6 py-3 sm:py-4 font-medium hover:bg-[#b96e48] transition-all duration-200 flex items-center gap-2 flex-shrink-0"
                     >
                       <Search className="w-4 h-4 sm:w-5 sm:h-5" />
                       <span className="hidden sm:inline">Search</span>
@@ -75,13 +75,13 @@ const Hero = () => {
                 <div className="flex flex-col sm:flex-row items-start gap-3 mt-6 sm:mt-8">
                   <Link
                     href="/shop"
-                    className="w-full sm:w-auto inline-flex items-center justify-center bg-[#c77f56] text-white px-6 sm:px-6 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-medium hover:bg-[#b96e48] transition-all duration-200 shadow-1"
+                    className="w-full sm:w-auto inline-flex items-center justify-center bg-[#c2712f] text-white px-6 sm:px-6 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-medium hover:bg-[#b96e48] transition-all duration-200 shadow-1"
                   >
                     Browse All Products
                   </Link>
                   <Link
                     href="/about"
-                    className="w-full sm:w-auto inline-flex items-center justify-center bg-white text-[#c77f56] px-6 sm:px-6 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-medium hover:bg-gray-1 transition-all duration-200 border-2 border-[#c77f56]"
+                    className="w-full sm:w-auto inline-flex items-center justify-center bg-white text-[#c2712f] px-6 sm:px-6 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-medium hover:bg-gray-1 transition-all duration-200 border-2 border-[#c2712f]"
                   >
                     Learn More
                   </Link>

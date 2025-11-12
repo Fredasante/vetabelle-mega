@@ -142,7 +142,7 @@ const Header = () => {
                       width={25}
                       height={25}
                     />
-                    <span className="flex items-center justify-center font-medium text-2xs absolute -right-2 -top-2.5 bg-amber-700 w-4.5 h-4.5 rounded-full text-white">
+                    <span className="flex items-center justify-center font-medium text-2xs absolute -right-2 -top-2.5 bg-[#c2712f] w-4.5 h-4.5 rounded-full text-white">
                       {product.length}
                     </span>
                   </span>
@@ -225,7 +225,7 @@ const Header = () => {
                       <Link
                         href={menuItem.path}
                         onClick={closeNavigation}
-                        className={`hover:text-[#c77f56] text-custom-sm font-medium text-dark flex ${
+                        className={`hover:text-[#c2712f] text-custom-sm font-medium text-dark flex ${
                           stickyMenu ? "xl:py-4" : "xl:py-6"
                         }`}
                       >
@@ -243,7 +243,7 @@ const Header = () => {
                 <li className="py-4">
                   <Link
                     href="/gallery"
-                    className="flex items-center gap-1.5 font-medium text-custom-sm text-dark hover:text-[#c77f56]"
+                    className="flex items-center gap-1.5 font-medium text-custom-sm text-dark hover:text-[#c2712f]"
                   >
                     <ImagePlus className="w-4 h-4" />
                     Gallery

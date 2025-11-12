@@ -83,7 +83,7 @@ const SingleGridItem = ({ item }: { item: Product }) => {
 
       {/* Title */}
       <h3
-        className="font-semibold text-dark text-center ease-out duration-200 hover:text-[#c77f56] mb-1.5"
+        className="font-semibold text-dark text-center ease-out duration-200 hover:text-[#c2712f] mb-1.5"
         onClick={handleProductDetails}
       >
         <Link href={`/shop/${item.slug.current}`} className="line-clamp-1">
@@ -132,14 +132,14 @@ const SingleGridItem = ({ item }: { item: Product }) => {
             handleQuickViewUpdate();
           }}
           aria-label="Quick view product"
-          className="flex items-center justify-center w-9 h-9 rounded-[5px] shadow-1 ease-out duration-200 text-dark bg-white hover:text-[#c77f56] flex-shrink-0"
+          className="flex items-center justify-center w-9 h-9 rounded-[5px] shadow-1 ease-out duration-200 text-dark bg-white hover:text-[#c2712f] flex-shrink-0"
         >
           <Eye className="w-4 h-4" />
         </button>
 
         <button
           onClick={handleAddToCart}
-          className="flex items-center justify-center bg-[#c77f56] font-medium text-custom-sm py-[7px] px-5 rounded-[5px] text-white ease-out duration-200 hover:bg-opacity-90"
+          className="flex items-center justify-center bg-[#c2712f] font-medium text-custom-sm py-[7px] px-5 rounded-[5px] text-white ease-out duration-200 hover:bg-opacity-90"
         >
           Add to cart
         </button>
@@ -147,7 +147,7 @@ const SingleGridItem = ({ item }: { item: Product }) => {
         <button
           onClick={handleItemToWishList}
           aria-label="Add to wishlist"
-          className="flex items-center justify-center w-9 h-9 rounded-[5px] shadow-1 ease-out duration-200 text-dark bg-white hover:text-[#c77f56] flex-shrink-0"
+          className="flex items-center justify-center w-9 h-9 rounded-[5px] shadow-1 ease-out duration-200 text-dark bg-white hover:text-[#c2712f] flex-shrink-0"
         >
           <Heart className="w-4 h-4" />
         </button>
