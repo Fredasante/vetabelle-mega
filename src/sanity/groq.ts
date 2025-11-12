@@ -16,10 +16,10 @@ export const allProductsQuery = `
   }
 `;
 
-// ✅ Fetch 12 most recent in-stock products (New Arrivals)
+// (New Arrivals)
 export const newArrivalsQuery = `
   *[_type == "product" && status == "in-stock"] 
-  | order(coalesce(createdAt, _createdAt) desc)[0...12] {
+  | order(coalesce(createdAt, _createdAt) desc) {
     _id,
     title,
     slug,
