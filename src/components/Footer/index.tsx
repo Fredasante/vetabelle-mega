@@ -160,7 +160,7 @@ const Footer = () => {
             </li>
 
             {/* TikTok */}
-            <li className="!ml-[11px]">
+            <li className="!ml-[12px]">
               <a
                 href="https://www.tiktok.com/@vetabellegh"
                 target="_blank"
