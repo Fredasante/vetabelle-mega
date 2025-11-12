@@ -121,7 +121,7 @@ const Header = () => {
               <div className="flex items-center gap-5">
                 <Link className="flex-shrink-0 block md:hidden" href="/">
                   <Image
-                    src="/vetabelle-logo.jpg"
+                    src="/vetabelle-logo.png"
                     alt="Logo"
                     width={105}
                     height={50}
