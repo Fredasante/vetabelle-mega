@@ -91,7 +91,7 @@ const Hero = () => {
           </div>
 
           {/* Right Cards */}
-          <div className="xl:max-w-[393px] w-full hidden md:block h-[520px]">
+          <div className="xl:max-w-[393px] w-full h-[520px]">
             <div className="flex flex-col sm:flex-row xl:flex-col gap-4 h-full">
               {/* Our Mission Card */}
               <div className="w-full relative rounded-[10px] overflow-hidden flex-1 flex flex-col justify-between">
