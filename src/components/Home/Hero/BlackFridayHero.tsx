@@ -16,9 +16,22 @@ const BlackFridayHero = () => {
   const router = useRouter();
 
   useEffect(() => {
-    // Calculate end date (7 days from now)
-    const endDate = new Date();
-    endDate.setDate(endDate.getDate() + 7);
+    // Get or create end date
+    const getEndDate = () => {
+      const stored = localStorage.getItem("countdownEndDate");
+
+      if (stored) {
+        return new Date(stored);
+      } else {
+        // First time - set end date to 7 days from now
+        const endDate = new Date();
+        endDate.setDate(endDate.getDate() + 7);
+        localStorage.setItem("countdownEndDate", endDate.toISOString());
+        return endDate;
+      }
+    };
+
+    const endDate = getEndDate();
 
     const calculateTimeLeft = () => {
       const now = new Date().getTime();
@@ -33,6 +46,11 @@ const BlackFridayHero = () => {
           minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
           seconds: Math.floor((distance % (1000 * 60)) / 1000),
         });
+      } else {
+        // Countdown finished - optionally clear and restart
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        // Optional: Start a new countdown
+        // localStorage.removeItem('countdownEndDate');
       }
     };
 
@@ -55,7 +73,7 @@ const BlackFridayHero = () => {
   };
 
   return (
-    <section className="overflow-x-hidden pb-10 lg:pb-12.5 xl:pb-12 pt-37 sm:pt-40 lg:pt-30 xl:pt-40 bg-[#f1f4f7] relative">
+    <section className="overflow-x-hidden pb-10 lg:pb-12.5 xl:pb-12 pt-35 sm:pt-40 lg:pt-30 xl:pt-40 bg-[#f1f4f7] relative">
       {/* Animated Background Effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse"></div>
@@ -71,7 +89,7 @@ const BlackFridayHero = () => {
           className="w-full flex items-center justify-center rounded-[10px] min-h-[580px] lg:h-[580px] bg-cover bg-center relative overflow-hidden border-4 border-red-600 shadow-2xl"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('https://images.unsplash.com/photo-1607083206968-13611e3d76db?w=1600')",
+              "linear-gradient(rgba(0,0,0,0.30), rgba(0,0,0,0.30)), url('/carousel-3.jpg')",
           }}
         >
           {/* Black Friday Badge */}
@@ -82,7 +100,7 @@ const BlackFridayHero = () => {
           </div>
 
           {/* Countdown Timer (Top Left) */}
-          <div className="absolute top-3 sm:top-6 left-3 sm:left-6 bg-black/90 backdrop-blur-sm border-2 border-yellow-400 text-white px-3 sm:px-6 py-2 sm:py-4 rounded-lg shadow-xl">
+          <div className="absolute top-3 sm:top-6 left-3 sm:left-6 backdrop-blur-sm border-2 border-yellow-400 text-white px-3 sm:px-6 py-2 sm:py-4 rounded-lg shadow-xl">
             <div className="flex items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
               <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400" />
               <span className="text-yellow-400 font-bold text-[10px] sm:text-xs uppercase">
