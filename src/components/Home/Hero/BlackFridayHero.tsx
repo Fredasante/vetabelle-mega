@@ -23,9 +23,9 @@ const BlackFridayHero = () => {
       if (stored) {
         return new Date(stored);
       } else {
-        // First time - set end date to 7 days from now
+        // First time - set end date to 3 days from now
         const endDate = new Date();
-        endDate.setDate(endDate.getDate() + 7);
+        endDate.setDate(endDate.getDate() + 3);
         localStorage.setItem("countdownEndDate", endDate.toISOString());
         return endDate;
       }
