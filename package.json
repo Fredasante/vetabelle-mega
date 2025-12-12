@@ -18,7 +18,7 @@
     "@sanity/vision": "^4.11.0",
     "autoprefixer": "10.4.15",
     "lucide-react": "^0.545.0",
-    "next": "15.2.3",
+    "next": "15.2.8",
     "next-sanity": "^11.6.2",
     "postcss": "8.4.29",
     "react": "19.0.0",
