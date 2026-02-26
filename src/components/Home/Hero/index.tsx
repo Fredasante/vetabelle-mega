@@ -49,24 +49,23 @@ const Hero = () => {
                   </p>
                 </div>
 
-                {/* Search Bar */}
+                {/* Search Bar - unified input + button */}
                 <div className="mb-4 sm:mb-6 w-full">
-                  <div className="relative flex items-center bg-white rounded-full shadow-2 overflow-hidden border-2 border-gray-3 focus-within:border-[#c77f56] transition-colors w-full max-w-full">
+                  <div className="relative w-full max-w-full">
                     <input
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       onKeyPress={handleKeyPress}
                       placeholder="Search for supplements, vitamins, beauty products..."
-                      className="flex-1 px-4 sm:px-6 py-3 sm:py-4 outline-none text-dark placeholder:text-gray-500 w-full min-w-0"
+                      className="w-full px-4 sm:px-6 py-3 sm:py-4 pr-14 sm:pr-20 outline-none text-dark placeholder:text-gray-500 border-2 border-gray-3 rounded-full shadow-2 focus:border-[#c77f56] transition-colors bg-white"
                     />
-
                     <button
                       onClick={handleSearch}
-                      className="bg-[#c2712f] text-white px-4 sm:px-6 py-3 sm:py-4 font-medium hover:bg-[#b96e48] transition-all duration-200 flex items-center gap-2 flex-shrink-0"
+                      type="button"
+                      className="absolute right-1 top-1/2 -translate-y-1/2 bg-[#c2712f] text-white p-2.5 sm:p-3 rounded-full font-medium hover:bg-[#b96e48] transition-all duration-200 flex items-center justify-center shrink-0"
                     >
                       <Search className="w-4 h-4 sm:w-5 sm:h-5" />
-                      <span className="hidden sm:inline">Search</span>
                     </button>
                   </div>
                 </div>
