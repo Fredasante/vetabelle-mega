@@ -25,9 +25,9 @@ export default function ClientLayout({
   const [loading, setLoading] = useState(true);
 
   const hideLayoutRoutes = ["/studio", "/admin"];
-  const hideLayout =
-    pathname === "/" ||
-    hideLayoutRoutes.some((route) => pathname.startsWith(route));
+  const hideLayout = hideLayoutRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
 
   useEffect(() => {
     if (!hideLayout) {
