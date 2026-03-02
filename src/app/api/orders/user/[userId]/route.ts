@@ -39,8 +39,10 @@ export async function GET(
     customerInfo.phone == $userPhone
   )] | order(createdAt desc) {
     orderId,
+    fulfillmentMethod,
     customerInfo,
     deliveryInfo,
+    pickupLocation,
     items[] {
       productSnapshot,
       quantity,

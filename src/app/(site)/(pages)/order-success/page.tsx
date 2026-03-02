@@ -16,16 +16,21 @@ import { ClipLoader } from "react-spinners";
 
 interface OrderDetails {
   orderId: string;
+  fulfillmentMethod?: string;
   customerInfo: {
     fullName: string;
     phone: string;
     email: string;
   };
-  deliveryInfo: {
+  deliveryInfo?: {
     region: string;
     city: string;
     address: string;
-  };
+  } | null;
+  pickupLocation?: {
+    name: string;
+    address: string;
+  } | null;
   items: Array<{
     productSnapshot: {
       title: string;
@@ -226,58 +231,123 @@ export default function OrderSuccessPage() {
             </div>
           </div>
 
-          <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
-            <p className="text-xs text-yellow-800">
-              <strong>Note:</strong> Delivery fee will be collected separately
-              by the rider upon delivery
-            </p>
-          </div>
+          {orderDetails.fulfillmentMethod === "delivery" || !orderDetails.fulfillmentMethod ? (
+            <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+              <p className="text-xs text-yellow-800">
+                <strong>Note:</strong> Delivery fee will be collected separately
+                by the rider upon delivery
+              </p>
+            </div>
+          ) : (
+            <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-md">
+              <p className="text-xs text-green-800">
+                <strong>Pickup:</strong> No delivery fee — collect your order at{" "}
+                {orderDetails.pickupLocation?.name}
+              </p>
+            </div>
+          )}
         </div>
 
-        {/* Delivery Information */}
+        {/* Fulfillment Information */}
         <div className="bg-white shadow-1 rounded-[10px] p-6 sm:p-8 mb-7.5">
-          <h2 className="text-xl font-semibold text-dark mb-5 flex items-center gap-2">
-            <Truck className="w-5 h-5 text-teal" />
-            Delivery Information
-          </h2>
-          <div className="space-y-4">
-            <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="font-medium text-dark mb-1">Delivery Address</p>
-                <p className="text-sm text-gray-600">
-                  {orderDetails.deliveryInfo.address}
-                  <br />
-                  {orderDetails.deliveryInfo.city},{" "}
-                  {orderDetails.deliveryInfo.region}
-                </p>
-              </div>
-            </div>
+          {orderDetails.fulfillmentMethod && orderDetails.fulfillmentMethod !== "delivery" ? (
+            <>
+              <h2 className="text-xl font-semibold text-dark mb-5 flex items-center gap-2">
+                <MapPin className="w-5 h-5 text-teal" />
+                Pickup Information
+              </h2>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <MapPin className="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium text-dark mb-1">Pickup Location</p>
+                    <p className="text-sm text-gray-600">
+                      {orderDetails.pickupLocation?.name}
+                      <br />
+                      {orderDetails.pickupLocation?.address}
+                    </p>
+                  </div>
+                </div>
 
-            <div className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="font-medium text-dark mb-1">Contact Person</p>
-                <p className="text-sm text-gray-600">
-                  {orderDetails.customerInfo.fullName}
-                  <br />
-                  {orderDetails.customerInfo.phone}
-                </p>
-              </div>
-            </div>
+                <div className="flex items-start gap-3">
+                  <Phone className="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium text-dark mb-1">Contact Person</p>
+                    <p className="text-sm text-gray-600">
+                      {orderDetails.customerInfo.fullName}
+                      <br />
+                      {orderDetails.customerInfo.phone}
+                    </p>
+                  </div>
+                </div>
 
-            {orderDetails.customerInfo.email && (
-              <div className="flex items-start gap-3">
-                <Mail className="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-medium text-dark mb-1">Email</p>
-                  <p className="text-sm text-gray-600">
-                    {orderDetails.customerInfo.email}
+                {orderDetails.customerInfo.email && (
+                  <div className="flex items-start gap-3">
+                    <Mail className="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="font-medium text-dark mb-1">Email</p>
+                      <p className="text-sm text-gray-600">
+                        {orderDetails.customerInfo.email}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                <div className="p-3 bg-blue-50 border border-blue-200 rounded-md">
+                  <p className="text-xs text-blue-800">
+                    Our team will contact you to confirm your pickup time.
                   </p>
                 </div>
               </div>
-            )}
-          </div>
+            </>
+          ) : (
+            <>
+              <h2 className="text-xl font-semibold text-dark mb-5 flex items-center gap-2">
+                <Truck className="w-5 h-5 text-teal" />
+                Delivery Information
+              </h2>
+              <div className="space-y-4">
+                {orderDetails.deliveryInfo && (
+                  <div className="flex items-start gap-3">
+                    <MapPin className="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="font-medium text-dark mb-1">Delivery Address</p>
+                      <p className="text-sm text-gray-600">
+                        {orderDetails.deliveryInfo.address}
+                        <br />
+                        {orderDetails.deliveryInfo.city},{" "}
+                        {orderDetails.deliveryInfo.region}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex items-start gap-3">
+                  <Phone className="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium text-dark mb-1">Contact Person</p>
+                    <p className="text-sm text-gray-600">
+                      {orderDetails.customerInfo.fullName}
+                      <br />
+                      {orderDetails.customerInfo.phone}
+                    </p>
+                  </div>
+                </div>
+
+                {orderDetails.customerInfo.email && (
+                  <div className="flex items-start gap-3">
+                    <Mail className="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="font-medium text-dark mb-1">Email</p>
+                      <p className="text-sm text-gray-600">
+                        {orderDetails.customerInfo.email}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
         </div>
 
         {/* What's Next */}
@@ -290,12 +360,22 @@ export default function OrderSuccessPage() {
                 Our team will review your order and contact you within 24 hours
               </span>
             </li>
-            <li className="flex gap-2">
-              <span className="text-teal font-semibold">4.</span>
-              <span>
-                Delivery fee will be collected by the rider on delivery
-              </span>
-            </li>
+            {orderDetails.fulfillmentMethod && orderDetails.fulfillmentMethod !== "delivery" ? (
+              <li className="flex gap-2">
+                <span className="text-teal font-semibold">2.</span>
+                <span>
+                  We&apos;ll confirm your pickup time at{" "}
+                  {orderDetails.pickupLocation?.name}
+                </span>
+              </li>
+            ) : (
+              <li className="flex gap-2">
+                <span className="text-teal font-semibold">2.</span>
+                <span>
+                  Delivery fee will be collected by the rider on delivery
+                </span>
+              </li>
+            )}
           </ol>
         </div>
 

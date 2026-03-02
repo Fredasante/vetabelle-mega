@@ -26,13 +26,37 @@ export default defineType({
       ],
     }),
     defineField({
+      name: "fulfillmentMethod",
+      title: "Fulfillment Method",
+      type: "string",
+      options: {
+        list: [
+          { title: "Delivery", value: "delivery" },
+          { title: "Pickup at Office", value: "pickup_office" },
+          { title: "Pickup at A&C Mall", value: "pickup_ac_mall" },
+        ],
+        layout: "radio",
+      },
+    }),
+    defineField({
       name: "deliveryInfo",
       title: "Delivery Information",
       type: "object",
+      description: "Only applicable for delivery orders",
       fields: [
         { name: "region", title: "Region", type: "string" },
         { name: "city", title: "City", type: "string" },
         { name: "address", title: "Address", type: "text" },
+      ],
+    }),
+    defineField({
+      name: "pickupLocation",
+      title: "Pickup Location",
+      type: "object",
+      description: "Only applicable for pickup orders",
+      fields: [
+        { name: "name", title: "Location Name", type: "string" },
+        { name: "address", title: "Address", type: "string" },
       ],
     }),
     defineField({
@@ -179,9 +203,10 @@ export default defineType({
       customerName: "customerInfo.fullName",
       total: "pricing.total",
       status: "deliveryStatus",
+      fulfillmentMethod: "fulfillmentMethod",
       createdAt: "createdAt",
     },
-    prepare({ orderId, customerName, total, status, createdAt }) {
+    prepare({ orderId, customerName, total, status, fulfillmentMethod, createdAt }) {
       const statusEmojis: Record<string, string> = {
         payment_pending: "⏳",
         payment_received: "✅",
@@ -192,9 +217,17 @@ export default defineType({
         cancelled: "❌",
       };
 
+      const fulfillmentLabels: Record<string, string> = {
+        delivery: "🚚 Delivery",
+        pickup_office: "🏢 Office Pickup",
+        pickup_ac_mall: "🛍️ A&C Mall Pickup",
+      };
+
+      const fulfillmentLabel = fulfillmentLabels[fulfillmentMethod] || "";
+
       return {
         title: `${orderId} - ${customerName || "Guest"}`,
-        subtitle: `₵${total?.toFixed(2)} • ${statusEmojis[status] || ""} ${status
+        subtitle: `₵${total?.toFixed(2)} • ${fulfillmentLabel ? fulfillmentLabel + " • " : ""}${statusEmojis[status] || ""} ${status
           ?.replace(/_/g, " ")
           .toUpperCase()} • ${new Date(createdAt).toLocaleDateString()}`,
       };

@@ -2,6 +2,10 @@
 import React, { useState } from "react";
 import Coupon from "./Coupon";
 import Billing from "./Billing";
+import FulfillmentMethod, {
+  FulfillmentType,
+  PICKUP_LOCATIONS,
+} from "./FulfillmentMethod";
 import { useAppSelector } from "@/redux/store";
 import { useSelector, useDispatch } from "react-redux";
 import { selectCartItems, selectTotalPrice } from "@/redux/features/cart-slice";
@@ -30,6 +34,8 @@ const Checkout = () => {
   const [discount, setDiscount] = useState(0);
   const [couponCode, setCouponCode] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
+  const [fulfillmentMethod, setFulfillmentMethod] =
+    useState<FulfillmentType>("delivery");
   const dispatch = useDispatch();
 
   const total = itemsTotal - discount;
@@ -47,8 +53,11 @@ const Checkout = () => {
         .toUpperCase()}`;
       const paymentReference = generatePaymentReference(orderId);
 
+      const isPickup = fulfillmentMethod !== "delivery";
+
       const orderData = {
         orderId,
+        fulfillmentMethod,
         customerInfo: {
           fullName: formData.get("fullName") as string,
           phone: formData.get("phone") as string,
@@ -58,11 +67,18 @@ const Checkout = () => {
             "",
           userId: user?.id || null,
         },
-        deliveryInfo: {
-          region: formData.get("region") as string,
-          city: formData.get("city") as string,
-          address: formData.get("address") as string,
-        },
+        deliveryInfo: isPickup
+          ? null
+          : {
+              region: formData.get("region") as string,
+              city: formData.get("city") as string,
+              address: formData.get("address") as string,
+            },
+        pickupLocation: isPickup
+          ? PICKUP_LOCATIONS[
+              fulfillmentMethod as Exclude<FulfillmentType, "delivery">
+            ]
+          : null,
         items: cartItems.map((item) => ({
           _key: generateKey(),
           product: { _ref: item._id, _type: "reference" },
@@ -110,7 +126,7 @@ const Checkout = () => {
         onSuccess: async (transaction) => {
           try {
             const verification = await verifyPaystackPayment(
-              transaction.reference
+              transaction.reference,
             );
 
             if (!verification.success) {
@@ -123,7 +139,7 @@ const Checkout = () => {
 
             sessionStorage.setItem(
               `order_${orderId}`,
-              JSON.stringify(orderData)
+              JSON.stringify(orderData),
             );
 
             // Create the order in Sanity
@@ -142,13 +158,13 @@ const Checkout = () => {
 
             // Redirect to success page
             router.push(
-              `/order-success?orderId=${orderId}&reference=${transaction.reference}`
+              `/order-success?orderId=${orderId}&reference=${transaction.reference}`,
             );
           } catch (error) {
             console.error("Post-payment error:", error);
             alert(
               "Payment was successful but there was an error processing your order. Please contact support with reference: " +
-                transaction.reference
+                transaction.reference,
             );
             setIsProcessing(false);
           }
@@ -161,7 +177,7 @@ const Checkout = () => {
     } catch (error) {
       console.error("Checkout error:", error);
       alert(
-        "Something went wrong. Please try again or contact us on WhatsApp."
+        "Something went wrong. Please try again or contact us on WhatsApp.",
       );
       setIsProcessing(false);
     }
@@ -208,7 +224,7 @@ const Checkout = () => {
 
   return (
     <>
-      <section className="overflow-hidden py-10 bg-gray-2 mt-45 md:mt-50 md:pb-10 lg:pb-18">
+      <section className="overflow-hidden py-10 bg-gray-2 pt-40 md:pt-50 md:pb-10 lg:pb-18">
         <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
           {!isSignedIn && (
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-5 mb-7.5">
@@ -258,7 +274,14 @@ const Checkout = () => {
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col lg:flex-row gap-7.5 xl:gap-11">
               <div className="lg:max-w-[670px] w-full">
-                <Billing isGuest={!isSignedIn} />
+                <FulfillmentMethod
+                  selected={fulfillmentMethod}
+                  onChange={setFulfillmentMethod}
+                />
+
+                {fulfillmentMethod === "delivery" && (
+                  <Billing isGuest={!isSignedIn} />
+                )}
               </div>
 
               <div className="max-w-[455px] w-full mt-3 md:mt-5 lg:mt-20">
@@ -334,12 +357,29 @@ const Checkout = () => {
                       </p>
                     </div>
 
-                    <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
-                      <p className="text-xs text-yellow-800">
-                        <strong>Note:</strong> Delivery fee will be collected
-                        separately by the rider upon delivery
-                      </p>
-                    </div>
+                    {fulfillmentMethod === "delivery" ? (
+                      <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+                        <p className="text-xs text-yellow-800">
+                          <strong>Note:</strong> Delivery fee will be collected
+                          separately by the rider upon delivery
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-md">
+                        <p className="text-xs text-green-800">
+                          <strong>Pickup:</strong> No delivery fee — collect
+                          your order at{" "}
+                          {
+                            PICKUP_LOCATIONS[
+                              fulfillmentMethod as Exclude<
+                                FulfillmentType,
+                                "delivery"
+                              >
+                            ]?.name
+                          }
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
 

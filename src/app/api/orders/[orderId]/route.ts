@@ -20,8 +20,10 @@ export async function GET(
     const order = await client.fetch(
       `*[_type == "order" && orderId == $orderId][0]{
         orderId,
+        fulfillmentMethod,
         customerInfo,
         deliveryInfo,
+        pickupLocation,
         items[]{
           _key,
           product->{
