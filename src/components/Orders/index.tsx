@@ -8,12 +8,13 @@ import { Package, ShoppingBag } from "lucide-react";
 
 interface Order {
   orderId: string;
+  fulfillmentMethod?: string;
   customerInfo: {
     fullName: string;
     phone: string;
     email: string;
   };
-  deliveryInfo: {
+  deliveryInfo?: {
     region: string;
     city: string;
     address: string;

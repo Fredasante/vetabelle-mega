@@ -30,10 +30,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Remove null fields to avoid Sanity "invalid property value" errors
+    const cleanedData = Object.fromEntries(
+      Object.entries(orderData).filter(([, v]) => v !== null)
+    );
+
     // Create order in Sanity
     const order = await client.create({
       _type: "order",
-      ...orderData,
+      ...cleanedData,
     });
 
     return NextResponse.json({

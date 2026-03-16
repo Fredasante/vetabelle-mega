@@ -2,15 +2,17 @@
 import React from "react";
 import { X, Package, MapPin, Phone, Mail } from "lucide-react";
 import Image from "next/image";
+import { PICKUP_LOCATIONS } from "@/components/Checkout/FulfillmentMethod";
 
 interface Order {
   orderId: string;
+  fulfillmentMethod?: string;
   customerInfo: {
     fullName: string;
     phone: string;
     email: string;
   };
-  deliveryInfo: {
+  deliveryInfo?: {
     region: string;
     city: string;
     address: string;
@@ -123,18 +125,32 @@ const OrderDetails = ({
 
         {/* Delivery & Contact Info */}
         <div className="space-y-6">
-          {/* Delivery Address */}
+          {/* Delivery / Pickup Address */}
           <div>
             <div className="flex items-center gap-2 mb-4">
               <MapPin className="w-5 h-5 text-blue" />
-              <h4 className="font-medium text-dark">Delivery Address</h4>
+              <h4 className="font-medium text-dark">
+                {order.fulfillmentMethod && order.fulfillmentMethod !== "delivery"
+                  ? "Pickup Location"
+                  : "Delivery Address"}
+              </h4>
             </div>
             <div className="p-3 bg-white rounded-lg">
-              <p className="text-sm text-dark">
-                {order.deliveryInfo.address}
-                <br />
-                {order.deliveryInfo.city}, {order.deliveryInfo.region}
-              </p>
+              {order.fulfillmentMethod && order.fulfillmentMethod !== "delivery" ? (
+                <p className="text-sm text-dark">
+                  {PICKUP_LOCATIONS[order.fulfillmentMethod as keyof typeof PICKUP_LOCATIONS]?.name}
+                  <br />
+                  {PICKUP_LOCATIONS[order.fulfillmentMethod as keyof typeof PICKUP_LOCATIONS]?.address}
+                </p>
+              ) : order.deliveryInfo ? (
+                <p className="text-sm text-dark">
+                  {order.deliveryInfo.address}
+                  <br />
+                  {order.deliveryInfo.city}, {order.deliveryInfo.region}
+                </p>
+              ) : (
+                <p className="text-sm text-gray-500">No address provided</p>
+              )}
             </div>
           </div>
 
@@ -183,13 +199,22 @@ const OrderDetails = ({
             </div>
           </div>
 
-          {/* Delivery Fee Notice */}
-          <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-            <p className="text-xs text-yellow-800">
-              <strong>Note:</strong> Delivery fee will be collected separately
-              by the rider upon delivery
-            </p>
-          </div>
+          {/* Delivery Fee / Pickup Notice */}
+          {order.fulfillmentMethod && order.fulfillmentMethod !== "delivery" ? (
+            <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
+              <p className="text-xs text-green-800">
+                <strong>Pickup:</strong> No delivery fee — collect your order
+                at {PICKUP_LOCATIONS[order.fulfillmentMethod as keyof typeof PICKUP_LOCATIONS]?.name}
+              </p>
+            </div>
+          ) : (
+            <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <p className="text-xs text-yellow-800">
+                <strong>Note:</strong> Delivery fee will be collected separately
+                by the rider upon delivery
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

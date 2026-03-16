@@ -50,16 +50,6 @@ export default defineType({
       ],
     }),
     defineField({
-      name: "pickupLocation",
-      title: "Pickup Location",
-      type: "object",
-      description: "Only applicable for pickup orders",
-      fields: [
-        { name: "name", title: "Location Name", type: "string" },
-        { name: "address", title: "Address", type: "string" },
-      ],
-    }),
-    defineField({
       name: "items",
       title: "Order Items",
       type: "array",

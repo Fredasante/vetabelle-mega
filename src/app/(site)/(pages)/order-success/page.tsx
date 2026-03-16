@@ -13,6 +13,7 @@ import {
   Printer,
 } from "lucide-react";
 import { ClipLoader } from "react-spinners";
+import { PICKUP_LOCATIONS } from "@/components/Checkout/FulfillmentMethod";
 
 interface OrderDetails {
   orderId: string;
@@ -25,10 +26,6 @@ interface OrderDetails {
   deliveryInfo?: {
     region: string;
     city: string;
-    address: string;
-  } | null;
-  pickupLocation?: {
-    name: string;
     address: string;
   } | null;
   items: Array<{
@@ -242,7 +239,7 @@ export default function OrderSuccessPage() {
             <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-md">
               <p className="text-xs text-green-800">
                 <strong>Pickup:</strong> No delivery fee — collect your order at{" "}
-                {orderDetails.pickupLocation?.name}
+                {PICKUP_LOCATIONS[orderDetails.fulfillmentMethod as keyof typeof PICKUP_LOCATIONS]?.name}
               </p>
             </div>
           )}
@@ -262,9 +259,9 @@ export default function OrderSuccessPage() {
                   <div>
                     <p className="font-medium text-dark mb-1">Pickup Location</p>
                     <p className="text-sm text-gray-600">
-                      {orderDetails.pickupLocation?.name}
+                      {PICKUP_LOCATIONS[orderDetails.fulfillmentMethod as keyof typeof PICKUP_LOCATIONS]?.name}
                       <br />
-                      {orderDetails.pickupLocation?.address}
+                      {PICKUP_LOCATIONS[orderDetails.fulfillmentMethod as keyof typeof PICKUP_LOCATIONS]?.address}
                     </p>
                   </div>
                 </div>
@@ -365,7 +362,7 @@ export default function OrderSuccessPage() {
                 <span className="text-teal font-semibold">2.</span>
                 <span>
                   We&apos;ll confirm your pickup time at{" "}
-                  {orderDetails.pickupLocation?.name}
+                  {PICKUP_LOCATIONS[orderDetails.fulfillmentMethod as keyof typeof PICKUP_LOCATIONS]?.name}
                 </span>
               </li>
             ) : (

@@ -28,7 +28,7 @@ const generateKey = () => {
 
 const Checkout = () => {
   const router = useRouter();
-  const { isSignedIn, user, isLoaded } = useUser();
+  const { user, isLoaded } = useUser();
   const cartItems = useAppSelector(selectCartItems);
   const itemsTotal = useSelector(selectTotalPrice);
   const [discount, setDiscount] = useState(0);
@@ -65,20 +65,17 @@ const Checkout = () => {
             (formData.get("email") as string) ||
             user?.primaryEmailAddress?.emailAddress ||
             "",
-          userId: user?.id || null,
+          ...(user?.id ? { userId: user.id } : {}),
         },
-        deliveryInfo: isPickup
-          ? null
+        ...(isPickup
+          ? {}
           : {
-              region: formData.get("region") as string,
-              city: formData.get("city") as string,
-              address: formData.get("address") as string,
-            },
-        pickupLocation: isPickup
-          ? PICKUP_LOCATIONS[
-              fulfillmentMethod as Exclude<FulfillmentType, "delivery">
-            ]
-          : null,
+              deliveryInfo: {
+                region: formData.get("region") as string,
+                city: formData.get("city") as string,
+                address: formData.get("address") as string,
+              },
+            }),
         items: cartItems.map((item) => ({
           _key: generateKey(),
           product: { _ref: item._id, _type: "reference" },
@@ -95,14 +92,14 @@ const Checkout = () => {
           subtotal: itemsTotal,
           discount,
           total,
-          couponCode: couponCode || null,
+          ...(couponCode ? { couponCode } : {}),
         },
         payment: {
           method: "paystack",
           status: "pending",
           paystackReference: paymentReference,
           amount: total,
-          paidAt: null,
+          paidAt: undefined,
         },
         deliveryStatus: "payment_pending",
         createdAt: new Date().toISOString(),
@@ -226,50 +223,6 @@ const Checkout = () => {
     <>
       <section className="overflow-hidden py-10 bg-gray-2 pt-40 md:pt-50 md:pb-10 lg:pb-18">
         <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
-          {!isSignedIn && (
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-5 mb-7.5">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <div className="flex-1">
-                  <h3 className="font-semibold text-dark mb-1.5">
-                    Checkout as Guest or Sign In
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    Complete your order as a guest, or sign in to track orders
-                    easily
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  <Link
-                    href="/signin?redirect_url=/checkout"
-                    className="inline-flex items-center justify-center font-medium text-white bg-teal py-2.5 px-6 rounded-md ease-out duration-200 hover:bg-opacity-90 whitespace-nowrap"
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    href="/signup?redirect_url=/checkout"
-                    className="inline-flex items-center justify-center font-medium text-teal bg-white border border-teal py-2.5 px-6 rounded-md ease-out duration-200 hover:bg-teal-dark hover:text-white whitespace-nowrap"
-                  >
-                    Create Account
-                  </Link>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {isSignedIn && user && (
-            <div className="bg-white border-none shadow-sm rounded-lg p-5 mb-7.5">
-              <div className="flex items-center  gap-3">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center">
-                  <CircleCheck className="w-6 h-6 text-green-dark" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">
-                    Your order will be saved to your account for easy tracking
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
 
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col lg:flex-row gap-7.5 xl:gap-11">
@@ -279,8 +232,67 @@ const Checkout = () => {
                   onChange={setFulfillmentMethod}
                 />
 
+                <div className="mt-7">
+                  <h2 className="font-medium text-dark text-xl sm:text-2xl mb-5.5">
+                    Contact Information
+                  </h2>
+
+                  <div className="bg-white shadow-1 rounded-[10px] p-4 sm:p-8.5">
+                    {/* Full Name */}
+                    <div className="mb-5">
+                      <label htmlFor="fullName" className="block mb-2.5">
+                        Full Name <span className="text-red">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="fullName"
+                        id="fullName"
+                        placeholder="Enter your full name"
+                        required
+                        className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full py-2.5 px-5 outline-none duration-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
+                      />
+                    </div>
+
+                    {/* Phone Number */}
+                    <div className="mb-5">
+                      <label htmlFor="phone" className="block mb-2.5">
+                        Phone Number <span className="text-red">*</span>
+                      </label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        id="phone"
+                        placeholder="024 123 4567"
+                        required
+                        pattern="[0-9]{10}"
+                        className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full py-2.5 px-5 outline-none duration-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
+                      />
+                      <p className="text-xs text-gray-600 mt-1.5">
+                        For contact and mobile money payment
+                      </p>
+                    </div>
+
+                    {/* Email (Optional) */}
+                    <div>
+                      <label htmlFor="email" className="block mb-2.5">
+                        Email Address <span className="text-dark-5">(Optional)</span>
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        placeholder="your.email@example.com"
+                        className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full py-2.5 px-5 outline-none duration-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
+                      />
+                      <p className="text-xs text-gray-600 mt-1.5">
+                        For order confirmation and updates
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
                 {fulfillmentMethod === "delivery" && (
-                  <Billing isGuest={!isSignedIn} />
+                  <Billing />
                 )}
               </div>
 

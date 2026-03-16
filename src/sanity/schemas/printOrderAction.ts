@@ -1,5 +1,16 @@
 import { Printer } from "lucide-react";
 
+const PICKUP_LOCATIONS: Record<string, { name: string; address: string }> = {
+  pickup_office: {
+    name: "Vetabelle Office",
+    address: "Near Entrance Hospital Kokomelemele",
+  },
+  pickup_ac_mall: {
+    name: "A&C Mall",
+    address: "A&C Mall",
+  },
+};
+
 export function PrintOrderAction(props) {
   const { type, draft, published } = props;
 
@@ -12,8 +23,29 @@ export function PrintOrderAction(props) {
 
     const win = window.open("", "_blank");
 
+    const isPickup =
+      order.fulfillmentMethod && order.fulfillmentMethod !== "delivery";
+    const pickup = isPickup
+      ? PICKUP_LOCATIONS[order.fulfillmentMethod] || null
+      : null;
+
+    const locationHtml = isPickup
+      ? `
+    <div style="margin-bottom:10px;">
+      <strong>Pickup Location:</strong><br/>
+      ${pickup?.name || ""}<br/>
+      ${pickup?.address || ""}
+    </div>`
+      : `
+    <div style="margin-bottom:10px;">
+      <strong>Delivery Address:</strong><br/>
+      ${order.deliveryInfo?.region || ""}<br/>
+      ${order.deliveryInfo?.city || ""}<br/>
+      ${order.deliveryInfo?.address || ""}
+    </div>`;
+
     const html = `
-    <h1 style="font-size:16px;text-align:center;margin-bottom:12px;">DELIVERY DETAILS</h1>
+    <h1 style="font-size:16px;text-align:center;margin-bottom:12px;">${isPickup ? "PICKUP DETAILS" : "DELIVERY DETAILS"}</h1>
 
     <div style="margin-bottom:10px;">
       <strong>Name:</strong><br/>
@@ -25,12 +57,7 @@ export function PrintOrderAction(props) {
       ${order.customerInfo?.phone || ""}
     </div>
 
-    <div style="margin-bottom:10px;">
-      <strong>Location:</strong><br/>
-      ${order.deliveryInfo?.region || ""}<br/>
-      ${order.deliveryInfo?.city || ""}<br/>
-      ${order.deliveryInfo?.address || ""}
-    </div>
+    ${locationHtml}
 
     <script>
       window.onload = () => window.print();
@@ -62,7 +89,7 @@ export function PrintOrderAction(props) {
   };
 
   return {
-    label: "Print Delivery",
+    label: "Print Order",
     icon: Printer,
     onHandle: handlePrint,
   };

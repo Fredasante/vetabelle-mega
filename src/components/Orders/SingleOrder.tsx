@@ -10,15 +10,17 @@ import {
   ChevronUp,
 } from "lucide-react";
 import Image from "next/image";
+import { PICKUP_LOCATIONS } from "@/components/Checkout/FulfillmentMethod";
 
 interface Order {
   orderId: string;
+  fulfillmentMethod?: string;
   customerInfo: {
     fullName: string;
     phone: string;
     email: string;
   };
-  deliveryInfo: {
+  deliveryInfo?: {
     region: string;
     city: string;
     address: string;
@@ -300,11 +302,13 @@ const SingleOrder = ({ order, isLast }: { order: Order; isLast: boolean }) => {
 
             {/* Delivery & Payment Info */}
             <div className="space-y-4">
-              {/* Delivery Information */}
+              {/* Fulfillment Information */}
               <div className="bg-white p-4 rounded-lg">
                 <h4 className="font-semibold text-dark mb-3 flex items-center gap-2">
                   <MapPin className="w-5 h-5" />
-                  Delivery Information
+                  {order.fulfillmentMethod && order.fulfillmentMethod !== "delivery"
+                    ? "Pickup Information"
+                    : "Delivery Information"}
                 </h4>
                 <div className="space-y-2 text-sm">
                   <div>
@@ -327,16 +331,34 @@ const SingleOrder = ({ order, isLast }: { order: Order; isLast: boolean }) => {
                       </p>
                     </div>
                   )}
-                  <div>
-                    <p className="text-gray-600">Location</p>
-                    <p className="text-dark font-medium">
-                      {order.deliveryInfo.city}, {order.deliveryInfo.region}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-gray-600">Address</p>
-                    <p className="text-dark">{order.deliveryInfo.address}</p>
-                  </div>
+                  {order.fulfillmentMethod && order.fulfillmentMethod !== "delivery" ? (
+                    <div>
+                      <p className="text-gray-600">Pickup Location</p>
+                      <p className="text-dark font-medium">
+                        {PICKUP_LOCATIONS[order.fulfillmentMethod as keyof typeof PICKUP_LOCATIONS]?.name}
+                      </p>
+                      <p className="text-dark">
+                        {PICKUP_LOCATIONS[order.fulfillmentMethod as keyof typeof PICKUP_LOCATIONS]?.address}
+                      </p>
+                    </div>
+                  ) : order.deliveryInfo ? (
+                    <>
+                      <div>
+                        <p className="text-gray-600">Location</p>
+                        <p className="text-dark font-medium">
+                          {order.deliveryInfo.city}, {order.deliveryInfo.region}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-gray-600">Address</p>
+                        <p className="text-dark">{order.deliveryInfo.address}</p>
+                      </div>
+                    </>
+                  ) : (
+                    <div>
+                      <p className="text-gray-500">No address provided</p>
+                    </div>
+                  )}
                 </div>
               </div>
 

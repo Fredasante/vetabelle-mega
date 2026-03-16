@@ -23,7 +23,6 @@ export async function GET(
         fulfillmentMethod,
         customerInfo,
         deliveryInfo,
-        pickupLocation,
         items[]{
           _key,
           product->{
