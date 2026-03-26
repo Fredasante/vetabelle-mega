@@ -19,6 +19,7 @@ const SingleListItem = ({ item }: { item: Product }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const [quantity, setQuantity] = useState(1);
+  const isOutOfStock = item.status === "out-of-stock";
 
   const handleIncrease = () => setQuantity((prev) => prev + 1);
   const handleDecrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
@@ -68,13 +69,20 @@ const SingleListItem = ({ item }: { item: Product }) => {
     <div className="group rounded-lg bg-white shadow-1">
       <div className="flex flex-col sm:flex-row">
         {/* Image Section */}
-        <div className="shadow-list relative overflow-hidden flex items-center justify-center w-full sm:max-w-[270px] min-h-[200px] sm:min-h-[230px] p-4">
-          <Image
-            src={item.image || "/images/placeholder.png"}
-            alt={item.title || "Product image"}
-            fill
-            className="object-contain object-center p-3"
-          />
+        <div className="relative shadow-list overflow-hidden w-full sm:max-w-[270px] min-h-[200px] sm:min-h-[230px] p-4">
+          <div className="relative flex items-center justify-center w-full h-full">
+            <Image
+              src={item.image || "/images/placeholder.png"}
+              alt={item.title || "Product image"}
+              fill
+              className="object-contain object-center p-3"
+            />
+          </div>
+          {isOutOfStock && (
+            <span className="absolute top-2 left-2 z-10 bg-red text-white text-xs font-semibold px-2 py-0.5 rounded">
+              Sold Out
+            </span>
+          )}
 
           {/* Hover Buttons */}
           <div className="absolute left-0 bottom-0 translate-y-full w-full flex items-center justify-center gap-2.5 pb-5 ease-linear duration-200 group-hover:translate-y-0">
@@ -90,10 +98,15 @@ const SingleListItem = ({ item }: { item: Product }) => {
             </button>
 
             <button
-              onClick={handleAddToCart}
-              className="inline-flex font-medium text-custom-sm py-[7px] px-5 rounded-[5px] bg-teal text-white ease-out duration-200 hover:bg-opacity-90"
+              onClick={isOutOfStock ? undefined : handleAddToCart}
+              disabled={isOutOfStock}
+              className={`inline-flex font-medium text-custom-sm py-[7px] px-5 rounded-[5px] text-white ease-out duration-200 ${
+                isOutOfStock
+                  ? "bg-teal/50 cursor-not-allowed"
+                  : "bg-teal hover:bg-opacity-90"
+              }`}
             >
-              Add to cart
+              {isOutOfStock ? "Sold Out" : "Add to cart"}
             </button>
 
             <button
@@ -131,30 +144,36 @@ const SingleListItem = ({ item }: { item: Product }) => {
             </span>
 
             {/* Quantity Controls */}
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-gray-600 font-medium">
-                Quantity:
+            {isOutOfStock ? (
+              <span className="text-sm font-semibold text-red-500">
+                Out of Stock
               </span>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={handleDecrease}
-                  className="p-1.5 rounded bg-gray-100 hover:bg-gray-200 transition-colors"
-                  aria-label="Decrease quantity"
-                >
-                  <Minus size={14} />
-                </button>
-                <span className="text-sm font-medium min-w-[24px] text-center">
-                  {quantity}
+            ) : (
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-gray-600 font-medium">
+                  Quantity:
                 </span>
-                <button
-                  onClick={handleIncrease}
-                  className="p-1.5 rounded bg-gray-100 hover:bg-gray-200 transition-colors"
-                  aria-label="Increase quantity"
-                >
-                  <Plus size={14} />
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={handleDecrease}
+                    className="p-1.5 rounded bg-gray-100 hover:bg-gray-200 transition-colors"
+                    aria-label="Decrease quantity"
+                  >
+                    <Minus size={14} />
+                  </button>
+                  <span className="text-sm font-medium min-w-[24px] text-center">
+                    {quantity}
+                  </span>
+                  <button
+                    onClick={handleIncrease}
+                    className="p-1.5 rounded bg-gray-100 hover:bg-gray-200 transition-colors"
+                    aria-label="Increase quantity"
+                  >
+                    <Plus size={14} />
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

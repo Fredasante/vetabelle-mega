@@ -154,39 +154,45 @@ const QuickViewModal = () => {
               </div>
 
               {/* Quantity */}
-              <div className="flex items-center gap-3 mb-7.5">
-                <h4 className="font-semibold text-lg text-slate-500">
-                  Quantity:
-                </h4>
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={handleDecrease}
-                    className="p-2 rounded bg-gray-100 hover:bg-gray-200 transition-colors"
-                    aria-label="Decrease quantity"
-                  >
-                    <Minus size={16} />
-                  </button>
-                  <span className="flex items-center justify-center w-12 h-10 rounded-[5px] border border-gray-3 bg-white font-medium text-dark">
-                    {quantity}
-                  </span>
-                  <button
-                    onClick={handleIncrease}
-                    className="p-2 rounded bg-gray-100 hover:bg-gray-200 transition-colors"
-                    aria-label="Increase quantity"
-                  >
-                    <Plus size={16} />
-                  </button>
+              {product.status === "in-stock" && (
+                <div className="flex items-center gap-3 mb-7.5">
+                  <h4 className="font-semibold text-lg text-slate-500">
+                    Quantity:
+                  </h4>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={handleDecrease}
+                      className="p-2 rounded bg-gray-100 hover:bg-gray-200 transition-colors"
+                      aria-label="Decrease quantity"
+                    >
+                      <Minus size={16} />
+                    </button>
+                    <span className="flex items-center justify-center w-12 h-10 rounded-[5px] border border-gray-3 bg-white font-medium text-dark">
+                      {quantity}
+                    </span>
+                    <button
+                      onClick={handleIncrease}
+                      className="p-2 rounded bg-gray-100 hover:bg-gray-200 transition-colors"
+                      aria-label="Increase quantity"
+                    >
+                      <Plus size={16} />
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Action Buttons */}
               <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 mb-6">
                 <button
-                  onClick={handleAddToCart}
+                  onClick={product.status === "in-stock" ? handleAddToCart : undefined}
                   disabled={product.status !== "in-stock"}
-                  className="inline-flex font-medium text-white bg-[#c77f56] py-2.5 px-4.5 sm:py-3 sm:px-7 text-sm sm:text-base rounded-md hover:bg-opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className={`inline-flex font-medium text-white py-2.5 px-4.5 sm:py-3 sm:px-7 text-sm sm:text-base rounded-md transition-colors ${
+                    product.status === "in-stock"
+                      ? "bg-[#c77f56] hover:bg-opacity-90"
+                      : "bg-gray-400 cursor-not-allowed"
+                  }`}
                 >
-                  Add to Cart
+                  {product.status === "in-stock" ? "Add to Cart" : "Sold Out"}
                 </button>
 
                 <button

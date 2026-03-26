@@ -26,24 +26,24 @@ export const fetchPaginatedProducts = async ({
   const start = (page - 1) * perPage;
   const end = start + perPage;
 
-  // Determine the order clause based on sortBy
-  let orderClause = "order(createdAt desc)";
+  // Determine the order clause based on sortBy (always push out-of-stock to bottom)
+  let orderClause = 'order(select(status == "out-of-stock" => 1, 0) asc, createdAt desc)';
 
   switch (sortBy) {
     case "price-asc":
-      orderClause = "order(price asc)";
+      orderClause = 'order(select(status == "out-of-stock" => 1, 0) asc, price asc)';
       break;
     case "price-desc":
-      orderClause = "order(price desc)";
+      orderClause = 'order(select(status == "out-of-stock" => 1, 0) asc, price desc)';
       break;
     case "latest":
     default:
-      orderClause = "order(createdAt desc)";
+      orderClause = 'order(select(status == "out-of-stock" => 1, 0) asc, createdAt desc)';
       break;
   }
 
   const productsQuery = `
-    *[_type == "product" && status == "in-stock"] 
+    *[_type == "product"]
       | ${orderClause}
       [${start}...${end}] {
         _id,
@@ -59,7 +59,7 @@ export const fetchPaginatedProducts = async ({
   `;
 
   const countQuery = `
-    count(*[_type == "product" && status == "in-stock"])
+    count(*[_type == "product"])
   `;
 
   try {
@@ -75,11 +75,11 @@ export const fetchPaginatedProducts = async ({
   }
 };
 
-// ✅ Fetch all "in-stock" products (without pagination)
+// ✅ Fetch all products (in-stock first, out-of-stock last)
 export const fetchAllProducts = async () => {
   const query = `
-    *[_type == "product" && status == "in-stock"] 
-      | order(createdAt desc) {
+    *[_type == "product"]
+      | order(select(status == "out-of-stock" => 1, 0) asc, createdAt desc) {
         _id,
         title,
         slug,
@@ -103,7 +103,7 @@ export const fetchAllProducts = async () => {
 // ✅ Fetch single product by slug
 export const fetchProductBySlug = async (slug: string) => {
   const query = `
-    *[_type == "product" && slug.current == $slug && status == "in-stock"][0] {
+    *[_type == "product" && slug.current == $slug][0] {
       _id,
       title,
       slug,

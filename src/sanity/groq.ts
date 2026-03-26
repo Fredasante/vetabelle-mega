@@ -1,9 +1,9 @@
 import { Product } from "@/types/product";
 import { client } from "./client";
 
-// 🛍️ All products (available only, newest first)
+// 🛍️ All products (in-stock first, then out-of-stock, newest first)
 export const allProductsQuery = `
-  *[_type == "product" && status == "in-stock"] | order(createdAt desc) {
+  *[_type == "product"] | order(select(status == "out-of-stock" => 1, 0) asc, createdAt desc) {
     _id,
     title,
     slug,
@@ -18,8 +18,8 @@ export const allProductsQuery = `
 
 // (New Arrivals)
 export const newArrivalsQuery = `
-  *[_type == "product" && status == "in-stock"] 
-  | order(coalesce(createdAt, _createdAt) desc) {
+  *[_type == "product"]
+  | order(select(status == "out-of-stock" => 1, 0) asc, coalesce(createdAt, _createdAt) desc) {
     _id,
     title,
     slug,
@@ -32,9 +32,9 @@ export const newArrivalsQuery = `
   }
 `;
 
-// 🔍 Search by name (in-stock only)
+// 🔍 Search by name (in-stock first, out-of-stock last)
 export const searchProductsQuery = `
-  *[_type == "product" && title match $search + "*" && status == "in-stock"] | order(createdAt desc) {
+  *[_type == "product" && title match $search + "*"] | order(select(status == "out-of-stock" => 1, 0) asc, createdAt desc) {
     _id,
     title,
     slug,
@@ -47,9 +47,9 @@ export const searchProductsQuery = `
   }
 `;
 
-// 🧭 Paginated products (in-stock only)
+// 🧭 Paginated products (in-stock first, out-of-stock last)
 export const paginatedProductsQuery = `
-  *[_type == "product" && status == "in-stock"] | order(createdAt desc) [$start...$end] {
+  *[_type == "product"] | order(select(status == "out-of-stock" => 1, 0) asc, createdAt desc) [$start...$end] {
     _id,
     title,
     slug,
@@ -62,14 +62,14 @@ export const paginatedProductsQuery = `
   }
 `;
 
-// 📊 Count total in-stock products
+// 📊 Count total products
 export const productCountQuery = `
-  count(*[_type == "product" && status == "in-stock"])
+  count(*[_type == "product"])
 `;
 
-// 🧾 Single product by slug (in-stock only)
+// 🧾 Single product by slug
 export const PRODUCT_BY_SLUG_QUERY = `
-  *[_type == "product" && slug.current == $slug && status == "in-stock"][0] {
+  *[_type == "product" && slug.current == $slug][0] {
     _id,
     title,
     slug,
@@ -97,5 +97,5 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 
 // 🧩 All product slugs (for static generation)
 export const ALL_PRODUCT_SLUGS_QUERY = `
-  *[_type == "product" && status == "in-stock"]{ "slug": slug.current }
+  *[_type == "product"]{ "slug": slug.current }
 `;
