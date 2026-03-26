@@ -189,15 +189,20 @@ const QuickViewModal = () => {
                   className={`inline-flex font-medium text-white py-2.5 px-4.5 sm:py-3 sm:px-7 text-sm sm:text-base rounded-md transition-colors ${
                     product.status === "in-stock"
                       ? "bg-[#c77f56] hover:bg-opacity-90"
-                      : "bg-gray-400 cursor-not-allowed"
+                      : "bg-[#c77f56]/50 cursor-not-allowed"
                   }`}
                 >
                   {product.status === "in-stock" ? "Add to Cart" : "Sold Out"}
                 </button>
 
                 <button
-                  onClick={handleAddToWishlist}
-                  className="inline-flex items-center gap-2 font-medium text-white bg-teal py-2.5 px-4.5 sm:py-3 sm:px-6 text-sm sm:text-base rounded-md hover:bg-opacity-90 transition-colors"
+                  onClick={product.status === "in-stock" ? handleAddToWishlist : undefined}
+                  disabled={product.status !== "in-stock"}
+                  className={`inline-flex items-center gap-2 font-medium text-white py-2.5 px-4.5 sm:py-3 sm:px-6 text-sm sm:text-base rounded-md transition-colors ${
+                    product.status === "in-stock"
+                      ? "bg-teal hover:bg-opacity-90"
+                      : "bg-teal/50 cursor-not-allowed"
+                  }`}
                 >
                   Add to Wishlist
                 </button>

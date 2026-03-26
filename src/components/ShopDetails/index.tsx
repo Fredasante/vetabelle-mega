@@ -145,10 +145,10 @@ const ShopDetails = ({ product }: ShopDetailsProps) => {
                 className={`inline-flex font-medium text-white py-2.5 px-4.5 text-sm sm:text-base rounded-md transition-colors ${
                   isAvailable
                     ? "bg-[#c77f56] hover:bg-opacity-90"
-                    : "bg-gray-400 cursor-not-allowed"
+                    : "bg-[#c77f56]/50 cursor-not-allowed"
                 }`}
               >
-                {isAvailable ? "Add to Cart" : "Out of Stock"}
+                {isAvailable ? "Add to Cart" : "Sold Out"}
               </button>
 
               <button
@@ -157,7 +157,7 @@ const ShopDetails = ({ product }: ShopDetailsProps) => {
                 className={`inline-flex items-center gap-2 font-medium text-white py-2.5 px-4.5 text-sm sm:text-base rounded-md transition-colors ${
                   isAvailable
                     ? "bg-teal hover:bg-opacity-90"
-                    : "bg-gray-400 cursor-not-allowed"
+                    : "bg-teal/50 cursor-not-allowed"
                 }`}
               >
                 Add to Wishlist
