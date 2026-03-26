@@ -70,7 +70,7 @@ const Contact = () => {
                       fill="#02aba5"
                     />
                   </svg>
-                  (+233) 5498-35411
+                  (+233) 54 818 2872
                 </p>
 
                 <p className="flex items-center gap-2 text-sm">
