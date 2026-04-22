@@ -15,6 +15,7 @@ import SearchInput from "./SearchInput";
 const Header = () => {
   const [navigationOpen, setNavigationOpen] = useState(false);
   const [stickyMenu, setStickyMenu] = useState(false);
+  const [hasActiveMasterclass, setHasActiveMasterclass] = useState(false);
   const { openCartModal } = useCartModalContext();
   const navRef = useRef<HTMLDivElement>(null);
 
@@ -39,6 +40,19 @@ const Header = () => {
       setStickyMenu(false);
     }
   };
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/masterclass/active")
+      .then((res) => res.json())
+      .then((data) => {
+        if (!cancelled) setHasActiveMasterclass(Boolean(data?.masterclass));
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", handleStickyMenu);
@@ -217,7 +231,19 @@ const Header = () => {
               {/* main nav */}
               <nav>
                 <ul className="flex xl:items-center flex-col xl:flex-row gap-5 xl:gap-6">
-                  {menuData.map((menuItem, i) => (
+                  {[
+                    ...menuData,
+                    ...(hasActiveMasterclass
+                      ? [
+                          {
+                            id: 999,
+                            title: "Masterclass",
+                            newTab: false,
+                            path: "/masterclass",
+                          },
+                        ]
+                      : []),
+                  ].map((menuItem, i) => (
                     <li
                       key={i}
                       className="group relative before:w-0 before:h-[3px] before:bg-[#c77f56] before:absolute before:left-0 before:top-0 before:rounded-b-[3px] before:ease-out before:duration-200 hover:before:w-full "
