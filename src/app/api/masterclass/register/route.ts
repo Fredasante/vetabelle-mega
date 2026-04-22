@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { client } from "@/sanity/client";
 import { masterclassByIdQuery } from "@/sanity/groq";
-import { getPriceTier, generateRegistrationId } from "@/lib/masterclass";
+import {
+  getPriceTier,
+  getRegistrationState,
+  generateRegistrationId,
+} from "@/lib/masterclass";
 import type {
   Masterclass,
   RegisterRequestBody,
@@ -59,11 +63,41 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (paystackData.data.currency !== "GHS") {
+      console.warn("Masterclass payment in unexpected currency", {
+        reference: body.paystackReference,
+        currency: paystackData.data.currency,
+      });
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Payment currency is not supported",
+        },
+        { status: 400 },
+      );
+    }
+
     const paidAtIso =
       paystackData.data.paid_at || paystackData.data.paidAt || new Date().toISOString();
     const paidAmountGhs = paystackData.data.amount / 100;
 
-    // 2. Fetch the masterclass and confirm it's active
+    // 2. Idempotency: if a registration already exists for this Paystack reference, return it.
+    const existing = await client.fetch<{
+      _id: string;
+      registrationId: string;
+    } | null>(
+      `*[_type == "masterclassRegistration" && payment.paystackReference == $ref][0]{ _id, registrationId }`,
+      { ref: body.paystackReference },
+    );
+    if (existing) {
+      return NextResponse.json({
+        success: true,
+        registrationId: existing.registrationId,
+        _id: existing._id,
+      });
+    }
+
+    // 3. Fetch the masterclass and confirm it's active and accepting registrations
     const masterclass: Masterclass | null = await client.fetch(
       masterclassByIdQuery,
       { id: body.masterclassId },
@@ -82,7 +116,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 3. Recompute price using paidAt as the reference time
+    const registrationState = getRegistrationState(masterclass);
+    if (registrationState !== "open") {
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            registrationState === "ended"
+              ? "This event has already taken place"
+              : "Registration for this masterclass is closed",
+        },
+        { status: 400 },
+      );
+    }
+
+    // 4. Recompute price using paidAt as the reference time
     const { tier: expectedTier, price: expectedPrice } = getPriceTier(
       masterclass,
       new Date(paidAtIso),
@@ -104,7 +152,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 4. Create the registration document
+    // 5. Create the registration document
     const registrationId = generateRegistrationId();
 
     const registration = await client.create({
