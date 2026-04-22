@@ -99,3 +99,66 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 export const ALL_PRODUCT_SLUGS_QUERY = `
   *[_type == "product"]{ "slug": slug.current }
 `;
+
+// 🎓 Active, upcoming masterclass (for /masterclass page, homepage promo, nav)
+export const activeMasterclassQuery = `
+  *[_type == "masterclass" && isActive == true && eventDate > now()]
+  | order(_updatedAt desc)[0] {
+    _id,
+    title,
+    slug,
+    eventDate,
+    location,
+    "bannerImage": bannerImage.asset->url,
+    description,
+    learningTopics,
+    audienceTypes,
+    referralSources,
+    regularPrice,
+    earlyBirdPrice,
+    earlyBirdDeadline,
+    registrationOpen,
+    registrationDeadline,
+    isActive
+  }
+`;
+
+// 🎓 Single masterclass by id (for the registration API)
+export const masterclassByIdQuery = `
+  *[_type == "masterclass" && _id == $id][0] {
+    _id,
+    title,
+    slug,
+    eventDate,
+    location,
+    "bannerImage": bannerImage.asset->url,
+    description,
+    learningTopics,
+    audienceTypes,
+    referralSources,
+    regularPrice,
+    earlyBirdPrice,
+    earlyBirdDeadline,
+    registrationOpen,
+    registrationDeadline,
+    isActive
+  }
+`;
+
+// 🎓 Registration by id (for the success page)
+export const masterclassRegistrationByIdQuery = `
+  *[_type == "masterclassRegistration" && registrationId == $id][0] {
+    _id,
+    registrationId,
+    masterclass->{
+      _id,
+      title,
+      eventDate,
+      location
+    },
+    registrantInfo,
+    preferences,
+    payment,
+    createdAt
+  }
+`;
