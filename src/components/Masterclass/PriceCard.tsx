@@ -30,18 +30,22 @@ const PriceCard: React.FC<PriceCardProps> = ({
         </span>
       )}
       <div className="flex items-baseline gap-3 mb-3">
-        <span className="text-4xl font-bold text-[#c2712f]">
-          ₵{price.toLocaleString()}
-        </span>
-        {isEarlyBird && masterclass.regularPrice > price && (
+        {isEarlyBird && masterclass.regularPrice > price ? (
           <>
-            <span className="text-2xl font-bold text-slate-500 line-through">
+            <span className="text-4xl font-bold text-dark line-through">
               ₵{masterclass.regularPrice.toLocaleString()}
+            </span>
+            <span className="text-2xl font-bold text-[#c2712f]">
+              ₵{price.toLocaleString()}
             </span>
             <span className="text-xs font-medium bg-green-light-6 text-green-dark px-2 py-0.5 rounded-full">
               Save ₵{(masterclass.regularPrice - price).toLocaleString()}
             </span>
           </>
+        ) : (
+          <span className="text-4xl font-bold text-[#c2712f]">
+            ₵{price.toLocaleString()}
+          </span>
         )}
       </div>
       {isEarlyBird && daysLeft !== null && (

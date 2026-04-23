@@ -22,8 +22,8 @@ const MasterclassPromo = async () => {
       : null;
 
   return (
-    <section className="py-10 md:py-14 bg-[#fdf6f0]">
-      <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
+    <section className="py-10 md:py-14 bg-[#fdf6f0] pb-10 lg:pb-12.5 xl:pb-12 pt-37 sm:pt-40 lg:pt-30 xl:pt-40">
+      <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0 lg:mt-3">
         <div className="bg-white rounded-[12px] shadow-1 overflow-hidden grid md:grid-cols-2">
           <div className="relative w-full aspect-[4/3] md:aspect-auto md:min-h-[320px] bg-[#fdf6f0]">
             <Image
@@ -55,18 +55,22 @@ const MasterclassPromo = async () => {
               </div>
             </div>
             <div className="flex items-baseline gap-3 mb-5">
-              <span className="text-3xl font-bold text-[#c2712f]">
-                ₵{price.toLocaleString()}
-              </span>
-              {isEarlyBird && masterclass.regularPrice > price && (
+              {isEarlyBird && masterclass.regularPrice > price ? (
                 <>
-                  <span className="text-2xl font-bold text-dark-3 line-through">
+                  <span className="text-3xl font-bold text-dark line-through">
                     ₵{masterclass.regularPrice.toLocaleString()}
+                  </span>
+                  <span className="text-2xl font-bold text-[#c2712f]">
+                    ₵{price.toLocaleString()}
                   </span>
                   <span className="text-xs font-medium bg-green-light-6 text-green-dark px-2 py-0.5 rounded-full">
                     Save ₵{(masterclass.regularPrice - price).toLocaleString()}
                   </span>
                 </>
+              ) : (
+                <span className="text-3xl font-bold text-[#c2712f]">
+                  ₵{price.toLocaleString()}
+                </span>
               )}
             </div>
             {isEarlyBird && daysLeft !== null && (

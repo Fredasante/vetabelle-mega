@@ -22,7 +22,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="overflow-x-hidden pb-10 lg:pb-12.5 xl:pb-12 pt-37 sm:pt-40 lg:pt-30 xl:pt-40 bg-[#f9fafb]">
+    <section className="overflow-x-hidden bg-[#f9fafb] py-8">
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0 mt-0 lg:mt-3">
         <div className="flex flex-wrap gap-5">
           {/* Left Search Section */}

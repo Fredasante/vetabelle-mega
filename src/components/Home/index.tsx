@@ -9,8 +9,9 @@ const Home = () => {
   return (
     <main>
       {/* <BlackFridayHero /> */}
-      <Hero />
       <MasterclassPromo />
+
+      <Hero />
       <NewArrival />
       <AboutUsSection />
     </main>
