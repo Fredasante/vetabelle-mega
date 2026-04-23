@@ -5,7 +5,7 @@ import { Calendar, MapPin } from "lucide-react";
 import { client } from "@/sanity/client";
 import { activeMasterclassQuery } from "@/sanity/groq";
 import type { Masterclass } from "@/types/masterclass";
-import { getPriceTier, formatEventDate, daysUntil } from "@/lib/masterclass";
+import { getPriceTier, formatEventDate } from "@/lib/masterclass";
 
 const MasterclassPromo = async () => {
   const masterclass: Masterclass | null = await client.fetch(
@@ -16,10 +16,6 @@ const MasterclassPromo = async () => {
 
   const { tier, price } = getPriceTier(masterclass);
   const isEarlyBird = tier === "early_bird";
-  const daysLeft =
-    isEarlyBird && masterclass.earlyBirdDeadline
-      ? daysUntil(masterclass.earlyBirdDeadline)
-      : null;
 
   return (
     <section className="py-10 md:py-14 bg-[#fdf6f0] pb-10 lg:pb-12.5 xl:pb-12 pt-37 sm:pt-40 lg:pt-30 xl:pt-40">
@@ -73,11 +69,12 @@ const MasterclassPromo = async () => {
                 </span>
               )}
             </div>
-            {isEarlyBird && daysLeft !== null && (
-              <p className="text-sm text-slate-500 mb-4">
-                {daysLeft === 0
-                  ? "Last day for early bird pricing!"
-                  : `Early bird ends in ${daysLeft} ${daysLeft === 1 ? "day" : "days"}`}
+            {isEarlyBird && masterclass.earlyBirdDeadline && (
+              <p className="text-base text-slate-500 mb-4">
+                Early bird access closes strictly on{" "}
+                <span className="font-bold text-dark">
+                  {formatEventDate(masterclass.earlyBirdDeadline)}
+                </span>
               </p>
             )}
             <Link

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import type { Masterclass } from "@/types/masterclass";
-import { getPriceTier, daysUntil } from "@/lib/masterclass";
+import { getPriceTier, formatEventDate } from "@/lib/masterclass";
 
 interface PriceCardProps {
   masterclass: Pick<
@@ -17,10 +17,6 @@ const PriceCard: React.FC<PriceCardProps> = ({
 }) => {
   const { tier, price } = getPriceTier(masterclass);
   const isEarlyBird = tier === "early_bird";
-  const daysLeft =
-    isEarlyBird && masterclass.earlyBirdDeadline
-      ? daysUntil(masterclass.earlyBirdDeadline)
-      : null;
 
   return (
     <div className="bg-white shadow-1 rounded-[10px] p-6 border border-gray-3">
@@ -48,11 +44,12 @@ const PriceCard: React.FC<PriceCardProps> = ({
           </span>
         )}
       </div>
-      {isEarlyBird && daysLeft !== null && (
-        <p className="text-sm text-slate-500 mb-4">
-          {daysLeft === 0
-            ? "Last day for early bird pricing!"
-            : `Early bird ends in ${daysLeft} ${daysLeft === 1 ? "day" : "days"}`}
+      {isEarlyBird && masterclass.earlyBirdDeadline && (
+        <p className="text-base text-slate-500 mb-4">
+          Early bird access closes strictly on{" "}
+          <span className="font-bold text-dark">
+            {formatEventDate(masterclass.earlyBirdDeadline)}
+          </span>
         </p>
       )}
       {!isEarlyBird && (
