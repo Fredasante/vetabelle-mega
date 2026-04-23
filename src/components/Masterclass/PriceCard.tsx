@@ -26,7 +26,7 @@ const PriceCard: React.FC<PriceCardProps> = ({ masterclass, onRegisterClick }) =
         </span>
       )}
       <div className="flex items-baseline gap-2 mb-2">
-        <span className="text-4xl font-bold text-dark">
+        <span className="text-4xl font-bold text-[#c2712f]">
           ₵{price.toLocaleString()}
         </span>
         {isEarlyBird && masterclass.regularPrice > price && (
