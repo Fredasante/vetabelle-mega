@@ -10,7 +10,7 @@ import { EventEnded, RegistrationClosed } from "./EmptyStates";
 
 const BONUSES = [
   "AI Tools for Business Growth",
-  "Exclusive 1-on-1 Session with Gayobi Achav",
+  "Exclusive 1-on-1 Session with Gayobi Achawa",
   "Feminine Healing & Confidence Session",
   "Certificate of Participation",
   "Breakfast, Snacks & 3-Course Lunch",
