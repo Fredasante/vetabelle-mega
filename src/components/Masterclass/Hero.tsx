@@ -13,7 +13,7 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ masterclass, onRegisterClick }) => {
   return (
-    <section className="bg-[#fdf6f0] pt-32 md:pt-40 pb-12 md:pb-16">
+    <section className="bg-[#fdf6f0] pt-36 md:pt-45 pb-12 md:pb-16">
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div className="relative w-full aspect-[4/3] rounded-[10px] overflow-hidden shadow-1 bg-[#fdf6f0]">
@@ -42,7 +42,10 @@ const Hero: React.FC<HeroProps> = ({ masterclass, onRegisterClick }) => {
                 <span className="font-medium">{masterclass.location}</span>
               </div>
             </div>
-            <PriceCard masterclass={masterclass} onRegisterClick={onRegisterClick} />
+            <PriceCard
+              masterclass={masterclass}
+              onRegisterClick={onRegisterClick}
+            />
           </div>
         </div>
       </div>

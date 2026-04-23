@@ -94,7 +94,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ masterclass }) => {
         },
         onCancel: () => {
           setIsProcessing(false);
-          setErrorMessage("Payment was cancelled. Your registration was not completed.");
+          setErrorMessage(
+            "Payment was cancelled. Your registration was not completed.",
+          );
         },
       });
     } catch (err) {
@@ -111,7 +113,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ masterclass }) => {
       className="bg-white shadow-1 rounded-[10px] p-4 sm:p-8"
     >
       <h2 className="text-2xl font-semibold text-dark mb-1">Register Now</h2>
-      <p className="text-dark-5 mb-7">
+      <p className="text-slate-500 mb-7">
         Fill in your details and pay securely via card or mobile money.
       </p>
 
@@ -223,7 +225,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ masterclass }) => {
 
       <div className="mb-7">
         <label htmlFor="referralSource" className="block mb-2.5">
-          Where did you hear about this program? <span className="text-red">*</span>
+          Where did you hear about this program?{" "}
+          <span className="text-red">*</span>
         </label>
         <select
           name="referralSource"

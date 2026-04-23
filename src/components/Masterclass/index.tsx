@@ -34,7 +34,7 @@ const Masterclass: React.FC<MasterclassProps> = ({ masterclass }) => {
               <h2 className="text-2xl md:text-3xl font-semibold text-dark mb-5">
                 About this Masterclass
               </h2>
-              <div className="prose max-w-none text-dark-5 leading-relaxed">
+              <div className="prose max-w-none leading-relaxed text-slate-500">
                 <PortableText value={masterclass.description} />
               </div>
             </div>
@@ -46,7 +46,7 @@ const Masterclass: React.FC<MasterclassProps> = ({ masterclass }) => {
                 {masterclass.learningTopics.map((topic) => (
                   <li
                     key={topic}
-                    className="flex items-start gap-2 text-dark-5"
+                    className="flex items-start gap-2 text-slate-500"
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-[#c77f56] mt-2 flex-shrink-0" />
                     <span>{topic}</span>
