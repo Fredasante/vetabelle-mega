@@ -10,7 +10,7 @@ export const NoActiveEvent: React.FC = () => (
   <section className="overflow-hidden py-20 bg-gray-2 mt-32 md:mt-40">
     <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
       <div className="bg-white shadow-1 rounded-[10px] p-8 md:p-12 text-center">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#fdf6f0] mb-5">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#f9fafb] mb-5">
           <Calendar className="w-8 h-8 text-[#c77f56]" />
         </div>
         <h2 className="text-2xl md:text-3xl font-semibold text-dark mb-3">

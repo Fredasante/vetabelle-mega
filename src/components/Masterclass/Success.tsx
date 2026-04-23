@@ -146,7 +146,7 @@ const Success: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-[#fdf6f0] rounded-md p-4 mb-7">
+          <div className="bg-[#f9fafb] rounded-md p-4 mb-7">
             <h3 className="font-medium text-dark mb-2">What happens next?</h3>
             <p className="text-sm text-dark-5">
               We&apos;ll be in touch via WhatsApp and email with all the details
