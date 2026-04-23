@@ -19,10 +19,10 @@ const MasterclassPromo = async () => {
   const isEarlyBird = tier === "early_bird";
 
   return (
-    <section className="py-10 md:py-14 bg-[#fdf6f0] pb-10 lg:pb-12.5 xl:pb-12 pt-37 sm:pt-40 lg:pt-30 xl:pt-40">
+    <section className="py-10 md:py-14 bg-[#fdf6f0] pb-10 lg:pb-12.5 xl:pb-12 pt-30 sm:pt-44 lg:pt-30 xl:pt-40">
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0 lg:mt-3">
         <div className="bg-white rounded-[12px] shadow-1 overflow-hidden grid md:grid-cols-2">
-          <div className="relative w-full aspect-[4/3] md:aspect-auto md:min-h-[420px] bg-[#fdf6f0]">
+          <div className="relative w-full aspect-[3/4] md:aspect-auto md:min-h-[420px] bg-[#fdf6f0]">
             <Image
               src={masterclass.bannerImage}
               alt={masterclass.title}
