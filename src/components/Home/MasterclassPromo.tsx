@@ -6,6 +6,7 @@ import { client } from "@/sanity/client";
 import { activeMasterclassQuery } from "@/sanity/groq";
 import type { Masterclass } from "@/types/masterclass";
 import { getPriceTier, formatEventDate } from "@/lib/masterclass";
+import CountdownTimer from "@/components/Masterclass/CountdownTimer";
 
 const MasterclassPromo = async () => {
   const masterclass: Masterclass | null = await client.fetch(
@@ -21,13 +22,13 @@ const MasterclassPromo = async () => {
     <section className="py-10 md:py-14 bg-[#fdf6f0] pb-10 lg:pb-12.5 xl:pb-12 pt-37 sm:pt-40 lg:pt-30 xl:pt-40">
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0 lg:mt-3">
         <div className="bg-white rounded-[12px] shadow-1 overflow-hidden grid md:grid-cols-2">
-          <div className="relative w-full aspect-[4/3] md:aspect-auto md:min-h-[320px] bg-[#fdf6f0]">
+          <div className="relative w-full aspect-[4/3] md:aspect-auto md:min-h-[420px] bg-[#fdf6f0]">
             <Image
               src={masterclass.bannerImage}
               alt={masterclass.title}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-contain md:object-cover"
+              className="object-contain"
             />
           </div>
           <div className="p-6 md:p-10 flex flex-col justify-center">
@@ -70,15 +71,18 @@ const MasterclassPromo = async () => {
               )}
             </div>
             {isEarlyBird && masterclass.earlyBirdDeadline && (
-              <div className="flex items-start gap-2.5 bg-[#fff7f0] border border-[#c2712f]/25 rounded-md px-3.5 py-3 mb-4">
-                <Clock className="w-4 h-4 text-[#c2712f] mt-0.5 flex-shrink-0" />
-                <p className="text-base text-[#c2712f] leading-snug">
-                  Early bird access closes strictly on{" "}
-                  <span className="font-bold">
-                    {formatEventDate(masterclass.earlyBirdDeadline)}
-                  </span>
-                </p>
-              </div>
+              <>
+                <CountdownTimer targetDate={masterclass.earlyBirdDeadline} />
+                <div className="flex items-start gap-2.5 bg-[#fff7f0] border border-[#c2712f]/25 rounded-md px-3.5 py-3 mb-4">
+                  <Clock className="w-4 h-4 text-[#c2712f] mt-0.5 flex-shrink-0" />
+                  <p className="text-base text-[#c2712f] leading-snug">
+                    Early bird access closes strictly on{" "}
+                    <span className="font-bold">
+                      {formatEventDate(masterclass.earlyBirdDeadline)}
+                    </span>
+                  </p>
+                </div>
+              </>
             )}
             <Link
               href="/masterclass"

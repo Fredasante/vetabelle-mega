@@ -3,6 +3,7 @@ import React from "react";
 import { Clock } from "lucide-react";
 import type { Masterclass } from "@/types/masterclass";
 import { getPriceTier, formatEventDate } from "@/lib/masterclass";
+import CountdownTimer from "./CountdownTimer";
 
 interface PriceCardProps {
   masterclass: Pick<
@@ -46,15 +47,18 @@ const PriceCard: React.FC<PriceCardProps> = ({
         )}
       </div>
       {isEarlyBird && masterclass.earlyBirdDeadline && (
-        <div className="flex items-start gap-2.5 bg-[#fff7f0] border border-[#c2712f]/25 rounded-md px-3.5 py-3 mb-4">
-          <Clock className="w-4 h-4 text-[#c2712f] mt-0.5 flex-shrink-0" />
-          <p className="text-base text-[#c2712f] leading-snug">
-            Early bird access closes strictly on{" "}
-            <span className="font-bold">
-              {formatEventDate(masterclass.earlyBirdDeadline)}
-            </span>
-          </p>
-        </div>
+        <>
+          <CountdownTimer targetDate={masterclass.earlyBirdDeadline} />
+          <div className="flex items-start gap-2.5 bg-[#fff7f0] border border-[#c2712f]/25 rounded-md px-3.5 py-3 mb-4">
+            <Clock className="w-4 h-4 text-[#c2712f] mt-0.5 flex-shrink-0" />
+            <p className="text-base text-[#c2712f] leading-snug">
+              Early bird access closes strictly on{" "}
+              <span className="font-bold">
+                {formatEventDate(masterclass.earlyBirdDeadline)}
+              </span>
+            </p>
+          </div>
+        </>
       )}
       {!isEarlyBird && (
         <p className="text-sm text-dark-5 mb-4">Regular price</p>

@@ -15,14 +15,14 @@ const Hero: React.FC<HeroProps> = ({ masterclass, onRegisterClick }) => {
   return (
     <section className="bg-[#fdf6f0] pt-36 md:pt-45 pb-12 md:pb-16">
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
-          <div className="relative w-full aspect-[4/3] rounded-[10px] overflow-hidden shadow-1 bg-[#fdf6f0]">
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+          <div className="relative w-full aspect-[4/3] md:aspect-auto md:min-h-[480px] rounded-[10px] overflow-hidden shadow-1 bg-[#fdf6f0]">
             <Image
               src={masterclass.bannerImage}
               alt={masterclass.title}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-contain md:object-cover"
+              className="object-contain"
               priority
             />
           </div>
