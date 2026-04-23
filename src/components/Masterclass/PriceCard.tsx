@@ -11,12 +11,16 @@ interface PriceCardProps {
   onRegisterClick?: () => void;
 }
 
-const PriceCard: React.FC<PriceCardProps> = ({ masterclass, onRegisterClick }) => {
+const PriceCard: React.FC<PriceCardProps> = ({
+  masterclass,
+  onRegisterClick,
+}) => {
   const { tier, price } = getPriceTier(masterclass);
   const isEarlyBird = tier === "early_bird";
-  const daysLeft = isEarlyBird && masterclass.earlyBirdDeadline
-    ? daysUntil(masterclass.earlyBirdDeadline)
-    : null;
+  const daysLeft =
+    isEarlyBird && masterclass.earlyBirdDeadline
+      ? daysUntil(masterclass.earlyBirdDeadline)
+      : null;
 
   return (
     <div className="bg-white shadow-1 rounded-[10px] p-6 border border-gray-3">
@@ -25,18 +29,23 @@ const PriceCard: React.FC<PriceCardProps> = ({ masterclass, onRegisterClick }) =
           Early Bird Offer
         </span>
       )}
-      <div className="flex items-baseline gap-2 mb-2">
+      <div className="flex items-baseline gap-3 mb-3">
         <span className="text-4xl font-bold text-[#c2712f]">
           ₵{price.toLocaleString()}
         </span>
         {isEarlyBird && masterclass.regularPrice > price && (
-          <span className="text-base text-dark-5 line-through">
-            ₵{masterclass.regularPrice.toLocaleString()}
-          </span>
+          <>
+            <span className="text-2xl font-bold text-slate-500 line-through">
+              ₵{masterclass.regularPrice.toLocaleString()}
+            </span>
+            <span className="text-xs font-medium bg-green-light-6 text-green-dark px-2 py-0.5 rounded-full">
+              Save ₵{(masterclass.regularPrice - price).toLocaleString()}
+            </span>
+          </>
         )}
       </div>
       {isEarlyBird && daysLeft !== null && (
-        <p className="text-sm text-dark-5 mb-4">
+        <p className="text-sm text-slate-500 mb-4">
           {daysLeft === 0
             ? "Last day for early bird pricing!"
             : `Early bird ends in ${daysLeft} ${daysLeft === 1 ? "day" : "days"}`}

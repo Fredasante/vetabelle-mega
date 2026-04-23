@@ -5,7 +5,7 @@ import { Calendar, MapPin } from "lucide-react";
 import { client } from "@/sanity/client";
 import { activeMasterclassQuery } from "@/sanity/groq";
 import type { Masterclass } from "@/types/masterclass";
-import { getPriceTier, formatEventDate } from "@/lib/masterclass";
+import { getPriceTier, formatEventDate, daysUntil } from "@/lib/masterclass";
 
 const MasterclassPromo = async () => {
   const masterclass: Masterclass | null = await client.fetch(
@@ -16,6 +16,10 @@ const MasterclassPromo = async () => {
 
   const { tier, price } = getPriceTier(masterclass);
   const isEarlyBird = tier === "early_bird";
+  const daysLeft =
+    isEarlyBird && masterclass.earlyBirdDeadline
+      ? daysUntil(masterclass.earlyBirdDeadline)
+      : null;
 
   return (
     <section className="py-10 md:py-14 bg-[#fdf6f0]">
@@ -40,26 +44,38 @@ const MasterclassPromo = async () => {
             <h2 className="text-2xl md:text-3xl font-bold text-dark mb-3 leading-tight">
               {masterclass.title}
             </h2>
-            <div className="flex flex-col gap-1.5 mb-5 text-sm text-dark-5">
+            <div className="flex flex-col gap-1.5 mb-5 text-sm text-slate-500">
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4 text-[#c77f56]" />
                 <span>{formatEventDate(masterclass.eventDate)}</span>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-[#c77f56]" />
-                <span>{masterclass.location}</span>
+                <span className="text-slate-500">{masterclass.location}</span>
               </div>
             </div>
-            <div className="flex items-baseline gap-2 mb-5">
+            <div className="flex items-baseline gap-3 mb-5">
               <span className="text-3xl font-bold text-[#c2712f]">
                 ₵{price.toLocaleString()}
               </span>
               {isEarlyBird && masterclass.regularPrice > price && (
-                <span className="text-sm text-dark-5 line-through">
-                  ₵{masterclass.regularPrice.toLocaleString()}
-                </span>
+                <>
+                  <span className="text-2xl font-bold text-dark-3 line-through">
+                    ₵{masterclass.regularPrice.toLocaleString()}
+                  </span>
+                  <span className="text-xs font-medium bg-green-light-6 text-green-dark px-2 py-0.5 rounded-full">
+                    Save ₵{(masterclass.regularPrice - price).toLocaleString()}
+                  </span>
+                </>
               )}
             </div>
+            {isEarlyBird && daysLeft !== null && (
+              <p className="text-sm text-slate-500 mb-4">
+                {daysLeft === 0
+                  ? "Last day for early bird pricing!"
+                  : `Early bird ends in ${daysLeft} ${daysLeft === 1 ? "day" : "days"}`}
+              </p>
+            )}
             <Link
               href="/masterclass"
               className="inline-block w-fit font-medium text-white bg-[#c2712f] py-3 px-7 rounded-md ease-out duration-200 hover:bg-[#b96e48]"
