@@ -51,7 +51,7 @@ const MasterclassPromo = async () => {
               </div>
             </div>
             <div className="flex items-baseline gap-2 mb-5">
-              <span className="text-3xl font-bold text-[#c77f56]">
+              <span className="text-3xl font-bold text-dark">
                 ₵{price.toLocaleString()}
               </span>
               {isEarlyBird && masterclass.regularPrice > price && (
