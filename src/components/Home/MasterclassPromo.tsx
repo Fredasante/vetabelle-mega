@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Calendar, MapPin } from "lucide-react";
+import { Calendar, MapPin, Clock } from "lucide-react";
 import { client } from "@/sanity/client";
 import { activeMasterclassQuery } from "@/sanity/groq";
 import type { Masterclass } from "@/types/masterclass";
@@ -70,12 +70,15 @@ const MasterclassPromo = async () => {
               )}
             </div>
             {isEarlyBird && masterclass.earlyBirdDeadline && (
-              <p className="text-base text-slate-500 mb-4">
-                Early bird access closes strictly on{" "}
-                <span className="font-bold text-dark">
-                  {formatEventDate(masterclass.earlyBirdDeadline)}
-                </span>
-              </p>
+              <div className="flex items-start gap-2.5 bg-[#fff7f0] border border-[#c2712f]/25 rounded-md px-3.5 py-3 mb-4">
+                <Clock className="w-4 h-4 text-[#c2712f] mt-0.5 flex-shrink-0" />
+                <p className="text-sm text-[#c2712f] leading-snug">
+                  Early bird access closes strictly on{" "}
+                  <span className="font-bold">
+                    {formatEventDate(masterclass.earlyBirdDeadline)}
+                  </span>
+                </p>
+              </div>
             )}
             <Link
               href="/masterclass"
