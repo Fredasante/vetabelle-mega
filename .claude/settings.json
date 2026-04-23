@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "Edit(*)",
+      "Write(*)",
+      "NotebookEdit(*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:context7.com)",
+      "mcp__context7__resolve-library-id"
+    ]
+  }
+}

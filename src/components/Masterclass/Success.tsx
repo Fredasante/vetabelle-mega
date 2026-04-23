@@ -82,7 +82,7 @@ const Success: React.FC = () => {
             </p>
             <Link
               href="/"
-              className="inline-block font-medium text-white bg-[#c77f56] py-3 px-8 rounded-md ease-out duration-200 hover:bg-opacity-90"
+              className="inline-block font-medium text-white bg-[#c2712f] py-3 px-8 rounded-md ease-out duration-200 hover:bg-[#b96e48]"
             >
               Back to Home
             </Link>
@@ -146,7 +146,7 @@ const Success: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-[#f9fafb] rounded-md p-4 mb-7">
+          <div className="bg-[#fdf6f0] rounded-md p-4 mb-7">
             <h3 className="font-medium text-dark mb-2">What happens next?</h3>
             <p className="text-sm text-dark-5">
               We&apos;ll be in touch via WhatsApp and email with all the details
@@ -156,7 +156,7 @@ const Success: React.FC = () => {
 
           <Link
             href="/"
-            className="block w-full text-center font-medium text-white bg-[#c77f56] py-3.5 px-6 rounded-md ease-out duration-200 hover:bg-opacity-90"
+            className="block w-full text-center font-medium text-white bg-[#c2712f] py-3.5 px-6 rounded-md ease-out duration-200 hover:bg-[#b96e48]"
           >
             Back to Home
           </Link>

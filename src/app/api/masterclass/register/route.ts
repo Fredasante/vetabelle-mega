@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { client } from "@/sanity/client";
 import { masterclassByIdQuery } from "@/sanity/groq";
@@ -10,6 +11,11 @@ import type {
   Masterclass,
   RegisterRequestBody,
 } from "@/types/masterclass";
+
+type ExistingRegistration = {
+  _id: string;
+  registrationId: string;
+};
 
 function isValidBody(body: any): body is RegisterRequestBody {
   return (
@@ -26,6 +32,11 @@ function isValidBody(body: any): body is RegisterRequestBody {
     typeof body.preferences.audienceType === "string" &&
     typeof body.preferences.referralSource === "string"
   );
+}
+
+function getRegistrationDocumentId(paystackReference: string): string {
+  const hash = createHash("sha256").update(paystackReference).digest("hex");
+  return `masterclass-registration-${hash}`;
 }
 
 export async function POST(request: NextRequest) {
@@ -79,13 +90,11 @@ export async function POST(request: NextRequest) {
 
     const paidAtIso =
       paystackData.data.paid_at || paystackData.data.paidAt || new Date().toISOString();
+    const paidAt = new Date(paidAtIso);
     const paidAmountGhs = paystackData.data.amount / 100;
 
     // 2. Idempotency: if a registration already exists for this Paystack reference, return it.
-    const existing = await client.fetch<{
-      _id: string;
-      registrationId: string;
-    } | null>(
+    const existing = await client.fetch<ExistingRegistration | null>(
       `*[_type == "masterclassRegistration" && payment.paystackReference == $ref][0]{ _id, registrationId }`,
       { ref: body.paystackReference },
     );
@@ -116,7 +125,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const registrationState = getRegistrationState(masterclass);
+    const registrationState = getRegistrationState(masterclass, paidAt);
     if (registrationState !== "open") {
       return NextResponse.json(
         {
@@ -133,7 +142,7 @@ export async function POST(request: NextRequest) {
     // 4. Recompute price using paidAt as the reference time
     const { tier: expectedTier, price: expectedPrice } = getPriceTier(
       masterclass,
-      new Date(paidAtIso),
+      paidAt,
     );
 
     if (Math.abs(paidAmountGhs - expectedPrice) > 0.01) {
@@ -153,9 +162,11 @@ export async function POST(request: NextRequest) {
     }
 
     // 5. Create the registration document
+    const registrationDocumentId = getRegistrationDocumentId(body.paystackReference);
     const registrationId = generateRegistrationId();
 
-    const registration = await client.create({
+    const registration = await client.createIfNotExists({
+      _id: registrationDocumentId,
       _type: "masterclassRegistration",
       registrationId,
       masterclass: { _ref: masterclass._id, _type: "reference" },

@@ -49,7 +49,7 @@ const PriceCard: React.FC<PriceCardProps> = ({ masterclass, onRegisterClick }) =
         <button
           type="button"
           onClick={onRegisterClick}
-          className="w-full font-medium text-white bg-[#c77f56] py-3 px-6 rounded-md ease-out duration-200 hover:bg-opacity-90"
+          className="w-full font-medium text-white bg-[#c2712f] py-3 px-6 rounded-md ease-out duration-200 hover:bg-[#b96e48]"
         >
           Register Below
         </button>

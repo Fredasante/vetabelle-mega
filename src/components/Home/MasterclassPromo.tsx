@@ -18,10 +18,10 @@ const MasterclassPromo = async () => {
   const isEarlyBird = tier === "early_bird";
 
   return (
-    <section className="py-10 md:py-14 bg-[#f9fafb]">
+    <section className="py-10 md:py-14 bg-[#fdf6f0]">
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
         <div className="bg-white rounded-[12px] shadow-1 overflow-hidden grid md:grid-cols-2">
-          <div className="relative w-full aspect-[4/3] md:aspect-auto md:min-h-[320px] bg-[#f9fafb]">
+          <div className="relative w-full aspect-[4/3] md:aspect-auto md:min-h-[320px] bg-[#fdf6f0]">
             <Image
               src={masterclass.bannerImage}
               alt={masterclass.title}
@@ -62,7 +62,7 @@ const MasterclassPromo = async () => {
             </div>
             <Link
               href="/masterclass"
-              className="inline-block w-fit font-medium text-white bg-[#c77f56] py-3 px-7 rounded-md ease-out duration-200 hover:bg-opacity-90"
+              className="inline-block w-fit font-medium text-white bg-[#c2712f] py-3 px-7 rounded-md ease-out duration-200 hover:bg-[#b96e48]"
             >
               Register Now
             </Link>

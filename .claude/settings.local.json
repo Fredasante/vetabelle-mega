@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/Alfred/ Apenteng/Desktop/inmotion-logistics-app/**)",
+      "Read(//c/Users/Alfred/ Apenteng/Desktop/inmotion-logistics-app/lib/**)",
+      "WebSearch"
+    ]
+  }
+}
