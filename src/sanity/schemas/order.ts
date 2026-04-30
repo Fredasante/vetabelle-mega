@@ -165,6 +165,7 @@ export default defineType({
         list: [
           { title: "Payment Pending", value: "payment_pending" },
           { title: "Payment Received", value: "payment_received" },
+          { title: "Confirmed", value: "confirmed" },
           { title: "Processing", value: "processing" },
           { title: "Ready for Pickup", value: "ready_for_pickup" },
           { title: "Out for Delivery", value: "out_for_delivery" },
@@ -200,6 +201,7 @@ export default defineType({
       const statusEmojis: Record<string, string> = {
         payment_pending: "⏳",
         payment_received: "✅",
+        confirmed: "🔵",
         processing: "📦",
         ready_for_pickup: "🎁",
         out_for_delivery: "🚚",
@@ -215,11 +217,13 @@ export default defineType({
 
       const fulfillmentLabel = fulfillmentLabels[fulfillmentMethod] || "";
 
+      const statusLabel = `${statusEmojis[status] || ""} ${status
+        ?.replace(/_/g, " ")
+        .toUpperCase()}`.trim();
+
       return {
         title: `${orderId} - ${customerName || "Guest"}`,
-        subtitle: `₵${total?.toFixed(2)} • ${fulfillmentLabel ? fulfillmentLabel + " • " : ""}${statusEmojis[status] || ""} ${status
-          ?.replace(/_/g, " ")
-          .toUpperCase()} • ${new Date(createdAt).toLocaleDateString()}`,
+        subtitle: `${statusLabel} • ₵${total?.toFixed(2)}${fulfillmentLabel ? " • " + fulfillmentLabel : ""} • ${new Date(createdAt).toLocaleDateString()}`,
       };
     },
   },
