@@ -76,7 +76,7 @@ const MasterclassPromo = async () => {
                 <div className="flex items-start gap-2.5 bg-[#fff7f0] border border-[#c2712f]/25 rounded-md px-3.5 py-3 mb-4">
                   <Clock className="w-4 h-4 text-[#c2712f] mt-0.5 flex-shrink-0" />
                   <p className="text-base text-[#c2712f] leading-snug">
-                    Early bird access closes strictly on{" "}
+                    Early bird has been extended to{" "}
                     <span className="font-bold">
                       {formatEventDate(masterclass.earlyBirdDeadline)}
                     </span>
