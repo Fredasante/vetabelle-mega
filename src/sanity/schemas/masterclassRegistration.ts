@@ -108,19 +108,19 @@ export default defineType({
       status: "payment.status",
     },
     prepare({ registrationId, fullName, topic, tier, status }) {
-      const statusEmoji =
+      const statusLabel =
         status === "paid"
-          ? "🟢"
+          ? "🟢 Paid"
           : status === "confirmed"
-            ? "🔵"
+            ? "🔵 Confirmed"
             : status === "failed"
-              ? "🔴"
-              : "🟡";
+              ? "🔴 Failed"
+              : "🟡 Pending";
       const tierLabel =
         tier === "early_bird" ? "Early Bird" : tier === "regular" ? "Regular" : "—";
       return {
         title: `${fullName || "Unknown"} — ${registrationId}`,
-        subtitle: `${statusEmoji} • ${topic || "No topic"} • ${tierLabel}`,
+        subtitle: `${statusLabel} • ${topic || "No topic"} • ${tierLabel}`,
       };
     },
   },
