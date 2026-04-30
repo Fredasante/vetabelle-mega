@@ -43,7 +43,7 @@ export const fetchPaginatedProducts = async ({
   }
 
   const productsQuery = `
-    *[_type == "product"]
+    *[_type == "product" && status == "in-stock"]
       | ${orderClause}
       [${start}...${end}] {
         _id,
@@ -59,7 +59,7 @@ export const fetchPaginatedProducts = async ({
   `;
 
   const countQuery = `
-    count(*[_type == "product"])
+    count(*[_type == "product" && status == "in-stock"])
   `;
 
   try {
@@ -78,7 +78,7 @@ export const fetchPaginatedProducts = async ({
 // ✅ Fetch all products (in-stock first, out-of-stock last)
 export const fetchAllProducts = async () => {
   const query = `
-    *[_type == "product"]
+    *[_type == "product" && status == "in-stock"]
       | order(select(status == "out-of-stock" => 1, 0) asc, createdAt desc) {
         _id,
         title,

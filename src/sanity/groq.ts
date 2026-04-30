@@ -18,7 +18,7 @@ export const allProductsQuery = `
 
 // (New Arrivals)
 export const newArrivalsQuery = `
-  *[_type == "product"]
+  *[_type == "product" && status == "in-stock"]
   | order(select(status == "out-of-stock" => 1, 0) asc, coalesce(createdAt, _createdAt) desc) {
     _id,
     title,

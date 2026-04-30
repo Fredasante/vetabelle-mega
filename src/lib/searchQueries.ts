@@ -13,7 +13,7 @@ export const searchProducts = async (
   const end = start + perPage;
 
   const searchQuery = `
-    *[_type == "product" && title match "${query}*"]
+    *[_type == "product" && status == "in-stock" && title match "${query}*"]
       | order(select(status == "out-of-stock" => 1, 0) asc, createdAt desc)
       [${start}...${end}] {
         _id,
@@ -29,7 +29,7 @@ export const searchProducts = async (
   `;
 
   const countQuery = `
-    count(*[_type == "product" && title match "${query}*"])
+    count(*[_type == "product" && status == "in-stock" && title match "${query}*"])
   `;
 
   try {
