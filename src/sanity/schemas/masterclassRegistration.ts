@@ -67,6 +67,7 @@ export default defineType({
             list: [
               { title: "Pending", value: "pending" },
               { title: "Paid", value: "paid" },
+              { title: "Confirmed", value: "confirmed" },
               { title: "Failed", value: "failed" },
             ],
           },
@@ -108,12 +109,18 @@ export default defineType({
     },
     prepare({ registrationId, fullName, topic, tier, status }) {
       const statusEmoji =
-        status === "paid" ? "✅" : status === "failed" ? "❌" : "⏳";
+        status === "paid"
+          ? "🟢"
+          : status === "confirmed"
+            ? "🔵"
+            : status === "failed"
+              ? "🔴"
+              : "🟡";
       const tierLabel =
         tier === "early_bird" ? "Early Bird" : tier === "regular" ? "Regular" : "—";
       return {
         title: `${fullName || "Unknown"} — ${registrationId}`,
-        subtitle: `${topic || "No topic"} • ${tierLabel} • ${statusEmoji}`,
+        subtitle: `${statusEmoji} • ${topic || "No topic"} • ${tierLabel}`,
       };
     },
   },
