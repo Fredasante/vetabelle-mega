@@ -11,6 +11,8 @@ interface PaystackPaymentData {
     customerName: string;
     phone: string;
     items: any[];
+    orderHash?: string;
+    intendedUserId?: string;
   };
   onSuccess: (transaction: any) => void;
   onCancel: () => void;
@@ -48,6 +50,20 @@ export const initializePaystackPayment = ({
           display_name: "Phone",
           variable_name: "phone",
           value: metadata.phone,
+        },
+        ...(metadata.orderHash
+          ? [
+              {
+                display_name: "Order Hash",
+                variable_name: "order_hash",
+                value: metadata.orderHash,
+              },
+            ]
+          : []),
+        {
+          display_name: "Intended User ID",
+          variable_name: "intended_user_id",
+          value: metadata.intendedUserId ?? "",
         },
       ],
     },

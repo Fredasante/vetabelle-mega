@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import Coupon from "./Coupon";
+import { calculateItemPrice } from "@/lib/pricing";
+import { computeOrderHash } from "@/lib/orderHash";
 import Billing from "./Billing";
 import FulfillmentMethod, {
   FulfillmentType,
@@ -31,14 +32,12 @@ const Checkout = () => {
   const { user, isLoaded } = useUser();
   const cartItems = useAppSelector(selectCartItems);
   const itemsTotal = useSelector(selectTotalPrice);
-  const [discount, setDiscount] = useState(0);
-  const [couponCode, setCouponCode] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [fulfillmentMethod, setFulfillmentMethod] =
     useState<FulfillmentType>("delivery");
   const dispatch = useDispatch();
 
-  const total = itemsTotal - discount;
+  const total = itemsTotal;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,27 +54,34 @@ const Checkout = () => {
 
       const isPickup = fulfillmentMethod !== "delivery";
 
+      const customerInfo = {
+        fullName: formData.get("fullName") as string,
+        phone: formData.get("phone") as string,
+        email:
+          (formData.get("email") as string) ||
+          user?.primaryEmailAddress?.emailAddress ||
+          "",
+      };
+      const deliveryInfo = isPickup
+        ? undefined
+        : {
+            region: formData.get("region") as string,
+            city: formData.get("city") as string,
+            address: formData.get("address") as string,
+          };
+
+      const orderHash = await computeOrderHash({
+        items: cartItems,
+        email: customerInfo.email,
+        fulfillmentMethod,
+        deliveryInfo,
+      });
+
       const orderData = {
         orderId,
         fulfillmentMethod,
-        customerInfo: {
-          fullName: formData.get("fullName") as string,
-          phone: formData.get("phone") as string,
-          email:
-            (formData.get("email") as string) ||
-            user?.primaryEmailAddress?.emailAddress ||
-            "",
-          ...(user?.id ? { userId: user.id } : {}),
-        },
-        ...(isPickup
-          ? {}
-          : {
-              deliveryInfo: {
-                region: formData.get("region") as string,
-                city: formData.get("city") as string,
-                address: formData.get("address") as string,
-              },
-            }),
+        customerInfo,
+        ...(deliveryInfo ? { deliveryInfo } : {}),
         items: cartItems.map((item) => ({
           _key: generateKey(),
           product: { _ref: item._id, _type: "reference" },
@@ -90,9 +96,8 @@ const Checkout = () => {
         })),
         pricing: {
           subtotal: itemsTotal,
-          discount,
+          discount: 0,
           total,
-          ...(couponCode ? { couponCode } : {}),
         },
         payment: {
           method: "paystack",
@@ -114,6 +119,8 @@ const Checkout = () => {
           orderId,
           customerName: orderData.customerInfo.fullName,
           phone: orderData.customerInfo.phone,
+          orderHash,
+          intendedUserId: user?.id ?? "",
           items: cartItems.map((item) => ({
             title: item.title,
             quantity: item.quantity,
@@ -306,8 +313,8 @@ const Checkout = () => {
 
                   <div className="pt-2.5 pb-8.5 px-4 sm:px-8.5">
                     {cartItems.map((item) => {
-                      const itemPrice = item.discountPrice ?? item.price;
-                      const itemTotal = itemPrice * item.quantity;
+                      const itemTotal = calculateItemPrice(item, item.quantity);
+                      const effectiveUnitPrice = itemTotal / item.quantity;
 
                       return (
                         <div
@@ -330,7 +337,8 @@ const Checkout = () => {
                                 {item.title}
                               </p>
                               <p className="text-xs text-gray-600">
-                                Qty: {item.quantity} x ₵{itemPrice.toFixed(2)}
+                                Qty: {item.quantity} x ₵
+                                {effectiveUnitPrice.toFixed(2)}
                               </p>
                             </div>
                           </div>
@@ -345,17 +353,6 @@ const Checkout = () => {
                       <p className="text-dark">Subtotal</p>
                       <p className="text-dark">₵{itemsTotal.toFixed(2)}</p>
                     </div>
-
-                    {discount > 0 && (
-                      <div className="flex items-center justify-between py-4 border-b border-gray-3">
-                        <p className="text-green-600">
-                          Discount {couponCode && `(${couponCode})`}
-                        </p>
-                        <p className="text-green-600">
-                          -₵{discount.toFixed(2)}
-                        </p>
-                      </div>
-                    )}
 
                     <div className="flex items-center justify-between py-4 border-b border-gray-3 bg-blue-50 -mx-4 sm:-mx-8.5 px-4 sm:px-8.5">
                       <div>
@@ -394,8 +391,6 @@ const Checkout = () => {
                     )}
                   </div>
                 </div>
-
-                <Coupon onApplyCoupon={setDiscount} />
 
                 <button
                   type="submit"

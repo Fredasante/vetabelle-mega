@@ -77,7 +77,9 @@ export default function OrderSuccessPage() {
     // Fetch order details
     const fetchOrderDetails = async () => {
       try {
-        const response = await fetch(`/api/orders/${orderId}`);
+        const response = await fetch(
+          `/api/orders/${orderId}${reference ? `?ref=${encodeURIComponent(reference)}` : ""}`,
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch order details");
         }
@@ -92,7 +94,7 @@ export default function OrderSuccessPage() {
     };
 
     fetchOrderDetails();
-  }, [orderId, router]);
+  }, [orderId, reference, router]);
 
   if (loading) {
     return (
