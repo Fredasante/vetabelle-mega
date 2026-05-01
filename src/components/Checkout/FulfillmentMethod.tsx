@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { MapPin, Truck, Store } from "lucide-react";
+import { Truck, Store } from "lucide-react";
 
 export type FulfillmentType = "delivery" | "pickup_office" | "pickup_ac_mall";
 
@@ -28,13 +28,6 @@ const FULFILLMENT_OPTIONS: FulfillmentOption[] = [
     address: "Near Entrance Hospital Kokomelemele",
     icon: <Store className="w-6 h-6" />,
   },
-  {
-    value: "pickup_ac_mall",
-    label: "Pickup at A&C Mall",
-    description: "Pick up at our A&C Mall event location",
-    address: "A&C Mall",
-    icon: <MapPin className="w-6 h-6" />,
-  },
 ];
 
 interface FulfillmentMethodProps {
@@ -49,7 +42,7 @@ const FulfillmentMethod = ({ selected, onChange }: FulfillmentMethodProps) => {
         How would you like to receive your order?
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {FULFILLMENT_OPTIONS.map((option) => {
           const isSelected = selected === option.value;
 
