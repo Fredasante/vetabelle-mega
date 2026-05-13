@@ -34,8 +34,7 @@ const MasterclassPromo = async () => {
           <div className="p-6 md:p-10 flex flex-col justify-center">
             {isEarlyBird && (
               <span className="inline-flex w-fit text-xs font-medium text-white bg-[#c77f56] px-2.5 py-1 rounded-full mb-3">
-                Early Bird — Save ₵
-                {(masterclass.regularPrice - price).toLocaleString()}
+                Limited-Time Registration
               </span>
             )}
             <h2 className="text-2xl md:text-3xl font-bold text-dark mb-3 leading-tight">
@@ -76,7 +75,7 @@ const MasterclassPromo = async () => {
                 <div className="flex items-start gap-2.5 bg-[#fff7f0] border border-[#c2712f]/25 rounded-md px-3.5 py-3 mb-4">
                   <Clock className="w-4 h-4 text-[#c2712f] mt-0.5 flex-shrink-0" />
                   <p className="text-base text-[#c2712f] leading-snug">
-                    Early bird has been extended to{" "}
+                    Registration closes on{" "}
                     <span className="font-bold">
                       {formatEventDate(masterclass.earlyBirdDeadline)}
                     </span>

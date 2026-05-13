@@ -30,7 +30,7 @@ interface CountdownTimerProps {
 
 const CountdownTimer: React.FC<CountdownTimerProps> = ({
   targetDate,
-  label = "Early bird closes in",
+  label = "Registration closes in",
 }) => {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>(getTimeLeft(targetDate));
   const expired = Object.values(timeLeft).every((v) => v === 0);
