@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import { PortableText } from "@portabletext/react";
 import { CheckCircle2 } from "lucide-react";
 import type { Masterclass as MasterclassType } from "@/types/masterclass";
-import { getRegistrationState } from "@/lib/masterclass";
+import { getRegistrationState, isDeadlinePassed } from "@/lib/masterclass";
 import Hero from "./Hero";
 import RegistrationForm from "./RegistrationForm";
 import { RegistrationClosed } from "./EmptyStates";
@@ -24,6 +24,11 @@ interface MasterclassProps {
 const Masterclass: React.FC<MasterclassProps> = ({ masterclass }) => {
   const formRef = useRef<HTMLDivElement>(null);
   const state = getRegistrationState(masterclass);
+  // The countdown deadline (earlyBirdDeadline) is the single source of truth
+  // for "registration closed" — once it passes the form is replaced with the
+  // contact message, even if the event date is still in the future.
+  const registrationOpen =
+    state === "open" && !isDeadlinePassed(masterclass.earlyBirdDeadline);
 
   const scrollToForm = () => {
     formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -84,7 +89,7 @@ const Masterclass: React.FC<MasterclassProps> = ({ masterclass }) => {
 
       <section ref={formRef} className="py-12 md:py-16 bg-gray-2">
         <div className="max-w-[800px] w-full mx-auto px-4 sm:px-8 xl:px-0">
-          {state === "open" ? (
+          {registrationOpen ? (
             <RegistrationForm masterclass={masterclass} />
           ) : (
             <RegistrationClosed />
