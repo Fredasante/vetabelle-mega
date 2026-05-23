@@ -6,7 +6,7 @@ import type { Masterclass as MasterclassType } from "@/types/masterclass";
 import { getRegistrationState } from "@/lib/masterclass";
 import Hero from "./Hero";
 import RegistrationForm from "./RegistrationForm";
-import { EventEnded, RegistrationClosed } from "./EmptyStates";
+import { RegistrationClosed } from "./EmptyStates";
 
 const BONUSES = [
   "AI Tools for Business Growth",
@@ -24,10 +24,6 @@ interface MasterclassProps {
 const Masterclass: React.FC<MasterclassProps> = ({ masterclass }) => {
   const formRef = useRef<HTMLDivElement>(null);
   const state = getRegistrationState(masterclass);
-
-  if (state === "ended") {
-    return <EventEnded title={masterclass.title} />;
-  }
 
   const scrollToForm = () => {
     formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });

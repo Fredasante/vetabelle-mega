@@ -5,7 +5,12 @@ import { Calendar, MapPin, Clock } from "lucide-react";
 import { client } from "@/sanity/client";
 import { activeMasterclassQuery } from "@/sanity/groq";
 import type { Masterclass } from "@/types/masterclass";
-import { getPriceTier, formatEventDate } from "@/lib/masterclass";
+import {
+  getPriceTier,
+  formatEventDate,
+  isDeadlinePassed,
+  MASTERCLASS_ENQUIRY_PHONE,
+} from "@/lib/masterclass";
 import CountdownTimer from "@/components/Masterclass/CountdownTimer";
 
 const MasterclassPromo = async () => {
@@ -17,6 +22,8 @@ const MasterclassPromo = async () => {
 
   const { tier, price } = getPriceTier(masterclass);
   const isEarlyBird = tier === "early_bird";
+  const showCountdown = !!masterclass.earlyBirdDeadline;
+  const deadlinePassed = isDeadlinePassed(masterclass.earlyBirdDeadline);
 
   return (
     <section className="py-10 md:py-14 bg-[#fdf6f0] pb-10 lg:pb-12.5 xl:pb-12 pt-30 sm:pt-44 lg:pt-30 xl:pt-40">
@@ -69,16 +76,27 @@ const MasterclassPromo = async () => {
                 </span>
               )}
             </div>
-            {isEarlyBird && masterclass.earlyBirdDeadline && (
+            {showCountdown && masterclass.earlyBirdDeadline && (
               <>
                 <CountdownTimer targetDate={masterclass.earlyBirdDeadline} />
                 <div className="flex items-start gap-2.5 bg-[#fff7f0] border border-[#c2712f]/25 rounded-md px-3.5 py-3 mb-4">
                   <Clock className="w-4 h-4 text-[#c2712f] mt-0.5 flex-shrink-0" />
                   <p className="text-base text-[#c2712f] leading-snug">
-                    Registration closes on{" "}
-                    <span className="font-bold">
-                      {formatEventDate(masterclass.earlyBirdDeadline)}
-                    </span>
+                    {deadlinePassed ? (
+                      <>
+                        For further enquiries contact{" "}
+                        <span className="font-bold">
+                          {MASTERCLASS_ENQUIRY_PHONE}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        Registration closes on{" "}
+                        <span className="font-bold">
+                          {formatEventDate(masterclass.earlyBirdDeadline)}
+                        </span>
+                      </>
+                    )}
                   </p>
                 </div>
               </>
@@ -87,7 +105,7 @@ const MasterclassPromo = async () => {
               href="/masterclass"
               className="inline-block w-fit font-medium text-white bg-[#c2712f] py-3 px-7 rounded-md ease-out duration-200 hover:bg-[#b96e48]"
             >
-              Register Now
+              {deadlinePassed ? "View Details" : "Register Now"}
             </Link>
           </div>
         </div>

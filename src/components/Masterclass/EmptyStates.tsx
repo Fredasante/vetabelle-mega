@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Calendar } from "lucide-react";
+import { MASTERCLASS_ENQUIRY_PHONE } from "@/lib/masterclass";
 
 interface EventEndedProps {
   title?: string;
@@ -58,7 +59,13 @@ export const RegistrationClosed: React.FC = () => (
       Registration is closed
     </h3>
     <p className="text-dark-5">
-      Registration for this masterclass is no longer accepting new sign-ups.
+      For further enquiries contact{" "}
+      <a
+        href={`tel:${MASTERCLASS_ENQUIRY_PHONE}`}
+        className="font-medium text-[#c2712f]"
+      >
+        {MASTERCLASS_ENQUIRY_PHONE}
+      </a>
     </p>
   </div>
 );

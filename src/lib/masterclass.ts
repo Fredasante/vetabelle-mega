@@ -43,6 +43,17 @@ export function generateRegistrationId(): string {
   return `MC-${timestamp}-${random}`;
 }
 
+// Phone number shown once registration has closed, in place of the countdown
+// banner and the registration form.
+export const MASTERCLASS_ENQUIRY_PHONE = "0545551961";
+
+export function isDeadlinePassed(
+  deadline?: string,
+  now: Date = new Date(),
+): boolean {
+  return !!deadline && now.getTime() >= new Date(deadline).getTime();
+}
+
 export function formatEventDate(iso: string): string {
   return new Date(iso).toLocaleDateString("en-GB", {
     weekday: "long",

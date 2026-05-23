@@ -102,7 +102,7 @@ export const ALL_PRODUCT_SLUGS_QUERY = `
 
 // 🎓 Active, upcoming masterclass (for /masterclass page, homepage promo, nav)
 export const activeMasterclassQuery = `
-  *[_type == "masterclass" && isActive == true && eventDate > now()]
+  *[_type == "masterclass" && isActive == true]
   | order(_updatedAt desc)[0] {
     _id,
     title,

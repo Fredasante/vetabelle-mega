@@ -2,7 +2,12 @@
 import React from "react";
 import { Clock } from "lucide-react";
 import type { Masterclass } from "@/types/masterclass";
-import { getPriceTier, formatEventDate } from "@/lib/masterclass";
+import {
+  getPriceTier,
+  formatEventDate,
+  isDeadlinePassed,
+  MASTERCLASS_ENQUIRY_PHONE,
+} from "@/lib/masterclass";
 import CountdownTimer from "./CountdownTimer";
 
 interface PriceCardProps {
@@ -19,6 +24,8 @@ const PriceCard: React.FC<PriceCardProps> = ({
 }) => {
   const { tier, price } = getPriceTier(masterclass);
   const isEarlyBird = tier === "early_bird";
+  const showCountdown = !!masterclass.earlyBirdDeadline;
+  const deadlinePassed = isDeadlinePassed(masterclass.earlyBirdDeadline);
 
   return (
     <div className="bg-white shadow-1 rounded-[10px] p-6 border border-gray-3">
@@ -46,24 +53,33 @@ const PriceCard: React.FC<PriceCardProps> = ({
           </span>
         )}
       </div>
-      {isEarlyBird && masterclass.earlyBirdDeadline && (
+      {showCountdown && masterclass.earlyBirdDeadline && (
         <>
           <CountdownTimer targetDate={masterclass.earlyBirdDeadline} />
           <div className="flex items-start gap-2.5 bg-[#fff7f0] border border-[#c2712f]/25 rounded-md px-3.5 py-3 mb-4">
             <Clock className="w-4 h-4 text-[#c2712f] mt-0.5 flex-shrink-0" />
             <p className="text-base text-[#c2712f] leading-snug">
-              Registration closes on{" "}
-              <span className="font-bold">
-                {formatEventDate(masterclass.earlyBirdDeadline)}
-              </span>
+              {deadlinePassed ? (
+                <>
+                  For further enquiries contact{" "}
+                  <span className="font-bold">{MASTERCLASS_ENQUIRY_PHONE}</span>
+                </>
+              ) : (
+                <>
+                  Registration closes on{" "}
+                  <span className="font-bold">
+                    {formatEventDate(masterclass.earlyBirdDeadline)}
+                  </span>
+                </>
+              )}
             </p>
           </div>
         </>
       )}
-      {!isEarlyBird && (
+      {!showCountdown && (
         <p className="text-sm text-dark-5 mb-4">Regular price</p>
       )}
-      {onRegisterClick && (
+      {onRegisterClick && !deadlinePassed && (
         <button
           type="button"
           onClick={onRegisterClick}

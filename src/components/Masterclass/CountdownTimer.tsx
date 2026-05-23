@@ -26,21 +26,22 @@ function pad(n: number) {
 interface CountdownTimerProps {
   targetDate: string;
   label?: string;
+  expiredLabel?: string;
 }
 
 const CountdownTimer: React.FC<CountdownTimerProps> = ({
   targetDate,
   label = "Registration closes in",
+  expiredLabel = "Registration closed",
 }) => {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>(getTimeLeft(targetDate));
   const expired = Object.values(timeLeft).every((v) => v === 0);
 
   useEffect(() => {
+    if (expired) return;
     const id = setInterval(() => setTimeLeft(getTimeLeft(targetDate)), 1000);
     return () => clearInterval(id);
-  }, [targetDate]);
-
-  if (expired) return null;
+  }, [targetDate, expired]);
 
   const units = [
     { label: "Days", value: timeLeft.days },
@@ -52,7 +53,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({
   return (
     <div className="mb-4">
       <p className="text-xs font-medium text-[#c2712f] uppercase tracking-wide mb-2">
-        {label}
+        {expired ? expiredLabel : label}
       </p>
       <div className="flex items-center gap-2">
         {units.map(({ label: unitLabel, value }, i) => (
