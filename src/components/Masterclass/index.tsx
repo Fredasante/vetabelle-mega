@@ -1,21 +1,11 @@
 "use client";
 import React, { useRef } from "react";
 import { PortableText } from "@portabletext/react";
-import { CheckCircle2 } from "lucide-react";
 import type { Masterclass as MasterclassType } from "@/types/masterclass";
 import { getRegistrationState, isDeadlinePassed } from "@/lib/masterclass";
 import Hero from "./Hero";
 import RegistrationForm from "./RegistrationForm";
 import { RegistrationClosed } from "./EmptyStates";
-
-const BONUSES = [
-  "AI Tools for Business Growth",
-  "Exclusive 1-on-1 Session with Gayobi Achawa",
-  "Feminine Healing & Confidence Session",
-  "Certificate of Participation",
-  "Breakfast, Snacks & 3-Course Lunch",
-  "After-Party Networking Experience",
-];
 
 interface MasterclassProps {
   masterclass: MasterclassType;
@@ -62,22 +52,6 @@ const Masterclass: React.FC<MasterclassProps> = ({ masterclass }) => {
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-[#c77f56] mt-2 flex-shrink-0" />
                       <span>{topic}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-dark mb-4 mt-5">
-                  Bonuses
-                </h3>
-                <ul className="space-y-2.5">
-                  {BONUSES.map((bonus) => (
-                    <li
-                      key={bonus}
-                      className="flex items-start gap-2 text-slate-700"
-                    >
-                      <CheckCircle2 className="w-4 h-4 text-[#c2712f] mt-0.5 flex-shrink-0" />
-                      <span>{bonus}</span>
                     </li>
                   ))}
                 </ul>
