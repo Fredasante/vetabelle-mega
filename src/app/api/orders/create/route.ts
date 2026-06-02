@@ -2,7 +2,11 @@ import { createHash } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { client } from "@/sanity/client";
-import { calculateItemPrice } from "@/lib/pricing";
+import {
+  calculateItemPrice,
+  isPaidAmountSufficient,
+  isOverpaymentWithinFeeBand,
+} from "@/lib/pricing";
 import { computeOrderHash } from "@/lib/orderHash";
 
 type ExistingOrder = { _id: string; orderId: string };
@@ -232,14 +236,23 @@ export async function POST(request: NextRequest) {
       };
     });
 
-    // Strict amount check — coupons are inactive, so paid must equal subtotal
-    if (Math.abs(paidAmountGhs - subtotal) > 0.01) {
-      console.warn("Order paid amount does not match server subtotal", {
+    // Accept the server-computed subtotal plus any gateway fee Paystack adds on
+    // top; only reject genuine underpayment. (Coupons are inactive.)
+    if (!isPaidAmountSufficient(paidAmountGhs, subtotal)) {
+      console.warn("Order underpayment vs server subtotal", {
         reference: paystackReference,
         paidAmountGhs,
         subtotal,
       });
-      return bad("Payment amount does not match the expected order total");
+      return bad("Payment amount is less than the expected order total");
+    }
+    if (!isOverpaymentWithinFeeBand(paidAmountGhs, subtotal)) {
+      // Recorded anyway — flagged only so an unusual overcharge is noticed.
+      console.warn("Order overpayment beyond expected fee band", {
+        reference: paystackReference,
+        paidAmountGhs,
+        subtotal,
+      });
     }
 
     const nowIso = new Date().toISOString();

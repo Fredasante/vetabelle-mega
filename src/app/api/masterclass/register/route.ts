@@ -1,4 +1,3 @@
-import { createHash } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { client } from "@/sanity/client";
 import { masterclassByIdQuery } from "@/sanity/groq";
@@ -7,6 +6,11 @@ import {
   getRegistrationState,
   generateRegistrationId,
 } from "@/lib/masterclass";
+import {
+  isPaidAmountSufficient,
+  isOverpaymentWithinFeeBand,
+} from "@/lib/pricing";
+import { getRegistrationDocumentId } from "@/lib/masterclassRegistration";
 import type {
   Masterclass,
   RegisterRequestBody,
@@ -32,11 +36,6 @@ function isValidBody(body: any): body is RegisterRequestBody {
     typeof body.preferences.audienceType === "string" &&
     typeof body.preferences.referralSource === "string"
   );
-}
-
-function getRegistrationDocumentId(paystackReference: string): string {
-  const hash = createHash("sha256").update(paystackReference).digest("hex");
-  return `masterclass-registration-${hash}`;
 }
 
 export async function POST(request: NextRequest) {
@@ -145,8 +144,11 @@ export async function POST(request: NextRequest) {
       paidAt,
     );
 
-    if (Math.abs(paidAmountGhs - expectedPrice) > 0.01) {
-      console.warn("Masterclass price mismatch", {
+    // Accept the expected price plus any gateway fee Paystack adds on top (the
+    // common mobile-money case, e.g. 305.97 for a 300 ticket). Only genuine
+    // underpayment blocks recording the registration.
+    if (!isPaidAmountSufficient(paidAmountGhs, expectedPrice)) {
+      console.warn("Masterclass underpayment", {
         reference: body.paystackReference,
         paidAmountGhs,
         expectedPrice,
@@ -155,10 +157,18 @@ export async function POST(request: NextRequest) {
         {
           success: false,
           message:
-            "Payment amount does not match the expected price. Please contact support.",
+            "Payment amount is less than the expected price. Please contact support.",
         },
         { status: 400 },
       );
+    }
+    if (!isOverpaymentWithinFeeBand(paidAmountGhs, expectedPrice)) {
+      // Recorded anyway — flagged only so an unusual overcharge is noticed.
+      console.warn("Masterclass overpayment beyond expected fee band", {
+        reference: body.paystackReference,
+        paidAmountGhs,
+        expectedPrice,
+      });
     }
 
     // 5. Create the registration document

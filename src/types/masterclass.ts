@@ -1,5 +1,10 @@
 export type PriceTier = "early_bird" | "regular";
-export type PaymentStatus = "pending" | "paid" | "confirmed" | "failed";
+export type PaymentStatus =
+  | "pending"
+  | "paid"
+  | "confirmed"
+  | "online_confirmed"
+  | "failed";
 export type RegistrationState = "open" | "closed" | "ended";
 
 export interface Masterclass {

@@ -61,6 +61,17 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ masterclass }) => {
               tier,
             },
           ],
+          // Carry the full registration so the webhook can record it server-side
+          // even if this browser never reaches onSuccess (common with mobile money).
+          customFields: [
+            { display_name: "Registration Type", variable_name: "registration_type", value: "masterclass" },
+            { display_name: "Masterclass ID", variable_name: "masterclass_id", value: masterclass._id },
+            { display_name: "Email", variable_name: "email", value: registrantInfo.email },
+            { display_name: "Location", variable_name: "location", value: registrantInfo.location },
+            { display_name: "Topic To Learn", variable_name: "topic_to_learn", value: preferences.topicToLearn },
+            { display_name: "Audience Type", variable_name: "audience_type", value: preferences.audienceType },
+            { display_name: "Referral Source", variable_name: "referral_source", value: preferences.referralSource },
+          ],
         },
         onSuccess: async (transaction) => {
           try {

@@ -13,6 +13,14 @@ interface PaystackPaymentData {
     items: any[];
     orderHash?: string;
     intendedUserId?: string;
+    // Extra fields forwarded verbatim into Paystack custom_fields. Used by the
+    // masterclass flow so a webhook can reconstruct the full registration even
+    // if the browser never fires onSuccess.
+    customFields?: Array<{
+      display_name: string;
+      variable_name: string;
+      value: string;
+    }>;
   };
   onSuccess: (transaction: any) => void;
   onCancel: () => void;
@@ -65,6 +73,7 @@ export const initializePaystackPayment = ({
           variable_name: "intended_user_id",
           value: metadata.intendedUserId ?? "",
         },
+        ...(metadata.customFields ?? []),
       ],
     },
     onSuccess: (transaction: any) => {

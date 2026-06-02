@@ -67,7 +67,10 @@ export default defineType({
             list: [
               { title: "Pending", value: "pending" },
               { title: "Paid", value: "paid" },
-              { title: "Online Confirmed", value: "confirmed" },
+              // Online masterclass registrations confirmed by the team (primary)
+              { title: "Online Confirmed", value: "online_confirmed" },
+              // In-person registrations (kept for the older, in-person masterclasses)
+              { title: "Confirmed", value: "confirmed" },
               { title: "Failed", value: "failed" },
             ],
           },
@@ -111,11 +114,13 @@ export default defineType({
       const statusLabel =
         status === "paid"
           ? "🟢 Paid"
-          : status === "confirmed"
-            ? "🔵 Online Confirmed"
-            : status === "failed"
-              ? "🔴 Failed"
-              : "🟡 Pending";
+          : status === "online_confirmed"
+            ? "🟣 Online Confirmed"
+            : status === "confirmed"
+              ? "🔵 Confirmed"
+              : status === "failed"
+                ? "🔴 Failed"
+                : "🟡 Pending";
       const tierLabel =
         tier === "early_bird" ? "Early Bird" : tier === "regular" ? "Regular" : "—";
       return {
