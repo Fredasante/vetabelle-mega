@@ -67,7 +67,7 @@ export default defineType({
             list: [
               { title: "Pending", value: "pending" },
               { title: "Paid", value: "paid" },
-              { title: "Confirmed", value: "confirmed" },
+              { title: "Online Confirmed", value: "confirmed" },
               { title: "Failed", value: "failed" },
             ],
           },
@@ -112,7 +112,7 @@ export default defineType({
         status === "paid"
           ? "🟢 Paid"
           : status === "confirmed"
-            ? "🔵 Confirmed"
+            ? "🔵 Online Confirmed"
             : status === "failed"
               ? "🔴 Failed"
               : "🟡 Pending";
