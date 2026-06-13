@@ -6,8 +6,8 @@ import { Calendar, Gift, Clock } from "lucide-react";
 import { isDeadlinePassed } from "@/lib/masterclass";
 import CountdownTimer from "@/components/Masterclass/CountdownTimer";
 
-// Promo runs 11th–13th June 2026 (flyer dates), Ghana time (GMT)
-const PROMO_END = "2026-06-13T23:59:59Z";
+// Promo extended through Wed 17th June 2026, 11:59pm Ghana time (GMT)
+const PROMO_END = "2026-06-17T23:59:59Z";
 
 const ThankYouPromo = () => {
   const [ended, setEnded] = useState(() => isDeadlinePassed(PROMO_END));
@@ -45,7 +45,7 @@ const ThankYouPromo = () => {
             <div className="flex flex-col gap-1.5 mb-5 text-sm text-slate-500">
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4 text-[#c77f56]" />
-                <span>11th – 13th June, 2026</span>
+                <span>11th – 17th June, 2026</span>
               </div>
               <div className="flex items-center gap-2">
                 <Gift className="w-4 h-4 text-[#c77f56]" />
@@ -70,7 +70,7 @@ const ThankYouPromo = () => {
                 ) : (
                   <>
                     Promo ends on{" "}
-                    <span className="font-bold">13th June, 2026</span>
+                    <span className="font-bold">17th June, 2026</span>
                   </>
                 )}
               </p>
