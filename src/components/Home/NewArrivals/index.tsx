@@ -38,10 +38,7 @@ export default function NewArrival() {
   }, [mutate]);
 
   return (
-    <section
-      id="featured-products"
-      className="overflow-hidden pt-15 bg-[#f3f4f6] pb-5 lg:pb-10 scroll-mt-25"
-    >
+    <section className="overflow-hidden pt-15 bg-[#f3f4f6] pb-5 lg:pb-10">
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
         {/* Section Header */}
         <div className="mb-7 flex items-center justify-between">
